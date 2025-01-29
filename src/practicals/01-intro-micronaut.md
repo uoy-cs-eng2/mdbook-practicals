@@ -157,12 +157,60 @@ Stop the program from IntelliJ, as we will now make some changes.
 Rather than plain strings, we would like to send and receive all the information about a book in one go.
 To do this, we will create a Data Transfer Object (DTO) class, which will be automatically turned to JSON by Micronaut so long as we annotate it as `@Serdeable` and follow certain conventions.
 
+### Writing the Book DTO
+
 *Note*: the name `Serdeable` comes from "serialisable + deserialisable".
 Serialisation is the process of turning an in-memory object into a stream of bytes that you can send over the network or save into a file (e.g. by representing it as JSON).
 Deserialisation is the reverse process of reading a stream of bytes and turning it into an in-memory object.
 
+Create a new `dto` subpackage inside `uk.ac.york.cs.eng2.lab1.books`, and create a `Book` class inside it.
+Annotate it with `@Serdeable`, to indicate to Micronaut that you want to serialise and deserialise it to/from JSON:
 
+```java
+@Serdeable
+class Book {
+}
+```
 
+For this example, let's track the title and the full name of the author.
+We will need to define them as *properties* to be serialised and deserialised.
+There are several ways to do it (see the [docs](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)).
+For this practical, we will use a pair of getter and setter methods.
+
+For instance, to track the title:
+
+* Add a `getTitle()` method that returns the value of a new `String title` field inside `Book`.
+* Add a `setTitle(String newTitle)` method that changes the value of the `title` field.
+
+Do the same for the author.
+
+*Note*: in IntelliJ, you can usually write the two fields yourself, and then use "Code - Generate" to have it producer the getter and setter methods.
+
+### Using the Book DTO
+
+Go back to our `BooksController` and change the `getTitles()` method to return a `List<Book>`.
+Change the code so that it creates a few `Book` objects instead of just using strings.
+
+Once you're done with the changes, run the application as before, and try out the endpoint through the [Swagger UI](http://localhost:8080/swagger-ui).
+If you expand `GET /books/titles` and scroll down to the "Example Value", you'll notice that it now shows a JSON object with both a `title` and an `author`:
+
+![Screenshot of Swagger UI showing the Book JSON structure](./intro-micronaut/example-book.png)
+
+Click on "Try it out" and then "Execute" to run your endpoint and check that it works as intended.
+You should get an HTTP 200 OK response like this one:
+
+```json
+[
+  {
+    "title": "Title 1",
+    "author": "Author 1"
+  },
+  {
+    "title": "Title 2",
+    "author": "Author 2"
+  }
+]
+```
 
 ## Adding the other endpoints
 
