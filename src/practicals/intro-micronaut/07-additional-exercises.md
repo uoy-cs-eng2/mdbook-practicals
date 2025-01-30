@@ -9,6 +9,13 @@ If you would like to gain more practice with the basics of building REST APIs wi
 `POST`ing a new book does not enforce that the ID is not already in use.
 Add this logic, making it so trying to `POST` a `Book` whose ID is already in use produces an HTTP 400 Bad Request response.
 
+## Creating a DTO specific for updating
+
+We use the same `Book` DTO for updating books, which allows for specifying an `id` that is not used.
+
+Change the updating of books to use a dedicated `BookUpdateDTO` which only allows for `title` and `author` to be used.
+This will make our expectations clearer to clients that use the Swagger UI or our generated OpenAPI definitions.
+
 ## Managing authors
 
 We only track books so far, but not their authors.
