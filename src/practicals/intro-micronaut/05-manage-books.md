@@ -53,7 +53,7 @@ Try restarting the application. Try this:
 
 You should be able to write the declaration of the method for `PUT /books/{id}` yourself, based on the above examples: just use `@Put` as the annotation for the method (with the appropriate string parameter).
 
-For the body, however, you will have to do things a bit differently.
+For the body of the method, however, you will have to do things a bit differently.
 For update requests, it's common to only provide the fields that should be changed.
 
 Follow this approach:

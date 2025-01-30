@@ -5,7 +5,7 @@ Micronaut has specific facilities for helping with tests, while emulating real H
 
 ## Creating the declarative HTTP client
 
-In order to test all the steps that a real requests would go through, our tests will send HTTP requests to our application, instead of directly calling the methods of the controller.
+In order to test all the steps that real requests would go through, our tests will send HTTP requests to our application, instead of directly calling the methods of the controller.
 To simplify that task, we will use the [declarative HTTP client support](https://docs.micronaut.io/4.7.11/guide/#clientAnnotation) in Micronaut.
 
 Within the `test` folder (which should have all the code for our tests, so we do not unnecessarily bundle it with a regular release), create a `resources` subpackage within `uk.ac.york.cs.eng2.lab1.books`.
@@ -38,7 +38,7 @@ Micronaut will automatically generate the code for the HTTP client based on this
 
 Since we will be testing the `BooksController` class, we will create a `BooksControllerTest` class in the same package as above.
 
-You may remember that Micronaut applications normally launch through the `Application` class, as there is a certain process involved in their startup.
+Micronaut applications normally launch through the `Application` class that Micronaut Launch generated for you, as there is a certain process involved in their startup.
 We need this startup process to happen before each of our tests as well.
 To do this, add the `@MicronautTest` annotation to your test class, like this:
 
@@ -57,7 +57,7 @@ private BooksClient booksClient;
 ```
 
 `@Inject` is one of several standard annotations for dependency injection: these are originally from the [JSR-330 specification](https://jcp.org/en/jsr/detail?id=330) (starting with `javax.inject`), which were later renamed to `jakarta.inject`.
-Micronaut supports a wide range of dependency injection mechanisms: here we use the simplest form of [field injection](https://docs.micronaut.io/4.7.11/guide/#injection).
+Micronaut supports a wide range of dependency injection mechanisms: here we use the simplest form of [field injection](https://docs.micronaut.io/4.7.11/guide/#fieldInjection).
 
 Let's add the most basic test one could imagine: if we ask for the list of books without having added anything yet, we should get the empty list.
 It would look like this:
@@ -113,11 +113,11 @@ public class BooksControllerTest {
 ```
 
 The `rebuildContext = true` option will make Micronaut recreate the controller for each test, so each test will start from a clean map from IDs to `Book`s.
-In a normal application, we would use a database instead of a Java map, and we would be cleaning the database between tests: we will show how to do that in later labs.
+In a normal application, we would use a database instead of a Java map, and instead of `rebuildContext = true` we would have a `@Before` test setup method that would clean the database between tests: we will learn how do to it in later labs.
 
 ## More tests for creating and updating books
 
-Write test methods for each of these scenarios:
+Write test methods for each of these scenarios, and ensure they pass:
 
 * Create a book, and then check that it can be retrieved by ID.
 * Retrieve a book that doesn't exist (assert that `getBook(...)` returns `null`).

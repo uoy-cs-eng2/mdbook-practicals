@@ -22,7 +22,7 @@ public class BooksController {
 ```
 
 Note how the `@Controller` annotation takes a parameter, which is the common prefix to all the URLs handled by this controller.
-In this case, the controller will handle all the URls that start with `/books`.
+In this case, the controller will handle all the URLs that start with `/books`.
 
 We will then add a `@Get` method which will list the titles of the various books in our collection.
 This is just to illustrate what it's like to work with Micronaut: we will change it later to use an internal in-memory list that is populated with our requests (which we will upgrade in later weeks to a relational database).

@@ -31,7 +31,7 @@ For instance, to track the `title`:
 
 Do the same for the `author` and the `id`.
 
-*Note*: in IntelliJ, you can usually write the two fields yourself, and then use "Code - Generate" to have it producer the getter and setter methods.
+*Note*: in IntelliJ, you can usually write just the fields, and then use "Code - Generate" to have it producer the getter and setter methods.
 
 ## Using the Book DTO
 
