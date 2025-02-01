@@ -14,7 +14,7 @@ Annotate it with `@Serdeable`, to indicate to Micronaut that you want to seriali
 
 ```java
 @Serdeable
-class Book {
+public class Book {
 }
 ```
 
@@ -26,8 +26,8 @@ For this practical, we will use a pair of getter and setter methods.
 For instance, to track the `title`:
 
 * Add a `private String title` field to `Book`.
-* Add a `getTitle()` method that returns the value of the `title` field.
-* Add a `setTitle(String newTitle)` method that changes the value of the `title` field.
+* Add a public `getTitle()` method that returns the value of the `title` field.
+* Add a public `setTitle(String newTitle)` method that changes the value of the `title` field.
 
 Do the same for the `author` and the `id`.
 
