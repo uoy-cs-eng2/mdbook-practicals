@@ -13,7 +13,7 @@ You should be familiar with these concepts from the lectures:
 * The distinction between compute-intensive and data-intensive systems.
 * The challenges related to the object/relational impedance mismatch.
 * The differences between JDBC database drivers, ORM libraries, and Micronaut Data itself.
-* The JPA annotations for persistent fields, one-to-many / many-to-one, and many-to-many relationships.
+* The JPA annotations for persistent fields, one-to-many, many-to-one, and many-to-many relationships.
 * The conventions followed by the methods in Micronaut Data `@Repository` interfaces.
 * The use of `@Transactional` to wrap invocations of controller methods in transactions.
 
