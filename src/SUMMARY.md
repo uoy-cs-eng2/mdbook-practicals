@@ -12,3 +12,8 @@
   - [ORM with Micronaut Data](./practicals/02-micronaut-data.md)
     - [Introduction](./practicals/micronaut-data/01-introduction.md)
     - [Adding libraries](./practicals/micronaut-data/02-libraries.md)
+    - [Book entity](./practicals/micronaut-data/03-book-entity.md)
+    - [Testing with DBs](./practicals/micronaut-data/04-testing-dbs.md)
+    - [1:N with Publisher](./practicals/micronaut-data/05-one-to-many.md)
+    - [M:N with Author](./practicals/micronaut-data/06-many-to-many.md)
+    - [Additional exercises](./practicals/micronaut-data/07-additional-exercises.md)
