@@ -9,3 +9,6 @@
     - [Managing books](./practicals/intro-micronaut/05-manage-books.md)
     - [Automated testing](./practicals/intro-micronaut/06-testing.md)
     - [Additional exercises](./practicals/intro-micronaut/07-additional-exercises.md)
+  - [ORM with Micronaut Data](./practicals/02-micronaut-data.md)
+    - [Introduction](./practicals/micronaut-data/01-introduction.md)
+    - [Adding libraries](./practicals/micronaut-data/02-libraries.md)

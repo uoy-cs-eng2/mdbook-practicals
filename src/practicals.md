@@ -6,3 +6,4 @@ More practicals will be available as the module progresses.
 ## Part 1: data-intensive systems
 
 1. [Micronaut basics](practicals/01-micronaut-basics.md)
+1. [ORM with Micronaut Data](practicals/02-micronaut-data.md)
