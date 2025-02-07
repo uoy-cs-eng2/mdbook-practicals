@@ -35,3 +35,7 @@
     - [End-to-end testing](./practicals/container-orchestration/02-e2e-testing.md)
     - [Writing the Compose spec](./practicals/container-orchestration/03-compose.md)
     - [Additional exercises](./practicals/container-orchestration/04-additional-exercises.md)
+  - [Metamodeling and Modelling](./practicals/modelling-and-metamodelling/README.md)
+    - [Tools](./practicals/modelling-and-metamodelling/tools.md)
+    - [Warm up](./practicals/modelling-and-metamodelling/warm-up.md)
+    - [Conference DSL](./practicals/modelling-and-metamodelling/conference-dsl.md)

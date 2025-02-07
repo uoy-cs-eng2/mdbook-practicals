@@ -10,3 +10,6 @@ More practicals will be available as the module progresses.
 1. [Reacting to events with Micronaut Kafka](practicals/03-micronaut-kafka.md)
 1. [Integrating external services](practicals/04-service-integration.md)
 1. [Deploying via container orchestration](practicals/05-container-orchestration.md)
+
+## Part 2: model-driven engineering
+
