@@ -5,4 +5,4 @@ multilingual = false
 src = "src"
 title = "Engineering 2 Practicals"
 [output.html]
-additional-js = ["custom-languages/eol.js", "custom-languages/evl.js", "custom-languages/etl.js", "custom-languages/egx.js", "custom-languages/egl.js","custom-languages/init.js"]
+additional-js = ["custom-languages/emfatic.js", "custom-languages/eol.js", "custom-languages/evl.js", "custom-languages/etl.js", "custom-languages/egx.js", "custom-languages/egl.js","custom-languages/init.js"]
