@@ -39,3 +39,8 @@
     - [Tools](./practicals/modelling-and-metamodelling/tools.md)
     - [Warm up](./practicals/modelling-and-metamodelling/warm-up.md)
     - [Conference DSL](./practicals/modelling-and-metamodelling/conference-dsl.md)
+    - [Research Project DSL](./practicals/modelling-and-metamodelling/research-project-dsl.md)
+    - [Software Distribution DSL](./practicals/modelling-and-metamodelling/software-distribution-dsl.md)
+    - [Collaborative Project Requirements DSL](./practicals/modelling-and-metamodelling/collaborative-project-requirements-dsl.md)
+    - [Editor generation](./practicals/modelling-and-metamodelling/editor-generation.md)
+    
