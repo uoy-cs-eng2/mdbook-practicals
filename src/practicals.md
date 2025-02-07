@@ -6,3 +6,6 @@ More practicals will be available as the module progresses.
 ## Part 1: data-intensive systems
 
 1. [Micronaut basics](practicals/01-micronaut-basics.md)
+
+## Part 2: model-driven engineering
+

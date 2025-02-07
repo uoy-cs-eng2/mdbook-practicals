@@ -9,3 +9,7 @@
     - [Managing books](./practicals/intro-micronaut/05-manage-books.md)
     - [Automated testing](./practicals/intro-micronaut/06-testing.md)
     - [Additional exercises](./practicals/intro-micronaut/07-additional-exercises.md)
+  - [Metamodeling and Modelling](./practicals/modelling-and-metamodelling/README.md)
+    - [Tools](./practicals/modelling-and-metamodelling/tools.md)
+    - [Warm up](./practicals/modelling-and-metamodelling/warm-up.md)
+    - [Conference DSL](./practicals/modelling-and-metamodelling/conference-dsl.md)
