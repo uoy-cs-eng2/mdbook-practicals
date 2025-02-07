@@ -1,0 +1,6 @@
+# Paper prototype
+
+- Design a paper prototype of a graphical concrete syntax for one language from Practical 6
+    - What shapes/colors/icons would you want to use to represent your model elements graphically?
+    - How should your model elements be connected?
+- In the VLE, the Practical 6 model solution on Week 7 includes Emfatic metamodels for its languages.
