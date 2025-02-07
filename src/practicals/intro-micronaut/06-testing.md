@@ -8,7 +8,7 @@ Micronaut has specific facilities for helping with tests, while emulating real H
 In order to test all the steps that real requests would go through, our tests will send HTTP requests to our application, instead of directly calling the methods of the controller.
 To simplify that task, we will use the [declarative HTTP client support](https://docs.micronaut.io/4.7.11/guide/#clientAnnotation) in Micronaut.
 
-Within the `test` folder (which should have all the code for our tests, so we do not unnecessarily bundle it with a regular release), create a `resources` subpackage within `uk.ac.york.cs.eng2.lab1.books`.
+Within the `test` folder (which should have all the code for our tests, so we do not unnecessarily bundle it with a regular release), create a `resources` subpackage within `uk.ac.york.cs.eng2.books`.
 
 Create a `BooksClient` interface in this same package.
 

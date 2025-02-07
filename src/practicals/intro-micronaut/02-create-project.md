@@ -9,7 +9,7 @@ Open the above link in a new tab, and select these options:
 * Application type: Micronaut Application
 * Java version: 17
 * Name: `book-microservice`
-* Base package: `uk.ac.york.cs.eng2.lab1.books`
+* Base package: `uk.ac.york.cs.eng2.books`
 * Micronaut version: the latest non-SNAPSHOT 4.x version (4.7.4 as of writing)
 * Language: Java
 * Build tool: Gradle

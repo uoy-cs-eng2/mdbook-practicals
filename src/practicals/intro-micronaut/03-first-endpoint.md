@@ -9,10 +9,10 @@ Instead, we will create our own controller from scratch: typically you have one 
 
 ## Writing the controller
 
-First, create a `resources` subpackage within the main `uk.ac.york.cs.eng2.lab1.books` package, create a `BooksController` class in it, and annotate it with `@Controller("/books")`:
+First, create a `resources` subpackage within the main `uk.ac.york.cs.eng2.books` package, create a `BooksController` class in it, and annotate it with `@Controller("/books")`:
 
 ```java
-package uk.ac.york.cs.eng2.lab1.books.resources;
+package uk.ac.york.cs.eng2.books.resources;
 
 import io.micronaut.http.annotation.Controller;
 

@@ -9,7 +9,7 @@ To do this, we will create a Data Transfer Object (DTO) class, which will be aut
 Serialisation is the process of turning an in-memory object into a stream of bytes that you can send over the network or save into a file (e.g. by representing it as JSON).
 Deserialisation is the reverse process of reading a stream of bytes and turning it into an in-memory object.
 
-Create a new `dto` subpackage inside `uk.ac.york.cs.eng2.lab1.books`, and create a `Book` class inside it.
+Create a new `dto` subpackage inside `uk.ac.york.cs.eng2.books`, and create a `Book` class inside it.
 Annotate it with `@Serdeable`, to indicate to Micronaut that you want to serialise and deserialise it to/from JSON:
 
 ```java
