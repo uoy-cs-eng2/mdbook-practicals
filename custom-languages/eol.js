@@ -39,6 +39,10 @@ hljs.registerLanguage('eol', function(hljs) {
         {
           className: 'string',
           begin: '"', end: '"'
+        },
+        {
+          className: 'identifier',
+          begin: '`', end: '`'
         }
       ]
     };

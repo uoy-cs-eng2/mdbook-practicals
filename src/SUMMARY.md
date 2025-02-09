@@ -50,5 +50,6 @@
     - [Conference DSL queries](./practicals/model-querying-and-validation/conference-dsl-queries.md)
     - [Software Distribution DSL queries](./practicals/model-querying-and-validation/software-distribution-dsl-queries.md)
     - [Research Project DSL queries](./practicals/model-querying-and-validation/research-project-dsl-queries.md)
+    - [Model Validation](./practicals/model-querying-and-validation/model-validation.md)
     
     
