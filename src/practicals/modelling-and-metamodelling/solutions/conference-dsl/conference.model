@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ASCII"?>
+<Conference xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="conference">
+  <participants fullName="Person 1" affiliation="University 1"/>
+  <participants fullName="Person 2" affiliation="University 2"/>
+  <participants fullName="Person 3" affiliation="University 3"/>
+  <participants fullName="Person 4" affiliation="University 4"/>
+  <participants fullName="Person 5" affiliation="University 5"/>
+  <participants fullName="Person 6" affiliation="University 6"/>
+  <participants fullName="Person 7" affiliation="University 7"/>
+  <participants fullName="Person 8" affiliation="University 8"/>
+  <participants fullName="Person 9" affiliation="University 9"/>
+  <participants fullName="Person 10" affiliation="University 10"/>
+  <rooms name="Room 1"/>
+  <rooms name="Room 2"/>
+  <rooms name="Room 3"/>
+  <rooms name="Room 4"/>
+  <days name="Day 1">
+    <slots xsi:type="Track" start="09:00" end="12:30" room="//@rooms.3" title="Morning">
+      <talks title="Talk 1" duration="20" speaker="//@participants.2" discussant="//@participants.6"/>
+      <talks title="Talk 2" duration="20" speaker="//@participants.1" discussant="//@participants.3"/>
+      <talks title="Talk 3" duration="20" speaker="//@participants.1" discussant="//@participants.3"/>
+      <talks title="Talk 4" duration="20" speaker="//@participants.0" discussant="//@participants.2"/>
+      <talks title="Talk 5" duration="20" speaker="//@participants.9" discussant="//@participants.8"/>
+    </slots>
+    <slots xsi:type="Break" start="12:30" end="14:00" room="//@rooms.0" reason="Lunch"/>
+    <slots xsi:type="Track" start="14:00" end="17:00" room="//@rooms.2" title="Afternoon">
+      <talks title="Talk 6" duration="20" speaker="//@participants.7" discussant="//@participants.5"/>
+      <talks title="Talk 7" duration="20" speaker="//@participants.5" discussant="//@participants.1"/>
+      <talks title="Talk 8" duration="20" speaker="//@participants.6" discussant="//@participants.2"/>
+      <talks title="Talk 9" duration="20" speaker="//@participants.6" discussant="//@participants.5"/>
+      <talks title="Talk 10" duration="20" speaker="//@participants.1" discussant="//@participants.6"/>
+    </slots>
+  </days>
+  <days name="Day 2">
+    <slots xsi:type="Track" start="09:00" end="12:30" room="//@rooms.1" title="Morning">
+      <talks title="Talk 11" duration="20" speaker="//@participants.9" discussant="//@participants.4"/>
+      <talks title="Talk 12" duration="20" speaker="//@participants.6" discussant="//@participants.8"/>
+      <talks title="Talk 13" duration="20" speaker="//@participants.5" discussant="//@participants.6"/>
+      <talks title="Talk 14" duration="20" speaker="//@participants.4" discussant="//@participants.1"/>
+      <talks title="Talk 15" duration="20" speaker="//@participants.7" discussant="//@participants.5"/>
+    </slots>
+    <slots xsi:type="Break" start="12:30" end="14:00" room="//@rooms.1" reason="Lunch"/>
+    <slots xsi:type="Track" start="14:00" end="17:00" room="//@rooms.2" title="Afternoon">
+      <talks title="Talk 16" duration="20" speaker="//@participants.3" discussant="//@participants.9"/>
+      <talks title="Talk 17" duration="20" speaker="//@participants.8" discussant="//@participants.1"/>
+      <talks title="Talk 18" duration="20" speaker="//@participants.9" discussant="//@participants.6"/>
+      <talks title="Talk 19" duration="20" speaker="//@participants.4" discussant="//@participants.0"/>
+      <talks title="Talk 20" duration="20" speaker="//@participants.6" discussant="//@participants.9"/>
+    </slots>
+  </days>
+  <days name="Day 3">
+    <slots xsi:type="Track" start="09:00" end="12:30" room="//@rooms.3" title="Morning">
+      <talks title="Talk 21" duration="20" speaker="//@participants.8" discussant="//@participants.9"/>
+      <talks title="Talk 22" duration="20" speaker="//@participants.5" discussant="//@participants.8"/>
+      <talks title="Talk 23" duration="20" speaker="//@participants.5" discussant="//@participants.8"/>
+      <talks title="Talk 24" duration="20" speaker="//@participants.1" discussant="//@participants.8"/>
+      <talks title="Talk 25" duration="20" speaker="//@participants.6" discussant="//@participants.4"/>
+    </slots>
+    <slots xsi:type="Break" start="12:30" end="14:00" room="//@rooms.1" reason="Lunch"/>
+    <slots xsi:type="Track" start="14:00" end="17:00" room="//@rooms.3" title="Afternoon">
+      <talks title="Talk 26" duration="20" speaker="//@participants.9" discussant="//@participants.6"/>
+      <talks title="Talk 27" duration="20" speaker="//@participants.7" discussant="//@participants.6"/>
+      <talks title="Talk 28" duration="20" speaker="//@participants.9" discussant="//@participants.0"/>
+      <talks title="Talk 29" duration="20" speaker="//@participants.9" discussant="//@participants.2"/>
+      <talks title="Talk 30" duration="20" speaker="//@participants.2" discussant="//@participants.1"/>
+    </slots>
+  </days>
+</Conference>

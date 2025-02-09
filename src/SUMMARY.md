@@ -46,5 +46,9 @@
   - [Graphical syntax and editor development](./practicals/graphical-syntax-and-editor-development/README.md)
     - [Paper prototype](./practicals/graphical-syntax-and-editor-development/paper-prototype.md)
     - [Sirius-based notation](./practicals/graphical-syntax-and-editor-development/sirius-based-notation.md)
+  - [Model querying and validation](./practicals/model-querying-and-validation/index.md)
+    - [Conference DSL queries](./practicals/model-querying-and-validation/conference-dsl-queries.md)
+    - [Software Distribution DSL queries](./practicals/model-querying-and-validation/software-distribution-dsl-queries.md)
+    - [Research Project DSL queries](./practicals/model-querying-and-validation/research-project-dsl-queries.md)
     
     

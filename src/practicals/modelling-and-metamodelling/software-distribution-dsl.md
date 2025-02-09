@@ -38,3 +38,11 @@ All these bundles are typically assembled from the same pool of components
         - components with cyclic dependencies
         - components/JARs that are not used in any products (obsolete?)
 - You can generate these packaging scripts automatically and they will be correct by construction
+
+## Solution
+
+Try to design your own metamodel before you check out the solution below ([sdl.emf](solutions/software-distribution-dsl/sdl.emf)).
+
+```emfatic
+{{#include solutions/software-distribution-dsl/sdl.emf}}
+```
