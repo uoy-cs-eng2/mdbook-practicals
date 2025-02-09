@@ -7,6 +7,8 @@
 
 ## Before you start
 
+<!--TODO: Remove the zip file from the repo and get CI to generate it -->
+
 - Download [this zip file](metamodels-practical6.zip) that contains Eclipse projects with metamodels, models etc. from [Practical 6](../modelling-and-metamodelling/README.md).
 - Import the projects in the zip file to your Eclipse workspace using the `File -> Import -> Existing Projects into Workspace` wizard as shown below
 
