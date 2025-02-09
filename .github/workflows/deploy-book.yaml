@@ -24,6 +24,11 @@ jobs:
           mdbook-version: '0.4.43'
       - name: Build Book
         run: ./zip-solutions.sh && mdbook build
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --offline --no-progress book
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
