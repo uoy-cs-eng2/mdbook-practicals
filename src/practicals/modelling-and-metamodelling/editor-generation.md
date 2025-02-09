@@ -1,4 +1,4 @@
-# Editor generation
+# Editor generation (optional)
 
 - Generate dedicated tree-based editors for your metamodels as demonstrated in the EMF lecture
 - Replace the default icons of your editor

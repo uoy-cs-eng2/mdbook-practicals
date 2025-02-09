@@ -5,9 +5,11 @@
 - Each work-package has a start and an end month and is further broken down into more fine-grained tasks and deliverables
     - Tasks also have a start and an end month and each deliverable is due on a specific month
 - Each partner declares how much effort (in person/months) they will allocate to each task
-- Exercise
-    - Create a DSL for designing such projects
-    - Create a model that conforms to the DSL and exercises all its features at least once
+
+## Exercise
+
+- Create a DSL for designing such projects
+- Create a model that conforms to the DSL and exercises all its features at least once
 
 ## Why?
 
@@ -23,12 +25,20 @@
     - Deliverables that are due after their work-package ends
 - This is how we **actually** write proposals for research projects
 
-## Screenshots
+## Examples
 
-Below are a few screenshots of actual tables generated from a research project model for an EC-funded research project.
+Below are a few screenshots of actual tables generated from a model of an EC-funded research project.
 
 ![Deliverables by chronological order](./deliverables-by-chronological-order.png)
 ![Work packages](./work-packages.png)
 ![Work package](./work-package.png)
 ![Summary of efforts](./summary-of-efforts.png)
 ![Gantt chart](./gantt-chart.png)
+
+## Solution
+
+Try to design your own metamodel before you check out the solution below ([research-project.emf](solutions/research-project-dsl/research-project.emf)).
+
+```emfatic
+{{#include solutions/research-project-dsl/research-project.emf}}
+```

@@ -1,8 +1,8 @@
 # Conference DSL
 
-Design the metamodel of a DSL for modelling conferences using Emfatic
+Design the metamodel of a DSL for modelling conferences using Emfatic. Below are key concepts and relationships your language must support.
 
-- A conference runs over several days
+- A conference runs over [several days](editor-generation.md)
 - On every day, there are several talks organised in (potentially parallel) tracks
 - There are breaks between tracks (e.g., for lunch/coffee)
 - Each track/break takes place in one room
@@ -19,57 +19,13 @@ Design the metamodel of a DSL for modelling conferences using Emfatic
 
 ## Solution
 
-- Try to design your own metamodel before you check out the solution below
+Try to design your own metamodel before you check out the solution below ([conference.emf](solutions/conference-dsl/conference.emf)).
 
 ```emfatic
-@namespace(uri="conference", prefix="")
-package conference;
-
-class Conference{
-    val Person[*] participants;
-    val Room[*] rooms;
-    val Day[*] days;
-    attr String name;
-}
-
-class Person {
-    attr String fullName;
-    attr String affiliation;
-}
-
-class Day {
-  attr String name;
-  val Slot[*] slots;
-}
-
-abstract class Slot {
-    attr String start;
-    attr String end;
-    ref Room room;
-}
-
-class Break extends Slot {
-    attr String reason;
-}
-
-class Track extends Slot {
-    attr String title;
-    val Talk[*] talks;
-}
-
-class Talk {
-    attr String title;
-    attr int duration;
-    ref Person[*] speakers;
-    ref Person discussant;
-}
-
-class Room {
-    attr String name;
-}
+{{#include solutions/conference-dsl/conference.emf}}
 ```
 
-A diagrammatic representation of the metamodel above appears below.
+A diagrammatic representation of the metamodel above can be found below.
 
 ![Diagrammatic representation of the Conference DSL metamodel](conference-dsl.png)
 
@@ -143,14 +99,20 @@ class Room {
         - Deleting a track should not cause the deletion of the respective room from the model
         - Deleting a talk should not cause the deletion of the respective speaker
 - There are two "artificial" containment references in the model to keep EMF happy
-    - `Conference->Person` (participants *)
-    - `Conference->Room` (rooms *)
+    - `Conference.participants`
+    - `Conference.rooms`
 - In the absence of these references, `Person` and `Room` instances could not be contained anywhere in the model and would have to appear as top-level elements
 EMF-based tools don't like models with multiple top-level elements
     - Hence we need to introduce these references so that all model elements can be contained somewhere under a root `Conference` model element
 
-## Create a Conference Model
+## Create a conference model
 
-- Create a model that conforms to the conference metamodel and exercises all its features at least once (i.e. instantiates all classes, contains values for all attributes/references)
-    - Using the tree-based EMF editor **or**
-    - Using [Flexmi](https://www.eclipse.org/epsilon/doc/flexmi/)  
+Create a model that conforms to the conference metamodel and exercises all its features at least once (i.e. instantiates all classes, contains values for all attributes/references) using the tree-based EMF editor **or** using [Flexmi](https://www.eclipse.org/epsilon/doc/flexmi/).
+
+### Solution
+
+Here is a sample model ([conference.model](solutions/conference-dsl/conference.model)) that conforms to the Conference DSL.
+
+```xml
+{{#include solutions/conference-dsl/conference.model}}
+```
