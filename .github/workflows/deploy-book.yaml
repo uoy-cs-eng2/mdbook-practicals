@@ -23,7 +23,7 @@ jobs:
         with:
           mdbook-version: '0.4.43'
       - name: Build Book
-        run: mdbook build
+        run: ./zip-solutions.sh && mdbook build
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
