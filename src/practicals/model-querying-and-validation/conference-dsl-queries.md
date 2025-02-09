@@ -123,6 +123,7 @@ The EOL execution engines ignores any statements that appear after the definitio
 - Create a new `EOL Program` run configuration to run your EOL queries.
 
 ![Step 8](images/step-8.png)
+
 ![Step 9](images/step-9.png)
 
 - Double-check that the path of your EOL file appears in the `Source` field of the `Source` tab of the run configuration dialog.
@@ -132,6 +133,7 @@ The EOL execution engines ignores any statements that appear after the definitio
 - Add the Conference model (`conference.model`) to the run configuration through the `Models` tab of the dialog.
 
 ![Step 11](images/step-11.png)
+
 ![Step 12](images/step-12.png)
 
 - Set the name of the model to `M`
