@@ -8,11 +8,11 @@ To build this book locally, install mdBook using the [official instructions](htt
 You can then serve it locally with:
 
 ```shell
-mdbook serve --open
+./zip-solutions.sh && mdbook serve --open
 ```
 
 Alternatively, you can build a static HTML version in the `book` folder with:
 
 ```shell
-mdbook build
+./zip-solutions.sh && mdbook build
 ```
