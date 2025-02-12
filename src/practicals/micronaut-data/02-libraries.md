@@ -1,7 +1,7 @@
 # Adding libraries
 
 Before starting this section, you will need to have a solution to Practical 1.
-You can use your own, or you can start from the model solution in the VLE.
+You can use your own, or you can start from the [model solution of Practical 1](../../solutions/practical1.zip).
 
 ## What we need
 
