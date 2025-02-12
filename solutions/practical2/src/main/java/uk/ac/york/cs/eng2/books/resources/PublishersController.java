@@ -5,8 +5,10 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.PublisherCreateDTO;
+import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 
 import java.net.URI;
@@ -16,6 +18,9 @@ import java.util.Optional;
 @Controller(PublishersController.PREFIX)
 public class PublishersController {
   public static final String PREFIX = "/publishers";
+
+  @Inject
+  private BookRepository bookRepository;
 
   @Inject
   private PublisherRepository repo;
@@ -28,6 +33,11 @@ public class PublishersController {
   @Get("/{id}")
   public Publisher get(@PathVariable long id) {
     return repo.findById(id).orElse(null);
+  }
+
+  @Get("/{id}/books")
+  public List<Book> listBooks(@PathVariable long id) {
+    return bookRepository.findByPublisherId(id);
   }
 
   @Post

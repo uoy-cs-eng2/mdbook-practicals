@@ -6,6 +6,7 @@ import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.annotation.Client;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.PublisherCreateDTO;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
@@ -22,6 +23,9 @@ public interface PublishersClient {
 
     @Get("/{id}")
     Publisher get(@PathVariable long id);
+
+    @Get("/{id}/books")
+    List<Book> listBooks(@PathVariable long id);
 
     @Post
     HttpResponse<Void> create(@Body PublisherCreateDTO dto);

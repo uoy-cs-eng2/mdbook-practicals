@@ -21,7 +21,7 @@ public interface BooksClient {
   Book getBook(@PathVariable long id);
 
   @Get("/{id}/publisher")
-  Publisher getBookPublisher(@PathVariable long id);
+  HttpResponse<Publisher> getBookPublisher(@PathVariable long id);
 
   @Put("/{id}")
   HttpResponse updateBook(@Body BookDTO book, @PathVariable long id);

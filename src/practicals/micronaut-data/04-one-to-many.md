@@ -80,22 +80,29 @@ We want to add support for this `Book->Publisher` relationship to our controller
 Specifically, we want to support these features:
 
 * `POST /books/{id}` should allow for specifying the publisher.
-* `PUT /books/{id}` should allow for changing the publisher of a `Book` (including unsetting it).
+* `PUT /books/{id}` should allow for setting and unsetting the publisher of a `Book`.
 * `GET /books/{id}/publisher` should return the publisher of a `Book`.
 * `GET /publishers/{id}/books` should list the `Book`s of a `Publisher`.
 
 You should be able to implement these yourself with what you have learned so far for the most part.
 There are a few things to take into account, though:
 
-  * For specifying the publisher while creating or updating a `Book`, you may now need to create a `BookCreateDTO` with a dedicated `publisherId` field, as `Book` itself will not allow you to specify that information.
-  * When fetching the publisher of a `Book`, if you first use `repo.findById(id)` to get the `Book` and then use `book.getPublisher()` to get the `Publisher`, you will need to add the `@Transactional` annotation to the controller method so both queries will run in the same transaction.
-  Otherwise, you may get an error message.
+  * For specifying the publisher while creating or updating a `Book`, you may now need to create a `BookCreateDTO` with a dedicated `Long publisherId` field, as `Book` itself will not allow you to specify that information (since it will just have a `Publisher publisher` field).
+  * Fetching the publisher of a `Book` can be done in two main ways:
+    * If you use `repo.findById(id)` to get the `Book` and then use `book.getPublisher()` to get the `Publisher`, you will need to add the `@Transactional` annotation to the controller method so both queries will run in the same transaction.
+    Otherwise, you may get an error message on the `book.getPublisher()` call, as `book` will no longer be connected to a database session.
+    * Alternatively, you can add a custom query method to your `PublisherRepository` and retrieve the appropriate `Publisher` in one call, like this one - we picked this name specifically so we'd obtain the `Publisher` that has the given `id` among its `books`:
 
-    Alternatively, you can add a custom query method to your `PublisherRepository` and retrieve the appropriate `Publisher` in one call:
-
-    ```java
-    Optional<Publisher> findByBooksId(Long id);
-    ```
+      ```java
+      Optional<Publisher> findByBooksId(Long id);
+      ```
+  * When fetching the `Book`s of a `Publisher`, you can follow two approaches:
+    * Use a `@Transactional` controller method that first finds the `Publisher`, copies `publisher.getBooks()` to a new `List<Book>` (to avoid any issues with lazy collections) which it then returns.
+    * Use a custom query method in your `BookRepository` which fetches those `Book`s directly - again, we picked the name specifically to find the `Book`s whose `publisher` has the given ID:
+      ```java
+      List<Book> findByPublisherId(long publisherId);
+      ```
 
 When testing, consider that you will need to modify the `@BeforeEach` method so it deletes all the `Book`s first, and then all the `Publisher`s.
 If you try to delete all the `Publisher`s first, you may see errors as some `Book`s may still be pointing at them.
+

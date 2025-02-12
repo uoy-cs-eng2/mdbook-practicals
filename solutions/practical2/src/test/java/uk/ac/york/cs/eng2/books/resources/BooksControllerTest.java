@@ -1,5 +1,6 @@
 package uk.ac.york.cs.eng2.books.resources;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -14,6 +15,8 @@ import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookDTO;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,7 +89,8 @@ public class BooksControllerTest {
     b.setPublisherId(p.getId());
     Long bookId = createBook(b);
 
-    Publisher bookPublisher = booksClient.getBookPublisher(bookId);
+    HttpResponse<Publisher> bookPublisherResponse = booksClient.getBookPublisher(bookId);
+    Publisher bookPublisher = bookPublisherResponse.getBody().get();
     assertEquals(p.getName(), bookPublisher.getName());
     assertEquals(p.getId(), bookPublisher.getId());
   }
@@ -125,8 +129,29 @@ public class BooksControllerTest {
     b.setPublisherId(p.getId());
     booksClient.updateBook(b, bookId);
 
-    Publisher bookPublisher = booksClient.getBookPublisher(bookId);
+    HttpResponse<Publisher> bookPublisherResponse = booksClient.getBookPublisher(bookId);
+    Publisher bookPublisher = bookPublisherResponse.getBody().get();
     assertEquals(p.getId(), bookPublisher.getId());
+  }
+
+  @Test
+  public void updateUnsetPublisher() {
+    Publisher p = new Publisher();
+    p.setName("P Ublisher");
+    p = publisherRepository.save(p);
+
+    BookDTO b = new BookDTO();
+    b.setTitle("Nice Book");
+    b.setAuthor("John Doe");
+    b.setPublisherId(p.getId());
+    Long bookId = createBook(b);
+
+    b.setPublisherId(null);
+    booksClient.updateBook(b, bookId);
+
+    HttpResponse<Publisher> response = booksClient.getBookPublisher(bookId);
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
+    assertTrue(response.getBody().isEmpty());
   }
 
   private Long createBook(BookDTO b) {
