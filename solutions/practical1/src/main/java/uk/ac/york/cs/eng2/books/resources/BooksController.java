@@ -33,12 +33,8 @@ public class BooksController {
       throw new HttpStatusException(HttpStatus.NOT_FOUND, "Book not found");
     }
 
-    if (book.getTitle() != null) {
-      mapBook.setTitle(book.getTitle());
-    }
-    if (book.getAuthor() != null) {
-      mapBook.setAuthor(book.getAuthor());
-    }
+    mapBook.setTitle(book.getTitle());
+    mapBook.setAuthor(book.getAuthor());
   }
 
   @Delete("/{id}")

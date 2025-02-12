@@ -55,12 +55,11 @@ public class BooksControllerTest {
     b.setAuthor("John Doe");
     booksClient.createBook(b);
 
-    Book update = new Book();
-    update.setTitle("Bad Book");
-    booksClient.updateBook(update, b.getId());
+    b.setTitle("Bad Book");
+    booksClient.updateBook(b, b.getId());
 
     Book updatedBook = booksClient.getBook(b.getId());
-    assertEquals(update.getTitle(), updatedBook.getTitle());
+    assertEquals(b.getTitle(), updatedBook.getTitle());
     assertEquals(b.getAuthor(), updatedBook.getAuthor());
   }
 
@@ -72,13 +71,12 @@ public class BooksControllerTest {
     b.setAuthor("John Doe");
     booksClient.createBook(b);
 
-    Book update = new Book();
-    update.setAuthor("Jane Smith");
-    booksClient.updateBook(update, b.getId());
+    b.setAuthor("Jane Smith");
+    booksClient.updateBook(b, b.getId());
 
     Book updatedBook = booksClient.getBook(b.getId());
     assertEquals(b.getTitle(), updatedBook.getTitle());
-    assertEquals(update.getAuthor(), updatedBook.getAuthor());
+    assertEquals(b.getAuthor(), updatedBook.getAuthor());
   }
 
   @Test

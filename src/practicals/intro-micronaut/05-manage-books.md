@@ -53,16 +53,14 @@ Try restarting the application. Try this:
 
 You should be able to write the declaration of the method for `PUT /books/{id}` yourself, based on the above examples: just use `@Put` as the annotation for the method (with the appropriate string parameter).
 
-For the body of the method, however, you will have to do things a bit differently.
-For update requests, it's common to only provide the fields that should be changed.
-
 Follow this approach:
 
 * Get the `Book` with the given `id` in your map. If it does not exist, respond with HTTP 404: when your method does not simply return a DTO, you can instead throw a `new HttpStatusException(HttpStatus.NOT_FOUND, message)`, where the `message` is up to you.
-* If the `book` sent in the request has a title, update the title of the book in your map.
-* If the `book` sent in the request has an author, update the author of the book in your map.
+* Update the title of the book in your map.
+* Update the author of the book in your map.
 
-Note how this HTTP endpoint does not use the `id` inside the `Book` object sent in the request, but instead uses the `id` in the URL. This is a common pattern for these `PUT` endpoints.
+Note how this HTTP endpoint does not use the `id` inside the `Book` object sent in the request, but instead uses the `id` in the URL.
+In fact, for update endpoints like these we would normally use a dedicated `BookUpdateDTO` that would not list `id` as a valid field.
 
 Try it out in the Swagger UI before moving on.
 
