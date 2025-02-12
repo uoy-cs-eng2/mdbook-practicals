@@ -8,8 +8,10 @@ import io.micronaut.http.exceptions.HttpStatusException;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uk.ac.york.cs.eng2.books.domain.Book;
+import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookDTO;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
+import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 
 import java.net.URI;
 import java.util.*;
@@ -18,6 +20,9 @@ import java.util.*;
 public class BooksController {
   @Inject
   private BookRepository repository;
+
+  @Inject
+  private PublisherRepository publisherRepository;
 
   @Get
   public List<Book> getBooks() {
@@ -29,14 +34,28 @@ public class BooksController {
     Book book = new Book();
     book.setTitle(dto.getTitle());
     book.setAuthor(dto.getAuthor());
-    book = repository.save(book);
 
+    if (dto.getPublisherId() != null) {
+      @NonNull Optional<Publisher> publisher = publisherRepository.findById(dto.getPublisherId());
+      if (!publisher.isPresent()) {
+        throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Publisher not found");
+      }
+      book.setPublisher(publisher.get());
+    }
+
+    book = repository.save(book);
     return HttpResponse.created(URI.create("/books/" + book.getId()));
   }
 
+  @Transactional
   @Get("/{id}")
   public Book getBook(@PathVariable long id) {
     return repository.findById(id).orElse(null);
+  }
+
+  @Get("/{id}/publisher")
+  public Publisher getBookPublisher(@PathVariable long id) {
+    return publisherRepository.findByBooksId(id).orElse(null);
   }
 
   @Transactional
@@ -48,12 +67,19 @@ public class BooksController {
     }
     Book book = oBook.get();
 
-    if (dto.getTitle() != null) {
-      book.setTitle(dto.getTitle());
+    book.setTitle(dto.getTitle());
+    book.setAuthor(dto.getAuthor());
+
+    if (dto.getPublisherId() != null) {
+      @NonNull Optional<Publisher> publisher = publisherRepository.findById(dto.getPublisherId());
+      if (!publisher.isPresent()) {
+        throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Publisher not found");
+      }
+      book.setPublisher(publisher.get());
+    } else {
+      book.setPublisher(null);
     }
-    if (dto.getAuthor() != null) {
-      book.setAuthor(dto.getAuthor());
-    }
+
     repository.save(book);
   }
 

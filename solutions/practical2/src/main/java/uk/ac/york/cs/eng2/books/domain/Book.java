@@ -1,10 +1,8 @@
 package uk.ac.york.cs.eng2.books.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Serdeable
 @Entity
@@ -19,6 +17,10 @@ public class Book {
 
   @Column
   private String author;
+
+  @JsonIgnore
+  @ManyToOne
+  private Publisher publisher;
 
   public Long getId() {
     return id;
@@ -42,5 +44,13 @@ public class Book {
 
   public void setAuthor(String author) {
     this.author = author;
+  }
+
+  public Publisher getPublisher() {
+    return publisher;
+  }
+
+  public void setPublisher(Publisher publisher) {
+    this.publisher = publisher;
   }
 }

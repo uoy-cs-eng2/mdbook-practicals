@@ -3,14 +3,17 @@ package uk.ac.york.cs.eng2.books.resources;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
+import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.ac.york.cs.eng2.books.domain.Book;
+import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookDTO;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
-
-import java.net.URI;
+import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,9 +25,13 @@ public class BooksControllerTest {
   @Inject
   private BookRepository bookRepository;
 
+  @Inject
+  private PublisherRepository publisherRepository;
+
   @BeforeEach
   public void setup() {
     bookRepository.deleteAll();
+    publisherRepository.deleteAll();
   }
 
   @Test
@@ -35,7 +42,6 @@ public class BooksControllerTest {
   @Test
   public void createThenList() {
     BookDTO b = new BookDTO();
-    b.setId(1);
     b.setTitle("Nice Book");
     b.setAuthor("John Doe");
 
@@ -50,8 +56,39 @@ public class BooksControllerTest {
     b.setAuthor("John Doe");
 
     Long bookId = createBook(b);
-    BookDTO fetchedBook = booksClient.getBook(bookId);
+    Book fetchedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), fetchedBook.getTitle());
+  }
+
+  @Test
+  public void createWithMissingPublisher() {
+    BookDTO b = new BookDTO();
+    b.setTitle("Nice Book");
+    b.setAuthor("John Doe");
+    b.setPublisherId(1234L);
+    try {
+      booksClient.createBook(b);
+      fail("An exception was expected");
+    } catch (HttpClientResponseException ex) {
+      assertEquals(HttpStatus.BAD_REQUEST, ex.getStatus());
+    }
+  }
+
+  @Test
+  public void createWithPublisher() {
+    Publisher p = new Publisher();
+    p.setName("P Ublisher");
+    p = publisherRepository.save(p);
+
+    BookDTO b = new BookDTO();
+    b.setTitle("Nice Book");
+    b.setAuthor("John Doe");
+    b.setPublisherId(p.getId());
+    Long bookId = createBook(b);
+
+    Publisher bookPublisher = booksClient.getBookPublisher(bookId);
+    assertEquals(p.getName(), bookPublisher.getName());
+    assertEquals(p.getId(), bookPublisher.getId());
   }
 
   @Test
@@ -66,13 +103,30 @@ public class BooksControllerTest {
     b.setAuthor("John Doe");
     Long bookId = createBook(b);
 
-    BookDTO update = new BookDTO();
-    update.setTitle("Bad Book");
-    booksClient.updateBook(update, bookId);
+    b.setTitle("Bad Book");
+    booksClient.updateBook(b, bookId);
 
-    BookDTO updatedBook = booksClient.getBook(bookId);
-    assertEquals(update.getTitle(), updatedBook.getTitle());
+    Book updatedBook = booksClient.getBook(bookId);
+    assertEquals(b.getTitle(), updatedBook.getTitle());
     assertEquals(b.getAuthor(), updatedBook.getAuthor());
+  }
+
+  @Test
+  public void updateOnlyPublisher() {
+    BookDTO b = new BookDTO();
+    b.setTitle("Nice Book");
+    b.setAuthor("John Doe");
+    Long bookId = createBook(b);
+
+    Publisher p = new Publisher();
+    p.setName("P Ublisher");
+    p = publisherRepository.save(p);
+
+    b.setPublisherId(p.getId());
+    booksClient.updateBook(b, bookId);
+
+    Publisher bookPublisher = booksClient.getBookPublisher(bookId);
+    assertEquals(p.getId(), bookPublisher.getId());
   }
 
   private Long createBook(BookDTO b) {
@@ -88,13 +142,12 @@ public class BooksControllerTest {
     b.setAuthor("John Doe");
     Long bookId = createBook(b);
 
-    BookDTO update = new BookDTO();
-    update.setAuthor("Jane Smith");
-    booksClient.updateBook(update, bookId);
+    b.setAuthor("Jane Smith");
+    booksClient.updateBook(b, bookId);
 
-    BookDTO updatedBook = booksClient.getBook(bookId);
+    Book updatedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), updatedBook.getTitle());
-    assertEquals(update.getAuthor(), updatedBook.getAuthor());
+    assertEquals(b.getAuthor(), updatedBook.getAuthor());
   }
 
   @Test
