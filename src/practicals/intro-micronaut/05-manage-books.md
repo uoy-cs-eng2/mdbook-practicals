@@ -36,7 +36,7 @@ The next method will be for retrieving a specific book:
 
 ```java
 @Get("/{id}")
-public Book getBook(@PathVariable int id)) {}
+public Book getBook(@PathVariable int id) {}
 ```
 
 `@PathVariable` is for binding a part of the path of the URL to a variable: specifically, the ID of the book that we want to fetch.

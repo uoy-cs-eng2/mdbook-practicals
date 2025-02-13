@@ -17,7 +17,7 @@ If you need to read up on these concepts, consult the links in the Part 1 Java k
 
 You should be familiar with these concepts from the lectures:
 
-* The definition of software architecture as structure + -ilities + decisions + design principles.
+* The definition of software architecture as structure + architectural characteristics + decisions + design principles.
 * The microservices architectural pattern.
 * The REST principles and the 4 levels of the Richardson Maturity Model.
 
