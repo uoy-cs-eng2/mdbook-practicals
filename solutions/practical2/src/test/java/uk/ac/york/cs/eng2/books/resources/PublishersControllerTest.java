@@ -84,13 +84,11 @@ public class PublishersControllerTest {
     p = repository.save(p);
 
     Book b1 = new Book();
-    b1.setAuthor("Cervantes");
     b1.setTitle("El Quijote");
     b1.setPublisher(p);
     bookRepository.save(b1);
 
     Book b2 = new Book();
-    b2.setAuthor("Shakespeare");
     b2.setTitle("Hamlet");
     b2.setPublisher(p);
     bookRepository.save(b2);
@@ -102,8 +100,7 @@ public class PublishersControllerTest {
   private long createPublisher(PublisherCreateDTO dto) {
     HttpResponse<Void> response = client.create(dto);
     assertEquals(HttpStatus.CREATED, response.getStatus());
-    long id = Long.valueOf(response.header(HttpHeaders.LOCATION).split("/")[2]);
-    return id;
+    return Long.parseLong(response.header(HttpHeaders.LOCATION).split("/")[2]);
   }
 
 }

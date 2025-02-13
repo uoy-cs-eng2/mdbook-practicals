@@ -112,7 +112,6 @@ public class BooksControllerTest {
 
     Book updatedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), updatedBook.getTitle());
-    assertEquals(b.getAuthor(), updatedBook.getAuthor());
   }
 
   @Test
@@ -172,7 +171,6 @@ public class BooksControllerTest {
 
     Book updatedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), updatedBook.getTitle());
-    assertEquals(b.getAuthor(), updatedBook.getAuthor());
   }
 
   @Test

@@ -5,6 +5,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.exceptions.HttpStatusException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uk.ac.york.cs.eng2.books.domain.Book;
@@ -16,6 +17,7 @@ import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 import java.net.URI;
 import java.util.*;
 
+@Tag(name="books")
 @Controller("/books")
 public class BooksController {
   @Inject
@@ -33,7 +35,6 @@ public class BooksController {
   public HttpResponse<Void> createBook(@Body BookDTO dto) {
     Book book = new Book();
     book.setTitle(dto.getTitle());
-    book.setAuthor(dto.getAuthor());
 
     if (dto.getPublisherId() != null) {
       @NonNull Optional<Publisher> publisher = publisherRepository.findById(dto.getPublisherId());
@@ -68,7 +69,6 @@ public class BooksController {
     Book book = oBook.get();
 
     book.setTitle(dto.getTitle());
-    book.setAuthor(dto.getAuthor());
 
     if (dto.getPublisherId() != null) {
       @NonNull Optional<Publisher> publisher = publisherRepository.findById(dto.getPublisherId());

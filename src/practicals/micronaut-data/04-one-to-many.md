@@ -106,3 +106,4 @@ There are a few things to take into account, though:
 When testing, consider that you will need to modify the `@BeforeEach` method so it deletes all the `Book`s first, and then all the `Publisher`s.
 If you try to delete all the `Publisher`s first, you may see errors as some `Book`s may still be pointing at them.
 
+Once you are done with the above functionality and your tests pass, move on to the next section.

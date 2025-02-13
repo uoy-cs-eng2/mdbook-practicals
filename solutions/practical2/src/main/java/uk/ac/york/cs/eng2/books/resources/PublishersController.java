@@ -3,6 +3,7 @@ package uk.ac.york.cs.eng2.books.resources;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uk.ac.york.cs.eng2.books.domain.Book;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name="publishers")
 @Controller(PublishersController.PREFIX)
 public class PublishersController {
   public static final String PREFIX = "/publishers";
