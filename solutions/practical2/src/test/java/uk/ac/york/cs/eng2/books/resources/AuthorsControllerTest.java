@@ -7,8 +7,12 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.ac.york.cs.eng2.books.domain.Author;
+import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.dto.AuthorCreateDTO;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
+import uk.ac.york.cs.eng2.books.repository.BookRepository;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,14 +24,18 @@ public class AuthorsControllerTest {
   @Inject
   private AuthorRepository repository;
 
+  @Inject
+  private BookRepository bookRepository;
+
   @BeforeEach
   public void setUp() {
+    bookRepository.deleteAll();
     repository.deleteAll();
   }
 
   @Test
   public void noAuthors() {
-    assertEquals(0, client.list().size());
+    assertEquals(0, client.list().getContent().size());
   }
 
   @Test
@@ -40,7 +48,7 @@ public class AuthorsControllerTest {
     var createdAuthor = client.get(id);
     assertEquals(dto.getName(), createdAuthor.getName());
 
-    var listedAuthors = client.list();
+    var listedAuthors = client.list().getContent();
     assertEquals(1, listedAuthors.size());
     assertEquals(id, listedAuthors.get(0).getId());
   }
@@ -66,6 +74,24 @@ public class AuthorsControllerTest {
     author = repository.save(author);
 
     client.delete(author.getId());
-    assertEquals(0, client.list().size());
+    assertEquals(0, client.list().getContent().size());
+  }
+
+  @Test
+  public void listAuthorBooks() {
+    Author author = new Author();
+    author.setName("John Doe");
+    author = repository.save(author);
+
+    assertEquals(0, client.listBooks(author.getId()).size());
+
+    Book book = new Book();
+    book.setTitle("Hamlet");
+    book.getAuthors().add(author);
+    book = bookRepository.save(book);
+
+    List<Book> books = client.listBooks(author.getId());
+    assertEquals(1, books.size());
+    assertEquals(book.getId(), books.get(0).getId());
   }
 }

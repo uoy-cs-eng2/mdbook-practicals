@@ -1,22 +1,22 @@
 package uk.ac.york.cs.eng2.books.resources;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
-import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.ac.york.cs.eng2.books.domain.Author;
 import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
-import uk.ac.york.cs.eng2.books.dto.BookDTO;
+import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
+import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,9 +31,13 @@ public class BooksControllerTest {
   @Inject
   private PublisherRepository publisherRepository;
 
+  @Inject
+  private AuthorRepository authorRepository;
+
   @BeforeEach
   public void setup() {
     bookRepository.deleteAll();
+    authorRepository.deleteAll();
     publisherRepository.deleteAll();
   }
 
@@ -44,9 +48,8 @@ public class BooksControllerTest {
 
   @Test
   public void createThenList() {
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
 
     booksClient.createBook(b);
     assertEquals(1, booksClient.getBooks().size());
@@ -54,9 +57,8 @@ public class BooksControllerTest {
 
   @Test
   public void createThenFetch() {
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
 
     Long bookId = createBook(b);
     Book fetchedBook = booksClient.getBook(bookId);
@@ -65,9 +67,8 @@ public class BooksControllerTest {
 
   @Test
   public void createWithMissingPublisher() {
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     b.setPublisherId(1234L);
     try {
       booksClient.createBook(b);
@@ -83,9 +84,8 @@ public class BooksControllerTest {
     p.setName("P Ublisher");
     p = publisherRepository.save(p);
 
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     b.setPublisherId(p.getId());
     Long bookId = createBook(b);
 
@@ -102,9 +102,8 @@ public class BooksControllerTest {
 
   @Test
   public void updateOnlyTitle() {
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     Long bookId = createBook(b);
 
     b.setTitle("Bad Book");
@@ -116,9 +115,8 @@ public class BooksControllerTest {
 
   @Test
   public void updateOnlyPublisher() {
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     Long bookId = createBook(b);
 
     Publisher p = new Publisher();
@@ -139,9 +137,8 @@ public class BooksControllerTest {
     p.setName("P Ublisher");
     p = publisherRepository.save(p);
 
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     b.setPublisherId(p.getId());
     Long bookId = createBook(b);
 
@@ -153,31 +150,16 @@ public class BooksControllerTest {
     assertTrue(response.getBody().isEmpty());
   }
 
-  private Long createBook(BookDTO b) {
+  private Long createBook(BookCreateDTO b) {
     HttpResponse<Void> createResponse = booksClient.createBook(b);
     Long bookId = Long.valueOf(createResponse.header(HttpHeaders.LOCATION).split("/")[2]);
     return bookId;
   }
 
   @Test
-  public void updateOnlyAuthor() {
-    BookDTO b = new BookDTO();
-    b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
-    Long bookId = createBook(b);
-
-    b.setAuthor("Jane Smith");
-    booksClient.updateBook(b, bookId);
-
-    Book updatedBook = booksClient.getBook(bookId);
-    assertEquals(b.getTitle(), updatedBook.getTitle());
-  }
-
-  @Test
   public void createThenDelete() {
-    BookDTO b = new BookDTO();
+    BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     Long bookId = createBook(b);
     booksClient.deleteBook(bookId);
 
@@ -186,8 +168,8 @@ public class BooksControllerTest {
 
   @Test
   public void updateMissing() {
-    BookDTO update = new BookDTO();
-    update.setAuthor("Jane Smith");
+    BookCreateDTO update = new BookCreateDTO();
+    update.setTitle("Nice Book");
 
     HttpResponse response = booksClient.updateBook(update, 23);
     assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
@@ -197,5 +179,26 @@ public class BooksControllerTest {
   public void deleteMissing() {
     HttpResponse response = booksClient.deleteBook(23);
     assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
+  }
+
+  @Test
+  public void listAuthors() {
+    BookCreateDTO b = new BookCreateDTO();
+    b.setTitle("Nice Book");
+    Long bookId = createBook(b);
+
+    assertEquals(0, booksClient.getBookAuthors(bookId).size());
+
+    Author author = new Author();
+    author.setName("Jane Smith");
+    author = authorRepository.save(author);
+
+    booksClient.addBookAuthor(bookId, author.getId());
+    List<Author> bookAuthors = booksClient.getBookAuthors(bookId);
+    assertEquals(1, bookAuthors.size());
+    assertEquals(author.getId(), bookAuthors.get(0).getId());
+
+    booksClient.removeBookAuthor(bookId, author.getId());
+    assertEquals(0, booksClient.getBookAuthors(bookId).size());
   }
 }

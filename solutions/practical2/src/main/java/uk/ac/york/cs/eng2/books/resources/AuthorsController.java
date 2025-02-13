@@ -1,6 +1,8 @@
 package uk.ac.york.cs.eng2.books.resources;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
@@ -9,8 +11,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uk.ac.york.cs.eng2.books.domain.Author;
+import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.dto.AuthorCreateDTO;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
+import uk.ac.york.cs.eng2.books.repository.BookRepository;
 
 import java.net.URI;
 import java.util.List;
@@ -24,14 +28,23 @@ public class AuthorsController {
   @Inject
   private AuthorRepository authorRepository;
 
-  @Get
-  public List<Author> list() {
-    return authorRepository.findAll();
+  @Inject
+  private BookRepository bookRepository;
+
+  // Only this one has been done pageable, as an example of how to do paging
+  @Get("/{?page}")
+  public Page<Author> list(@QueryValue(defaultValue = "0") int page) {
+    return authorRepository.findAll(Pageable.from(page));
   }
 
   @Get("/{id}")
   public Author get(@PathVariable long id) {
     return authorRepository.findById(id).orElse(null);
+  }
+
+  @Get("/{id}/books")
+  public List<Book> listBooks(@PathVariable long id) {
+    return bookRepository.findByAuthorsId(id);
   }
 
   @Post

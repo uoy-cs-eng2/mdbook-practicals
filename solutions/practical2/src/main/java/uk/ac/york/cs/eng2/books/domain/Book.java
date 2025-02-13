@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Serdeable
 @Entity
 public class Book {
@@ -18,6 +21,10 @@ public class Book {
   @JsonIgnore
   @ManyToOne
   private Publisher publisher;
+
+  @JsonIgnore
+  @ManyToMany
+  private Set<Author> authors = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -41,5 +48,13 @@ public class Book {
 
   public void setPublisher(Publisher publisher) {
     this.publisher = publisher;
+  }
+
+  public Set<Author> getAuthors() {
+    return authors;
+  }
+
+  public void setAuthors(Set<Author> authors) {
+    this.authors = authors;
   }
 }
