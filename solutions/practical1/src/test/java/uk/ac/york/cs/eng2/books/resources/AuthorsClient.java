@@ -1,9 +1,7 @@
 package uk.ac.york.cs.eng2.books.resources;
 
-import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.annotation.Client;
-import io.micronaut.http.exceptions.HttpStatusException;
 import uk.ac.york.cs.eng2.books.dto.Author;
 import uk.ac.york.cs.eng2.books.dto.Book;
 
