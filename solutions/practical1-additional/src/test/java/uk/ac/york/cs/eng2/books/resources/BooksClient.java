@@ -3,6 +3,7 @@ package uk.ac.york.cs.eng2.books.resources;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.annotation.Client;
+import uk.ac.york.cs.eng2.books.dto.Author;
 import uk.ac.york.cs.eng2.books.dto.Book;
 
 import java.util.List;
@@ -23,4 +24,7 @@ public interface BooksClient {
 
   @Delete("/{id}")
   HttpResponse deleteBook(@PathVariable int id);
+
+  @Get("/{id}/author")
+  Author getAuthor(@PathVariable int id);
 }

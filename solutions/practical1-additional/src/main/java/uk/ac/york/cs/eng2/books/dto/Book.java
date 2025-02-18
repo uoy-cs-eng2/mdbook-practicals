@@ -6,7 +6,7 @@ import io.micronaut.serde.annotation.Serdeable;
 public class Book {
   private Integer id;
   private String title;
-  private String author;
+  private Author author;
 
   public Integer getId() {
     return id;
@@ -24,11 +24,11 @@ public class Book {
     this.title = title;
   }
 
-  public String getAuthor() {
+  public Author getAuthor() {
     return author;
   }
 
-  public void setAuthor(String author) {
+  public void setAuthor(Author author) {
     this.author = author;
   }
 }
