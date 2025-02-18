@@ -4,6 +4,8 @@ Congratulations! You have completed this first practical.
 
 If you would like to gain more practice with the basics of building REST APIs with Micronaut, here are some things you could try.
 
+For the harder exercises, we have an [expanded model solution](../../solutions/practical1-additional.zip) that covers some of them, in case you get stuck.
+
 ## Enforcing ID uniqueness when adding books (easy)
 
 `POST`ing a new book does not enforce that the ID is not already in use.
