@@ -42,7 +42,7 @@ There are several options:
 
 * Use public static fields for the maps that hold the authors and the books. These are essentially mutable global variables now (which make testing and debugging harder).
 * Add an `@Inject AuthorsController authorsController` field to `BooksController`, so it can ask the other controller for authors.
-* Create an `ApplicationState` class that holds both maps, annotate it as `@Singleton`, and then `@Inject` it into both controllers.
+* Move both maps to a new `ApplicationState` class annotated as a `@Singleton`, and then `@Inject` it into both controllers.
 
 You may notice that we have limited updating the Author-Book relationship to the Book side: this is to keep things simpler.
 In Practical 2, we will see this is a common practice when using databases as well: we would say that Book is the "owning" side of the Author-Book relationship as that is the side we make changes from.
