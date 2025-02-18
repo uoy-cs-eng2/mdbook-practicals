@@ -5,6 +5,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
+import uk.ac.york.cs.eng2.books.dto.Author;
 import uk.ac.york.cs.eng2.books.dto.Book;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BooksControllerTest {
   @Inject
   private BooksClient booksClient;
+
+  @Inject
+  private AuthorsClient authorsClient;
 
   @Test
   public void noBooks() {
@@ -24,7 +28,6 @@ public class BooksControllerTest {
     Book b = new Book();
     b.setId(1);
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
 
     booksClient.createBook(b);
     assertEquals(1, booksClient.getBooks().size());
@@ -33,13 +36,21 @@ public class BooksControllerTest {
   @Test
   public void createThenFetch() {
     Book b = new Book();
-    b.setId(1);
+    b.setId(123);
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
+
+    Author a = new Author();
+    a.setId(456);
+    a.setFirstName("John");
+    a.setLastName("Doe");
+    authorsClient.createAuthor(a);
+    b.setAuthor(a);
 
     booksClient.createBook(b);
     Book fetchedBook = booksClient.getBook(b.getId());
     assertEquals(b.getTitle(), fetchedBook.getTitle());
+    assertEquals(a.getId(), fetchedBook.getAuthor().getId());
+    assertEquals(a.getId(), booksClient.getAuthor(b.getId()).getId());
   }
 
   @Test
@@ -52,7 +63,6 @@ public class BooksControllerTest {
     Book b = new Book();
     b.setId(1);
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     booksClient.createBook(b);
 
     b.setTitle("Bad Book");
@@ -60,7 +70,6 @@ public class BooksControllerTest {
 
     Book updatedBook = booksClient.getBook(b.getId());
     assertEquals(b.getTitle(), updatedBook.getTitle());
-    assertEquals(b.getAuthor(), updatedBook.getAuthor());
   }
 
   @Test
@@ -68,15 +77,29 @@ public class BooksControllerTest {
     Book b = new Book();
     b.setId(1);
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
-    booksClient.createBook(b);
 
-    b.setAuthor("Jane Smith");
+    Author oldAuthor = new Author();
+    oldAuthor.setId(1);
+    oldAuthor.setFirstName("John");
+    oldAuthor.setLastName("Doe");
+    authorsClient.createAuthor(oldAuthor);
+    b.setAuthor(oldAuthor);
+    booksClient.createBook(b);
+    assertEquals(1, authorsClient.getBooks(oldAuthor.getId()).size());
+
+    Author newAuthor = new Author();
+    newAuthor.setId(2);
+    newAuthor.setFirstName("Jane");
+    newAuthor.setLastName("Smith");
+    authorsClient.createAuthor(newAuthor);
+    b.setAuthor(newAuthor);
     booksClient.updateBook(b, b.getId());
+    assertEquals(1, authorsClient.getBooks(newAuthor.getId()).size());
+    assertEquals(0, authorsClient.getBooks(oldAuthor.getId()).size());
 
     Book updatedBook = booksClient.getBook(b.getId());
     assertEquals(b.getTitle(), updatedBook.getTitle());
-    assertEquals(b.getAuthor(), updatedBook.getAuthor());
+    assertEquals(b.getAuthor().getId(), updatedBook.getAuthor().getId());
   }
 
   @Test
@@ -84,7 +107,6 @@ public class BooksControllerTest {
     Book b = new Book();
     b.setId(1);
     b.setTitle("Nice Book");
-    b.setAuthor("John Doe");
     booksClient.createBook(b);
     booksClient.deleteBook(b.getId());
 
@@ -94,7 +116,6 @@ public class BooksControllerTest {
   @Test
   public void updateMissing() {
     Book update = new Book();
-    update.setAuthor("Jane Smith");
 
     HttpResponse response = booksClient.updateBook(update, 23);
     assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
