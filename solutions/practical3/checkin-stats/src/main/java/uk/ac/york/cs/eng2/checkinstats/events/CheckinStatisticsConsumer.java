@@ -7,7 +7,7 @@ import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckinStat;
 import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckinStatRepository;
 
 @KafkaListener(groupId="checkin-stats", threads = 3, offsetReset = OffsetReset.EARLIEST)
-public class CheckinCounterConsumer {
+public class CheckinStatisticsConsumer {
   @Inject
   private PartitionedCheckinStatRepository repo;
 

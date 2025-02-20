@@ -20,7 +20,7 @@ public class WindowedAreaCheckinsConsumer {
    * Time windows are "tumbling": they start at the epoch (midnight on
    * 1970-01-01 UTC+0), and there's a new one every 60s.
    */
-  private static final int WINDOW_SIZE_MILLIS = 60_000;
+  public static final int WINDOW_SIZE_MILLIS = 60_000;
 
   @Inject
   private WindowedAreaCheckinsProducer producer;

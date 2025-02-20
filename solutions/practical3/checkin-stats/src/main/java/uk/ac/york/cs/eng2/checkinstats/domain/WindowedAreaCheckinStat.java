@@ -77,4 +77,15 @@ public class WindowedAreaCheckinStat {
   public void setValue(Long value) {
     this.value = value;
   }
+
+  @Override
+  public String toString() {
+    return "WindowedAreaCheckinStat{" +
+        "id=" + id +
+        ", area=" + area +
+        ", windowStartAt=" + windowStartAt +
+        ", name='" + name + '\'' +
+        ", value=" + value +
+        '}';
+  }
 }
