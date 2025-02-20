@@ -7,3 +7,4 @@ More practicals will be available as the module progresses.
 
 1. [Micronaut basics](practicals/01-micronaut-basics.md)
 1. [ORM with Micronaut Data](practicals/02-micronaut-data.md)
+1. [Reacting to events with Micronaut Kafka](practicals/03-micronaut-kafka.md)
