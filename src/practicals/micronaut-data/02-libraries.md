@@ -48,7 +48,7 @@ Here is a quick summary of the notation:
 
 If you read through the changes, you will see that you have to do the following:
 
-* Add a few `features` to the list in `micronaut-cli.yml`, which match the ones you selected in Micronaut Launch.
+* Optionally, add a few `features` to the list in `micronaut-cli.yml`, which match the ones you selected in Micronaut Launch. This is only used by Micronaut CLI, which is not used in the module: you may skip this.
 * Add the `io.micronaut.test-resources` plugin to the list in your `build.gradle` file.
 * Add the listed dependencies to the `dependencies` block in your `build.gradle` file.
 * Optionally, add some text to your `README.md` file with some useful links to the relevant documentation.
@@ -59,7 +59,7 @@ When copying and pasting the new lines, remember to remove the initial `+` as th
 
 ## What do these changes mean?
 
-The changes in the `micronaut-cli.yml` file are for integration with the [Micronaut CLI](https://docs.micronaut.io/latest/guide/#cli), which we do not use in this module.
+The changes in the `micronaut-cli.yml` file are for integration with the [Micronaut CLI](https://docs.micronaut.io/latest/guide/#cli), which we do not use in this module: you can skip them.
 
 The changes in the `build.gradle` file make some important additions:
 
