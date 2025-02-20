@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import uk.ac.york.cs.eng2.checkinstats.domain.CheckInDesk;
 import uk.ac.york.cs.eng2.checkinstats.repositories.CheckInDeskRepository;
 
+import java.time.Instant;
 import java.util.Collection;
 
 @Controller("/desks")
@@ -27,4 +28,10 @@ public class CheckinDesksController {
   public Collection<CheckInDesk> stuck() {
     return repo.findByOutOfOrderAndCheckinStartedAtIsNotNull(true);
   }
+
+  @Get("/crashed")
+  public Collection<CheckInDesk> crashed() {
+    return repo.findByLastStatusAtBefore(Instant.now().minusSeconds(12));
+  }
+
 }

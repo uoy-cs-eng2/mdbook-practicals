@@ -22,6 +22,9 @@ public class CheckInDesk {
   private Instant checkinStartedAt;
 
   @Column
+  private Instant lastStatusAt;
+
+  @Column
   private Boolean outOfOrder;
 
   public CheckInDesk() {
@@ -55,6 +58,14 @@ public class CheckInDesk {
 
   public void setCheckinStartedAt(Instant timestamp) {
     this.checkinStartedAt = timestamp;
+  }
+
+  public Instant getLastStatusAt() {
+    return lastStatusAt;
+  }
+
+  public void setLastStatusAt(Instant lastStatusAt) {
+    this.lastStatusAt = lastStatusAt;
   }
 
   public Boolean getOutOfOrder() {

@@ -5,4 +5,5 @@ public interface CheckinTopics {
   String TOPIC_CHECKIN = "selfservice-checkin";
   String TOPIC_COMPLETED = "selfservice-completed";
   String TOPIC_OUTOFORDER = "selfservice-outoforder";
+  String TOPIC_STATUS = "selfservice-status";
 }
