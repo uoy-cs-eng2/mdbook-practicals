@@ -78,6 +78,10 @@ The `application.properties` changes do a few things:
 
 ## Ready to move on?
 
-Once you've made all the changes in the patch produced by Micronaut Launch, we can continue.
+Once you've made all the changes in the patch produced by Micronaut Launch, ensure that your IDE reloads the Gradle project.
+
+In IntelliJ, this can be done by pressing the "Reload All Gradle Projects" in the Gradle drawer:
+
+![Screenshot of the Reload All Gradle Projects button in IntelliJ](./reload-gradle.png)
 
 Do not try to run the project yet, as we still have some changes to make.
