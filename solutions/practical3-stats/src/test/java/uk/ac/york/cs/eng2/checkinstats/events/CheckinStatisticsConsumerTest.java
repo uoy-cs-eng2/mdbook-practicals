@@ -25,7 +25,7 @@ public class CheckinStatisticsConsumerTest {
 
   @Test
   public void startedIsRecorded() {
-    consumer.checkInStarted(1, 0);
+    consumer.checkInStarted(0);
 
     PartitionedCheckinStat stat = repo.findByPartitionIdAndName(0, "started").get();
     assertEquals(1, stat.getValue());
@@ -33,8 +33,8 @@ public class CheckinStatisticsConsumerTest {
 
   @Test
   public void valueIsIncremented() {
-    consumer.checkInCompleted(2, 2);
-    consumer.checkInCompleted(2, 2);
+    consumer.checkInCompleted(2);
+    consumer.checkInCompleted(2);
 
     PartitionedCheckinStat stat = repo.findByPartitionIdAndName(2, "completed").get();
     assertEquals(2, stat.getValue());
@@ -42,8 +42,8 @@ public class CheckinStatisticsConsumerTest {
 
   @Test
   public void valuesAreSeparated() {
-    consumer.checkInCancelled(2, 2);
-    consumer.checkInCompleted(2, 2);
+    consumer.checkInCancelled(2);
+    consumer.checkInCompleted(2);
 
     PartitionedCheckinStat stat = repo.findByPartitionIdAndName(2, "cancelled").get();
     assertEquals(1, stat.getValue());

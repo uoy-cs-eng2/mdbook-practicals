@@ -21,8 +21,8 @@ In this case, you should fill the form like this:
 
 You should also pick these features:
 
-* The `openapi` and `swagger-ui` features for the Swagger UI of Practical 1.
-* The `data-jpa`, `flyway`, `mariadb`, and `jdbc-hikari` features for the object/relational mapping of Practical 2.
+* The `openapi` and `swagger-ui` features for the Swagger UI (as we did in Practical 1).
+* The `data-jpa`, `flyway`, `mariadb`, and `jdbc-hikari` features for object/relational mapping (as we did in Practical 2).
 * The `kafka` feature that is new to this practical.
 
 Do *NOT* pick the `kafka-streams` feature as we do not use Kafka Streams, and it can run into problems without the appropriate configuration.

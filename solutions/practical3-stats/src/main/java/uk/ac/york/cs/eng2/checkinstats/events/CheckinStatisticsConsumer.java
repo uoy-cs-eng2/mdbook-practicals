@@ -13,19 +13,19 @@ public class CheckinStatisticsConsumer {
 
   @Transactional
   @Topic(CheckinTopics.TOPIC_CHECKIN)
-  public void checkInStarted(@KafkaKey long id, @KafkaPartition int partition) {
+  public void checkInStarted(@KafkaPartition int partition) {
     incrementStatistic(partition, "started");
   }
 
   @Transactional
   @Topic(CheckinTopics.TOPIC_CANCELLED)
-  public void checkInCancelled(@KafkaKey long id, @KafkaPartition int partition) {
+  public void checkInCancelled(@KafkaPartition int partition) {
     incrementStatistic(partition, "cancelled");
   }
 
   @Transactional
   @Topic(CheckinTopics.TOPIC_COMPLETED)
-  public void checkInCompleted(@KafkaKey long id, @KafkaPartition int partition) {
+  public void checkInCompleted(@KafkaPartition int partition) {
     incrementStatistic(partition, "completed");
   }
 
