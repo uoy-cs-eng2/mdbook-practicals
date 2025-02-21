@@ -226,7 +226,7 @@ In this case, you could simply populate a `Map<String, Long>` and return it (whi
 
 With the consumer and the controller both ready, try this:
 
-* Launch the `run` task of the simulator. After some time, you will start seeing messages about check-in events taking place.
+* Launch the `run` task of the simulator. After some time, you will start seeing messages about check-in events taking place. Leave it running.
 * Launch the `run` task of your `checkin-stats` project.
 * Open the [Swagger UI](http://localhost:8080/swagger-ui) and try invoking your endpoint.
   You should see the expected output, and the counts should automatically increase over time as you consume events.
