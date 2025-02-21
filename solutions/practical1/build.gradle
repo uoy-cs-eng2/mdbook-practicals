@@ -24,7 +24,7 @@ dependencies {
 
 
 application {
-    mainClass = "uk.ac.york.cs.eng2.lab1.books.Application"
+    mainClass = "uk.ac.york.cs.eng2.books.Application"
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
