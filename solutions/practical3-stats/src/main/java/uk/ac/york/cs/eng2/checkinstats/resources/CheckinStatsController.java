@@ -30,11 +30,11 @@ public class CheckinStatsController {
   }
 
   @Get("/windowed")
-  public Map<String, Map<String, Long>> getWindowedStats() {
-    Map<String, Map<String, Long>> stats = new HashMap<>();
+  public Map<Integer, Map<String, Map<String, Long>>> getWindowedStats() {
+    Map<Integer, Map<String, Map<String, Long>>> stats = new HashMap<>();
 
     for (WindowedAreaCheckinStat stat : winRepo.findAll()) {
-      stats
+      stats.computeIfAbsent(stat.getArea(), k -> new HashMap<>())
           .computeIfAbsent(stat.getName(), (k) -> new HashMap<>())
           .put(stat.getWindowStartAt().toString(), stat.getValue());
     }

@@ -17,14 +17,13 @@ You should be familiar with these concepts from the lectures:
 * The core concepts in Apache Kafka: cluster, broker, topic, partition, record, and the structure of a record (key, message body, and a timestamp).
 * The challenges around achieving durable and scalable stateful event processing, and common strategies (partitioned state, re-keying).
 * The use of interaction-based testing (Mockito) for checking the correct use of Kafka producers.
-* The use of dedicated assertion libraries for expectations of asynchronous systems (Awaitility).
 
 ## What you will learn
 
 * How to create a project that uses Micronaut Kafka.
 * How to automatically create topics while starting a Micronaut microservice.
 * How to implement Kafka producers and consumers using Micronaut Kafka.
-* How to test Kafka consumers using JUnit and Awaitility.
+* How to test Kafka producers and consumers using JUnit.
 
 ## What you will need
 

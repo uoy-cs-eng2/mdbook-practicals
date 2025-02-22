@@ -44,7 +44,7 @@ public static final String TOPIC_STATUS = "selfservice-status";
 ```
 
 `ProducingAirportSimulator` also overrides the `tick` method.
-It does not change its implementation, but it adds this annotation:
+It does not change its implementation, but it adds this Micronaut annotation:
 
 ```java
 @Scheduled(fixedDelay = "${airport.tick.delay}")
@@ -121,7 +121,7 @@ create table partitioned_checkin_stat (
 
 You may recall from Practical 2 that `hibernate_sequence` is the database sequence used by Hibernate to automatically generate primary keys when it needs to.
 
-The `partitioned_checkin_stat` table is an example of *partitioned state*, where we avoid interference between consumers by keeping different parts of the state of each Kafka partition.
+The `partitioned_checkin_stat` table is an example of *partitioned state*, where we avoid interference between consumers by keeping different parts of the state for each Kafka partition.
 A partitioned check-in statistic has a name (e.g. `started`), a partition ID (e.g. 1), and a value (the number of times that has happened so far).
 We have also defined a `unique` constraint, saying that we can only have one row for a given combination of `(partition_id, name)`.
 This `unique` constraint has two benefits:
@@ -177,17 +177,17 @@ The annotation has this meaning:
   We are using `EARLIEST` so a new consumer group will start from the beginning of each topic.
   The default is `LATEST`, which would have a new consumer group only process the records that are produced after its creation.
 
-Ensure that the repository for your `PartitionedCheckinStat` entities is injected into this consumer.
+Inject the repository for your `PartitionedCheckinStat` entities into this consumer.
 
-You will then need to define three consumer methods:
+Define three consumer methods:
 
 * One which takes the `CheckinTopics.TOPIC_CHECKIN` events and creates or increments the value associated to the "started" statistic and the partition of the record.
 * Same for `CheckinTopics.TOPIC_CANCELLED`, but the name is "cancelled".
 * Same for `CheckinTopics.TOPIC_COMPLETED`, but the name is "completed".
 
-The methods will have to meet a number of requirements:
+The methods have to meet a number of requirements:
 
-* They should be annotated as `@Transactional`, as you will need to first check the existing value (if it exists), and then create or increment it as needed. That's multiple database accesses that should happen all at once or not at all (hence the need for a transaction).
+* They should be annotated as `@Transactional`, as you will need to first check the existing value (if it exists), and then create or increment it as needed. Those are multiple database accesses that should happen all at once or not at all (hence the need for a transaction).
 * They should use the `@Topic(topic)` annotation to indicate the topic that they will be consuming from.
 * Their only parameter will be `@KafkaPartition int partition`: the `@KafkaPartition` annotation ensures Micronaut will bind the partition of the record to the `partition` parameter.
 
@@ -211,7 +211,7 @@ We recommend using separate tests for the logic associated to each topic.
 
 Note: by invoking the consumer methods directly, we're testing the logic of our consumer in isolation of the Kafka cluster.
 This simplifies the tests, as we do not need to prepare the Kafka cluster before each test.
-We are making the assumption that the core logic of connecting to the Kafka cluster and consuming a given topic has been thoroughly tested by the Micronaut Kafka project already.
+Later in the module, we will discuss how to automate *end-to-end* tests that cover the interactions between all the parts.
 
 ## Writing the controller
 

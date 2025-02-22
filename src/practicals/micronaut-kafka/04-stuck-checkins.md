@@ -1,7 +1,7 @@
 # Stuck check-ins
 
 In the previous exercise, the consumer maintained overall counts of various types of events.
-In this exercise, we will instead maintain an updated view of the current state of all the check-in desks,
+In this exercise, we will instead maintain an updated view of the current state of every check-in desk,
 and provide these endpoints:
 
 * `GET /desks`: lists all the desks and their current state.
@@ -14,9 +14,9 @@ Add a migration script called `V2__create-checkin-desk.sql` with this content:
 
 ```sql
 create table check_in_desk (
-    -- internal key (autoincremented)
+    -- surrogate key (autoincremented)
     id bigint primary key not null,
-    -- business key (from Kafka)
+    -- natural key (from Kafka)
     desk_id bigint unique not null,
     -- if not null, a check-in is currently undergoing in this desk
     checkin_started_at timestamp(3),
@@ -26,6 +26,9 @@ create table check_in_desk (
 ```
 
 This creates a new table which will hold the known status of each desk.
+
+Note: `timestamp(3)` is a MariaDB type which means "timestamps at the millisecond level" (i.e. 10^-3 seconds).
+The plain `timestamp` type only works at the level of seconds.
 
 ## Creating the entity and the repository
 
@@ -47,7 +50,7 @@ In terms of actual behaviour, you should do this:
 * When a check-in is cancelled or completed, create or update the `CheckInDesk` with the relevant `desk_id`:
   * Reset `checkin_started_at` to `null`.
   * Set it as not being out of order.
-* when a desk goes out of order, create or update the `CheckInDesk` with the relevant `desk_id`:
+* When a desk goes out of order, create or update the `CheckInDesk` with the relevant `desk_id`:
   * Set it as being out of order.
 
 Note that the consumer methods will need these parameters:
@@ -55,8 +58,8 @@ Note that the consumer methods will need these parameters:
 * `@KafkaKey long deskId`: the key of the topics is the desk ID.
 * `TerminalInfo tInfo`: the unannotated parameter after the `@KafkaKey` is bound to the record body.
 * `long timestamp`: this parameter is bound by Micronaut to the timestamp of the record.
-  This is because the record itself may be quite old, and we want to use the time in the record
-  rather than the current time in the consumer.
+  This is because we want to use the time in the record rather than the current time in the consumer:
+  we may be catching up with old events.
 
 ## Testing the consumer
 
