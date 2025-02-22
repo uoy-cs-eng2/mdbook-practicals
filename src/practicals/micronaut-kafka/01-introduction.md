@@ -31,6 +31,8 @@ You should be familiar with these concepts from the lectures:
 * An IDE with Gradle and Java support: in this worksheet, we discuss [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 * A local installation of [Docker Desktop](https://www.docker.com/get-started/).
   Ensure Docker Desktop is running before you start this practical.
+  *  Note: if using a lab machine, you will need to boot Windows as Docker
+     Desktop is not installed in the Linux image.
 
 ## What you will do
 
