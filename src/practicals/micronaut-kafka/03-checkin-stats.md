@@ -154,7 +154,7 @@ You will need some bits of code from the simulator project:
 Our database code is ready, and we have the necessary information about the topics to be consumed.
 We can finally write our first consumer.
 
-Create a class called `CheckinDeskConsumer` in the `.events` subpackage, and add this annotation:
+Create a class called `CheckinStatisticsConsumer` in the `.events` subpackage, and add this annotation:
 
 ```java
 @KafkaListener(
