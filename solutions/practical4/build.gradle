@@ -3,6 +3,7 @@ plugins {
     id("io.micronaut.application") version "4.4.4"
     id("io.micronaut.test-resources") version "4.4.4"
     id("io.micronaut.aot") version "4.4.4"
+    id("io.micronaut.openapi") version "4.4.4"
 }
 
 version = "0.1"
@@ -59,6 +60,14 @@ micronaut {
         deduceEnvironment = true
         optimizeNetty = true
         replaceLogbackXml = true
+    }
+    openapi {
+        client("openlibrary", file("src/main/openapi/openlibrary-0.1.0.json")) {
+            apiPackageName = "uk.ac.york.cs.eng2.books.openlibrary.api"
+            modelPackageName = "uk.ac.york.cs.eng2.books.openlibrary.model"
+            clientId = "openlibrary"
+            useReactive = false
+        }
     }
 }
 
