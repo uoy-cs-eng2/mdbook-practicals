@@ -28,4 +28,5 @@
     - [Client generation](./practicals/service-integration/02-client-generation.md)
     - [Creating the gateway](./practicals/service-integration/03-gateway-creation.md)
     - [Integrating the gateway](./practicals/service-integration/04-gateway-integration.md)
-    - [Additional exercises](./practicals/service-integration/05-additional-exercies.md)
+    - [Background processing](./practicals/service-integration/05-background-processing.md)
+    - [Additional exercises](./practicals/service-integration/06-additional-exercises.md)
