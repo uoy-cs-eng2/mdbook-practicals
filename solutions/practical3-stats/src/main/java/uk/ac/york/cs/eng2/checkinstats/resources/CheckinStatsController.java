@@ -36,7 +36,7 @@ public class CheckinStatsController {
        * the new value.
        *
        * In the code below, we are using a lambda expression that produces the desired
-       * BiFunction<K, V> object. For more information on lambda expressions, consult
+       * BiFunction<K, V, V> object. For more information on lambda expressions, consult
        * the Learn section of the dev.java website:
        *
        *   https://dev.java/learn/lambdas/first-lambdas/
