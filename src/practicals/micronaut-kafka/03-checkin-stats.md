@@ -92,7 +92,7 @@ The idea is to consume the records from the topics related to starting, completi
 {
     "started": 200,
     "completed": 50,
-    "cancelled:  40
+    "cancelled":  40
 }
 ```
 
@@ -123,6 +123,7 @@ You may recall from Practical 2 that `hibernate_sequence` is the database sequen
 
 The `partitioned_checkin_stat` table is an example of *partitioned state*, where we avoid interference between consumers by keeping different parts of the state for each Kafka partition.
 A partitioned check-in statistic has a name (e.g. `started`), a partition ID (e.g. 1), and a value (the number of times that has happened so far).
+
 We have also defined a `unique` constraint, saying that we can only have one row for a given combination of `(partition_id, name)`.
 This `unique` constraint has two benefits:
 
