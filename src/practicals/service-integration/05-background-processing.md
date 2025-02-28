@@ -44,7 +44,7 @@ We suggest something like this:
 
 * Try to fetch the book by ID. If it does not exist anymore, stop processing this event.
 * Check if the book already has a publisher. If it does, stop processing this event.
-* Try to fetch the publisher(s) via your gateway. If the gateway fails or it does not return any results, stop processing this event.
+* Try to fetch the publisher(s) via your gateway. If the gateway fails or it does not return any results, stop processing this event. Note: if the gateway throws an exception, print it to the standard error stream with `exception.printStackTrace()`.
 * Find the `Publisher` with the first name listed by the gateway, and associate it with the `Book`. Create the `Publisher` if it does not exist.
 * Update the `Book`. Note that since this should always be an update, you can do `repo.update(book)` instead of `repo.save(book)` (which can sometimes be an insert, and sometimes be an update).
 
@@ -52,3 +52,9 @@ Update your controller tests accordingly, and write tests for your new consumer.
 We recommend having one separate test for every possible situation above.
 
 For testing, it may be easier to mock the gateway and set it up with a few ISBNs that will make it behave in specific ways (an ISBN with a known publisher, an ISBN that will cause the gateway to throw an exception, an ISBN which will return an empty response, and so on).
+
+## Removing the old ExecuteOn annotation
+
+Now that you no longer perform a synchronous blocking HTTP requests from your `BooksController`, you should remove the `@ExecuteOn` annotation that you added in the previous section.
+
+You should also be able to remove the injection of the gateway into the `BooksController`.

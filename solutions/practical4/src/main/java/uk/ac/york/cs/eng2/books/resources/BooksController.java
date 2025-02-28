@@ -5,8 +5,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.exceptions.HttpStatusException;
-import io.micronaut.scheduling.TaskExecutors;
-import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,7 +21,6 @@ import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 import java.net.URI;
 import java.util.*;
 
-@ExecuteOn(TaskExecutors.BLOCKING)
 @Tag(name="books")
 @Controller("/books")
 public class BooksController {
