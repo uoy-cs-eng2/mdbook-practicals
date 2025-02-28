@@ -33,6 +33,8 @@ public class CheckinStatisticsConsumerTest {
 
   @Test
   public void valueIsIncremented() {
+    // We change the partition here, to ensure the consumer is taking into account
+    // the source partition (instead of sending everything to partition 0)
     consumer.checkInCompleted(2);
     consumer.checkInCompleted(2);
 
