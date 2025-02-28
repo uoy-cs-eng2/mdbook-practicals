@@ -13,6 +13,8 @@ import uk.ac.york.cs.eng2.books.domain.Author;
 import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
+import uk.ac.york.cs.eng2.books.events.BookIsbnChange;
+import uk.ac.york.cs.eng2.books.events.BooksProducer;
 import uk.ac.york.cs.eng2.books.openlibrary.api.BooksApi;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
@@ -24,8 +26,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @MicronautTest(transactional = false)
 public class BooksControllerTest {
@@ -40,6 +41,9 @@ public class BooksControllerTest {
 
   @Inject
   private AuthorRepository authorRepository;
+
+  @Inject
+  private BooksProducer booksProducer;
 
   @BeforeEach
   public void setup() {
@@ -64,18 +68,19 @@ public class BooksControllerTest {
 
   @Test
   public void createThenFetch() {
+    final String bookIsbn = "1234567890";
+
     BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setIsbn("1234567890");
+    b.setIsbn(bookIsbn);
 
     Long bookId = createBook(b);
     Book fetchedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), fetchedBook.getTitle());
     assertEquals(b.getIsbn(), fetchedBook.getIsbn());
-
-    // Publisher should be set up from using the ISBN
-    Publisher publisher = booksClient.getBookPublisher(bookId).getBody().get();
-    assertEquals("P Ublisher", publisher.getName());
+    verify(booksProducer).isbnChanged(
+        eq(bookId),
+        eq(new BookIsbnChange(null, bookIsbn)));
   }
 
   @Test
@@ -130,22 +135,19 @@ public class BooksControllerTest {
   public void updateOnlyIsbn() {
     BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
-    b.setIsbn("1234567890");
+    String oldIsbn = "1234567890";
+    b.setIsbn(oldIsbn);
     Long bookId = createBook(b);
 
     b.setTitle("Bad Book");
-    b.setIsbn("0123456789");
+    String newIsbn = "0123456789";
+    b.setIsbn(newIsbn);
     booksClient.updateBook(b, bookId);
+    verify(booksProducer).isbnChanged(eq(bookId), eq(new BookIsbnChange(oldIsbn, newIsbn)));
 
     Book updatedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), updatedBook.getTitle());
     assertEquals(b.getIsbn(), updatedBook.getIsbn());
-
-    Publisher publisher = booksClient.getBookPublisher(bookId).getBody().get();
-    assertEquals("P Ublisher", publisher.getName());
-
-    // The existing publisher should be reused
-    assertEquals(1, publisherRepository.count());
   }
 
   @Test
@@ -244,6 +246,11 @@ public class BooksControllerTest {
         Map.of("publishers", Collections.singletonList("P Ublisher"))
     );
     return mock;
+  }
+
+  @MockBean(BooksProducer.class)
+  public BooksProducer getBooksProducer() {
+    return mock(BooksProducer.class);
   }
 
 }

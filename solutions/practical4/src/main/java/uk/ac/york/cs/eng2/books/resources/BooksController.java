@@ -14,8 +14,8 @@ import uk.ac.york.cs.eng2.books.domain.Author;
 import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
-import uk.ac.york.cs.eng2.books.gateways.BookCatalogGateway;
-import uk.ac.york.cs.eng2.books.gateways.BookCatalogInfo;
+import uk.ac.york.cs.eng2.books.events.BookIsbnChange;
+import uk.ac.york.cs.eng2.books.events.BooksProducer;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
@@ -28,9 +28,6 @@ import java.util.*;
 @Controller("/books")
 public class BooksController {
   @Inject
-  private BookCatalogGateway catalogGateway;
-
-  @Inject
   private BookRepository repository;
 
   @Inject
@@ -38,6 +35,9 @@ public class BooksController {
 
   @Inject
   private AuthorRepository authorRepository;
+
+  @Inject
+  private BooksProducer booksProducer;
 
   @Get
   public List<Book> getBooks() {
@@ -52,6 +52,7 @@ public class BooksController {
     updatePublisher(dto, book);
 
     book = repository.save(book);
+    booksProducer.isbnChanged(book.getId(), new BookIsbnChange(null, dto.getIsbn()));
     return HttpResponse.created(URI.create("/books/" + book.getId()));
   }
 
@@ -62,21 +63,6 @@ public class BooksController {
         throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Publisher not found");
       }
       book.setPublisher(publisher.get());
-    } else if (dto.getIsbn() != null) {
-      Optional<BookCatalogInfo> oPublishers = catalogGateway.findByIsbn(dto.getIsbn());
-      if (oPublishers.isPresent()) {
-        for (String publisherName : oPublishers.get().getPublishers()) {
-          Optional<Publisher> p = publisherRepository.findByName(publisherName);
-          if (p.isPresent()) {
-            book.setPublisher(p.get());
-          } else {
-            Publisher newPublisher = new Publisher();
-            newPublisher.setName(publisherName);
-            newPublisher = publisherRepository.save(newPublisher);
-            book.setPublisher(newPublisher);
-          }
-        }
-      }
     } else {
       book.setPublisher(null);
     }
@@ -141,11 +127,14 @@ public class BooksController {
     Book book = oBook.get();
 
     book.setTitle(dto.getTitle());
+    String oldIsbn = book.getIsbn();
     book.setIsbn(dto.getIsbn());
 
     updatePublisher(dto, book);
-
     repository.save(book);
+    if (!Objects.equals(oldIsbn, dto.getIsbn())) {
+      booksProducer.isbnChanged(book.getId(), new BookIsbnChange(oldIsbn, dto.getIsbn()));
+    }
   }
 
   @Delete("/{id}")
