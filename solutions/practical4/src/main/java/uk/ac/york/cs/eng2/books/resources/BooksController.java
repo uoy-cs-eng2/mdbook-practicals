@@ -5,6 +5,8 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.exceptions.HttpStatusException;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -12,6 +14,8 @@ import uk.ac.york.cs.eng2.books.domain.Author;
 import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
+import uk.ac.york.cs.eng2.books.gateways.BookCatalogGateway;
+import uk.ac.york.cs.eng2.books.gateways.BookCatalogInfo;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
@@ -19,9 +23,13 @@ import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 import java.net.URI;
 import java.util.*;
 
+@ExecuteOn(TaskExecutors.BLOCKING)
 @Tag(name="books")
 @Controller("/books")
 public class BooksController {
+  @Inject
+  private BookCatalogGateway catalogGateway;
+
   @Inject
   private BookRepository repository;
 
@@ -40,17 +48,38 @@ public class BooksController {
   public HttpResponse<Void> createBook(@Body BookCreateDTO dto) {
     Book book = new Book();
     book.setTitle(dto.getTitle());
-
-    if (dto.getPublisherId() != null) {
-      @NonNull Optional<Publisher> publisher = publisherRepository.findById(dto.getPublisherId());
-      if (!publisher.isPresent()) {
-        throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Publisher not found");
-      }
-      book.setPublisher(publisher.get());
-    }
+    book.setIsbn(dto.getIsbn());
+    updatePublisher(dto, book);
 
     book = repository.save(book);
     return HttpResponse.created(URI.create("/books/" + book.getId()));
+  }
+
+  protected void updatePublisher(BookCreateDTO dto, Book book) {
+    if (dto.getPublisherId() != null) {
+      @NonNull Optional<Publisher> publisher = publisherRepository.findById(dto.getPublisherId());
+      if (publisher.isEmpty()) {
+        throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Publisher not found");
+      }
+      book.setPublisher(publisher.get());
+    } else if (dto.getIsbn() != null) {
+      Optional<BookCatalogInfo> oPublishers = catalogGateway.findByIsbn(dto.getIsbn());
+      if (oPublishers.isPresent()) {
+        for (String publisherName : oPublishers.get().getPublishers()) {
+          Optional<Publisher> p = publisherRepository.findByName(publisherName);
+          if (p.isPresent()) {
+            book.setPublisher(p.get());
+          } else {
+            Publisher newPublisher = new Publisher();
+            newPublisher.setName(publisherName);
+            newPublisher = publisherRepository.save(newPublisher);
+            book.setPublisher(newPublisher);
+          }
+        }
+      }
+    } else {
+      book.setPublisher(null);
+    }
   }
 
   @Transactional
@@ -89,19 +118,17 @@ public class BooksController {
 
   private BookAuthor getBookAuthor(long id, long authorId) {
     @NonNull Optional<Author> oAuthor = authorRepository.findById(authorId);
-    if (!oAuthor.isPresent()) {
+    if (oAuthor.isEmpty()) {
       throw new HttpStatusException(HttpStatus.NOT_FOUND, "Author not found");
     }
     Author author = oAuthor.get();
 
     @NonNull Optional<Book> oBook = repository.findById(id);
-    if (!oBook.isPresent()) {
+    if (oBook.isEmpty()) {
       throw new HttpStatusException(HttpStatus.NOT_FOUND, "Book not found");
     }
     Book book = oBook.get();
-    BookAuthor result = new BookAuthor(author, book);
-
-    return result;
+    return new BookAuthor(author, book);
   }
 
   @Transactional
@@ -114,16 +141,9 @@ public class BooksController {
     Book book = oBook.get();
 
     book.setTitle(dto.getTitle());
+    book.setIsbn(dto.getIsbn());
 
-    if (dto.getPublisherId() != null) {
-      @NonNull Optional<Publisher> publisher = publisherRepository.findById(dto.getPublisherId());
-      if (!publisher.isPresent()) {
-        throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Publisher not found");
-      }
-      book.setPublisher(publisher.get());
-    } else {
-      book.setPublisher(null);
-    }
+    updatePublisher(dto, book);
 
     repository.save(book);
   }
@@ -136,4 +156,5 @@ public class BooksController {
       throw new HttpStatusException(HttpStatus.NOT_FOUND, "Book not found");
     }
   }
+
 }

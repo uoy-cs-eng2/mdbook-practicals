@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @MicronautTest
 public class OpenLibraryGatewayTest {
   @Inject
-  OpenLibraryBookCatalogGateway gateway;
+  private BookCatalogGateway gateway;
 
   private static final String ISBN_MINECRAFT = "1524797162";
 
   @Test
   public void minecraft() {
-    BookCatalogInfo bookInfo = gateway.findByIsbn(ISBN_MINECRAFT);
+    BookCatalogInfo bookInfo = gateway.findByIsbn(ISBN_MINECRAFT).get();
     assertEquals(Collections.singletonList("Del Rey"), bookInfo.getPublishers());
   }
 

@@ -18,6 +18,9 @@ public class Book {
   @Column
   private String title;
 
+  @Column
+  private String isbn;
+
   @JsonIgnore
   @ManyToOne
   private Publisher publisher;
@@ -56,5 +59,13 @@ public class Book {
 
   public void setAuthors(Set<Author> authors) {
     this.authors = authors;
+  }
+
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
   }
 }

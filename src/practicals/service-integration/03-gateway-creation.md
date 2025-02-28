@@ -4,6 +4,26 @@ Let's say that we want to fetch additional information about a book by its ISBN 
 
 We want to shield most of our application from the details of talking to OpenLibrary, so we will apply the Gateway pattern that we discussed in the lecture.
 
+## Adding the HTTP client to the regular dependencies
+
+The `build.gradle` normally only includes the HTTP client for compilation and for testing.
+We will need it for our regular implementation as well.
+
+Remove these two lines from the `dependencies` of your `build.gradle` (they may be separate from each other):
+
+```groovy
+compileOnly("io.micronaut:micronaut-http-client")
+testImplementation("io.micronaut:micronaut-http-client")
+```
+
+Add this line to the `dependencies`:
+
+```groovy
+implementation("io.micronaut:micronaut-http-client")
+```
+
+Reload all Gradle projects, since we changed the `build.gradle` file.
+
 ## Designing the Gateway interface
 
 Most of the application only needs to know that given an ISBN, we can get some additional information.
@@ -11,7 +31,7 @@ Let's encode this in a new interface, within a new `gateways` subpackage:
 
 ```java
 public interface BookCatalogGateway {
-  BookCatalogInfo findByIsbn(String isbn);
+  Optional<BookCatalogInfo> findByIsbn(String isbn);
 }
 ```
 
@@ -27,7 +47,7 @@ Annotate it with `@Singleton` so Micronaut will automatically create an instance
 Inject a `BooksApi` into `OpenLibraryBookCatalogGateway`.
 
 You would now need to implement the `findByIsbn` method, using the `readIsbnIsbnIsbnGet` method in `BooksApi`.
-For now, just write enough for the code to compile (e.g. just return a new `BookCatalogInfo` without filling it in).
+For now, just write enough for the code to compile (e.g. just return `Optional.empty()`).
 
 ## Designing a test case for the gateway
 
@@ -49,5 +69,6 @@ You may find it useful to experiment with the [OpenLibrary Swagger UI](https://o
 In terms of ISBNs, the endpoint only takes ISBNs of books in the Open Library: for example, use `1524797162` (it's the ISBN of a videogame book).
 
 You'll most likely need to use `instanceof` checks and cast down to `Map<String, Object>` and `List<String>` where needed.
+You should return `Optional.empty()` if the response is not in the format if you expect or if an exception is thrown while invoking the OpenLibrary API: you may want to print an error message in those situations (in a production website, you'd log a warning of some kind).
 
 This downcasting is obviously somewhat fragile, as OpenLibrary may decide to change the format of their response at any time, but at least all that is encapsulated in your gateway, and you have a test to automatically detect if they have changed the API in a breaking way.

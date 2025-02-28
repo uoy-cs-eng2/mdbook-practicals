@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface PublisherRepository extends PageableRepository<Publisher, Long> {
 
   Optional<Publisher> findByBooksId(Long id);
+  Optional<Publisher> findByName(String name);
 
 }

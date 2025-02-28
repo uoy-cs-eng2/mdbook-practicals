@@ -4,6 +4,7 @@ import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
+import io.micronaut.test.annotation.MockBean;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,13 +13,19 @@ import uk.ac.york.cs.eng2.books.domain.Author;
 import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
+import uk.ac.york.cs.eng2.books.openlibrary.api.BooksApi;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @MicronautTest(transactional = false)
 public class BooksControllerTest {
@@ -59,10 +66,16 @@ public class BooksControllerTest {
   public void createThenFetch() {
     BookCreateDTO b = new BookCreateDTO();
     b.setTitle("Nice Book");
+    b.setIsbn("1234567890");
 
     Long bookId = createBook(b);
     Book fetchedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), fetchedBook.getTitle());
+    assertEquals(b.getIsbn(), fetchedBook.getIsbn());
+
+    // Publisher should be set up from using the ISBN
+    Publisher publisher = booksClient.getBookPublisher(bookId).getBody().get();
+    assertEquals("P Ublisher", publisher.getName());
   }
 
   @Test
@@ -111,6 +124,28 @@ public class BooksControllerTest {
 
     Book updatedBook = booksClient.getBook(bookId);
     assertEquals(b.getTitle(), updatedBook.getTitle());
+  }
+
+  @Test
+  public void updateOnlyIsbn() {
+    BookCreateDTO b = new BookCreateDTO();
+    b.setTitle("Nice Book");
+    b.setIsbn("1234567890");
+    Long bookId = createBook(b);
+
+    b.setTitle("Bad Book");
+    b.setIsbn("0123456789");
+    booksClient.updateBook(b, bookId);
+
+    Book updatedBook = booksClient.getBook(bookId);
+    assertEquals(b.getTitle(), updatedBook.getTitle());
+    assertEquals(b.getIsbn(), updatedBook.getIsbn());
+
+    Publisher publisher = booksClient.getBookPublisher(bookId).getBody().get();
+    assertEquals("P Ublisher", publisher.getName());
+
+    // The existing publisher should be reused
+    assertEquals(1, publisherRepository.count());
   }
 
   @Test
@@ -201,4 +236,14 @@ public class BooksControllerTest {
     booksClient.removeBookAuthor(bookId, author.getId());
     assertEquals(0, booksClient.getBookAuthors(bookId).size());
   }
+
+  @MockBean(BooksApi.class)
+  public BooksApi getBooksApi() {
+    BooksApi mock = mock(BooksApi.class);
+    when(mock.readIsbnIsbnIsbnGet(any())).thenReturn(
+        Map.of("publishers", Collections.singletonList("P Ublisher"))
+    );
+    return mock;
+  }
+
 }

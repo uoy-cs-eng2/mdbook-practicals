@@ -6,6 +6,7 @@ import uk.ac.york.cs.eng2.books.openlibrary.api.BooksApi;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Singleton
 public class OpenLibraryBookCatalogGateway implements BookCatalogGateway {
@@ -14,17 +15,21 @@ public class OpenLibraryBookCatalogGateway implements BookCatalogGateway {
   private BooksApi booksApi;
 
   @Override
-  public BookCatalogInfo findByIsbn(String isbn) {
-    Object response = booksApi.readIsbnIsbnIsbnGet(isbn);
-
-    BookCatalogInfo info = new BookCatalogInfo();
-    if (response instanceof Map map) {
-      Map<String, Object> mapResponse = (Map<String, Object>) response;
-      List<String> publishers = (List<String>) mapResponse.get("publishers");
-      info.getPublishers().addAll(publishers);
+  public Optional<BookCatalogInfo> findByIsbn(String isbn) {
+    try {
+      Object response = booksApi.readIsbnIsbnIsbnGet(isbn);
+      if (response instanceof Map map) {
+        BookCatalogInfo info = new BookCatalogInfo();
+        Map<String, Object> mapResponse = (Map<String, Object>) response;
+        List<String> publishers = (List<String>) mapResponse.get("publishers");
+        info.getPublishers().addAll(publishers);
+        return Optional.of(info);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    return info;
+    return Optional.empty();
   }
 
 }
