@@ -123,6 +123,10 @@ services:
         condition: service_healthy
       kafka-0:
         condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '--fail', 'http://localhost:8080/health']
+      timeout: 10s
+      retries: 3
 
 volumes:
   mariadb_data:

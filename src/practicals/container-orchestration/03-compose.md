@@ -204,7 +204,17 @@ We have a production-like deployment now, with a multi-node Kafka cluster and a 
 It's time to see if this containerised version also passes our end-to-end tests.
 
 Since we have not changed our end-to-end tests, we will have to clean the cached tests results first by running the `clean` Gradle task.
+
 Once that is done, run the `test` Gradle task: since your container is exposed from the same URL as before (`http://localhost:8080`), the test should pass without requiring any changes.
+
+If at some point you need to re-run the tests from a clean database and Kafka cluster, you can follow these steps:
+
+1. Use the "Down" button to destroy the containers.
+1. Go to the "Volumes" section in the "Services" drawer (or in Docker Desktop) and delete all volumes.
+1. Run your Compose file again and wait for all services to start.
+1. Re-run your tests by running the `clean` and `test` Gradle tasks in the `e2e-tests` project.
+
+## End of the practical
 
 Congratulations, you have now containerised your Micronaut microservice!
 
