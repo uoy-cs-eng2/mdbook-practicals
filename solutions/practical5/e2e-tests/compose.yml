@@ -1,0 +1,131 @@
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_USER: books
+      MARIADB_PASSWORD: bookspw
+      MARIADB_ROOT_PASSWORD: iamroot
+      MARIADB_DATABASE: booksdb
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      # https://github.com/docker-library/healthcheck/blob/master/mysql/Dockerfile.mariadb
+      test: ['CMD', 'healthcheck.sh', '--su=mysql', '--connect', '--innodb_initialized']
+      timeout: 10s
+      retries: 3
+
+  # Web-based UI for Kafka (this time on http://localhost:9001)
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 9001:8080
+    depends_on:
+      - kafka-0
+      - kafka-1
+      - kafka-2
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-0:9092
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+      DYNAMIC_CONFIG_ENABLED: 'true'
+
+  # 3-node Kafka cluster
+  kafka-0:
+    image: docker.io/bitnami/kafka:3.5
+    environment:
+      # KRaft settings
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
+      # Listeners
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      # Default topic settings
+      - KAFKA_CFG_NUM_PARTITIONS=6
+      - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR=3
+      # Disable automated topic creation
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+      # JMX port for metrics
+      - JMX_PORT=9997
+      - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-0 -Dcom.sun.management.jmxremote.rmi.port=9997
+    volumes:
+      - kafka_0_data:/bitnami/kafka
+    healthcheck:
+      test: ['CMD-SHELL', 'unset KAFKA_JMX_OPTS; export JMX_PORT=9999; kafka-topics.sh --bootstrap-server localhost:9092 --topic hc --create --if-not-exists && kafka-topics.sh --bootstrap-server localhost:9092 --topic hc --describe']
+      timeout: 10s
+      retries: 3
+
+  kafka-1:
+    image: docker.io/bitnami/kafka:3.5
+    environment:
+      # KRaft settings
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
+      # Listeners
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      # Default topic settings
+      - KAFKA_CFG_NUM_PARTITIONS=6
+      - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR=3
+      # Disable automated topic creation
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+      # JMX port for metrics
+      - JMX_PORT=9997
+      - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-1 -Dcom.sun.management.jmxremote.rmi.port=9997
+    volumes:
+      - kafka_1_data:/bitnami/kafka
+
+  kafka-2:
+    image: docker.io/bitnami/kafka:3.5
+    environment:
+      # KRaft settings
+      - KAFKA_CFG_NODE_ID=2
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
+      # Listeners
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      # Default topic settings
+      - KAFKA_CFG_NUM_PARTITIONS=6
+      - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR=3
+      # Disable automated topic creation
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+      # JMX port for metrics
+      - JMX_PORT=9997
+      - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-2 -Dcom.sun.management.jmxremote.rmi.port=9997
+    volumes:
+      - kafka_2_data:/bitnami/kafka
+
+  books:
+    image: book-microservice:latest
+    ports:
+      - 8080:8080
+    environment:
+      DATASOURCES_DEFAULT_URL: jdbc:mariadb://db/booksdb
+      DATASOURCES_DEFAULT_USERNAME: books
+      DATASOURCES_DEFAULT_PASSWORD: bookspw
+      KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka-0:
+        condition: service_healthy
+
+volumes:
+  mariadb_data:
+  kafka_0_data:
+  kafka_1_data:
+  kafka_2_data:

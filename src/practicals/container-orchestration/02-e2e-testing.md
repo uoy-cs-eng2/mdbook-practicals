@@ -87,7 +87,7 @@ Create a `@MicronautTest` test class, and write a JUnit test case that does the 
 Run the test and ensure it passes.
 If it does not pass, you will have to double check your `book-microservice` (unless it's the model solution), and also this test.
 
-Once the test passes, move on to the next section.
+Once the test passes, shut down `book-microservice` and move on to the next section.
 
 ### Refresher on Awaitility assertions
 
