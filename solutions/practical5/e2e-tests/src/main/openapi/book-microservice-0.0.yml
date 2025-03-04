@@ -1,0 +1,515 @@
+openapi: 3.0.1
+info:
+  title: book-microservice
+  version: "0.0"
+paths:
+  /authors:
+    get:
+      tags:
+      - authors
+      operationId: list
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "200":
+          description: list 200 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Page_Author_"
+    post:
+      tags:
+      - authors
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorCreateDTO"
+        required: true
+      responses:
+        "200":
+          description: create 200 response
+  /authors/{id}:
+    get:
+      tags:
+      - authors
+      operationId: get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: get 200 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+    put:
+      tags:
+      - authors
+      operationId: update
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorCreateDTO"
+        required: true
+      responses:
+        "200":
+          description: update 200 response
+    delete:
+      tags:
+      - authors
+      operationId: delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: delete 200 response
+  /authors/{id}/books:
+    get:
+      tags:
+      - authors
+      operationId: listBooks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: listBooks 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+  /books:
+    get:
+      tags:
+      - books
+      operationId: getBooks
+      responses:
+        "200":
+          description: getBooks 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+    post:
+      tags:
+      - books
+      operationId: createBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookCreateDTO"
+        required: true
+      responses:
+        "200":
+          description: createBook 200 response
+  /books/{id}:
+    get:
+      tags:
+      - books
+      operationId: getBook
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: getBook 200 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+    put:
+      tags:
+      - books
+      operationId: updateBook
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookCreateDTO"
+        required: true
+      responses:
+        "200":
+          description: updateBook 200 response
+    delete:
+      tags:
+      - books
+      operationId: deleteBook
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: deleteBook 200 response
+  /books/{id}/authors:
+    get:
+      tags:
+      - books
+      operationId: getBookAuthors
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: getBookAuthors 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+  /books/{id}/authors/{authorId}:
+    put:
+      tags:
+      - books
+      operationId: addBookAuthor
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: authorId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: addBookAuthor 200 response
+    delete:
+      tags:
+      - books
+      operationId: removeBookAuthor
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: authorId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: removeBookAuthor 200 response
+  /books/{id}/publisher:
+    get:
+      tags:
+      - books
+      operationId: getBookPublisher
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: getBookPublisher 200 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Publisher"
+  /publishers:
+    get:
+      tags:
+      - publishers
+      operationId: list_1
+      responses:
+        "200":
+          description: list_1 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Publisher"
+    post:
+      tags:
+      - publishers
+      operationId: create_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublisherCreateDTO"
+        required: true
+      responses:
+        "200":
+          description: create_1 200 response
+  /publishers/{id}:
+    get:
+      tags:
+      - publishers
+      operationId: get_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: get_1 200 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Publisher"
+    put:
+      tags:
+      - publishers
+      operationId: update_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublisherCreateDTO"
+        required: true
+      responses:
+        "200":
+          description: update_1 200 response
+    delete:
+      tags:
+      - publishers
+      operationId: delete_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: delete_1 200 response
+  /publishers/{id}/books:
+    get:
+      tags:
+      - publishers
+      operationId: listBooks_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: listBooks_1 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+components:
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        name:
+          type: string
+    AuthorCreateDTO:
+      type: object
+      properties:
+        name:
+          type: string
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        title:
+          type: string
+        isbn:
+          type: string
+    BookCreateDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        publisherId:
+          type: integer
+          format: int64
+        isbn:
+          type: string
+    Page_Author_:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/Slice_Author_"
+      - properties:
+          totalSize:
+            type: integer
+            format: int64
+          totalPages:
+            type: integer
+            format: int32
+    Pageable:
+      required:
+      - size
+      - sort
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/Sort"
+      - properties:
+          number:
+            type: integer
+            format: int32
+          size:
+            type: integer
+            format: int32
+          mode:
+            $ref: "#/components/schemas/Pageable.Mode"
+          sort:
+            $ref: "#/components/schemas/Sort"
+    Pageable.Mode:
+      type: string
+      enum:
+      - CURSOR_NEXT
+      - CURSOR_PREVIOUS
+      - OFFSET
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: true
+        name:
+          type: string
+    PublisherCreateDTO:
+      type: object
+      properties:
+        name:
+          type: string
+    Slice_Author_:
+      required:
+      - content
+      - pageable
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/Author"
+        pageable:
+          $ref: "#/components/schemas/Pageable"
+        pageNumber:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+    Sort:
+      required:
+      - orderBy
+      type: object
+      properties:
+        orderBy:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sort.Order"
+    Sort.Order:
+      required:
+      - direction
+      - ignoreCase
+      - property
+      type: object
+      properties:
+        ignoreCase:
+          type: boolean
+        direction:
+          $ref: "#/components/schemas/Sort.Order.Direction"
+        property:
+          type: string
+        ascending:
+          type: boolean
+    Sort.Order.Direction:
+      type: string
+      enum:
+      - ASC
+      - DESC

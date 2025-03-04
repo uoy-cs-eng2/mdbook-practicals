@@ -30,3 +30,8 @@
     - [Integrating the gateway](./practicals/service-integration/04-gateway-integration.md)
     - [Background processing](./practicals/service-integration/05-background-processing.md)
     - [Additional exercises](./practicals/service-integration/06-additional-exercises.md)
+  - [Deploying as containers](./practicals/05-container-orchestration.md)
+    - [Introduction](./practicals/container-orchestration/01-introduction.md)
+    - [End-to-end testing](./practicals/container-orchestration/02-e2e-testing.md)
+    - [Writing the Compose spec](./practicals/container-orchestration/03-compose.md)
+    - [Additional exercises](./practicals/container-orchestration/04-additional-exercises.md)
