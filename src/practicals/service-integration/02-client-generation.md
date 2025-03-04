@@ -34,11 +34,13 @@ We need to let the Micronaut OpenAPI Gradle know about the OpenLibrary spec.
 Within the `micronaut` section of the `build.gradle` file, add this block:
 
 ```groovy
-client("openlibrary", file("src/main/openapi/openlibrary-0.1.0.json")) {
+openapi {
+  client("openlibrary", file("src/main/openapi/openlibrary-0.1.0.json")) {
     apiPackageName = "uk.ac.york.cs.eng2.books.openlibrary.api"
     modelPackageName = "uk.ac.york.cs.eng2.books.openlibrary.model"
     clientId = "openlibrary"
     useReactive = false
+  }
 }
 ```
 

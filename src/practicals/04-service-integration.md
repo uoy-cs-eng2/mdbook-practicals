@@ -1,6 +1,7 @@
 # Practical 4: Integrating external services
 
 This is the worksheet for the fourth practical in the Engineering 2 module.
+
 We will start from a solution to Practical 2, and integrate an external service to fetch more information about the books.
 You will practice with using the Gateway pattern to encapsulate the details of accessing this external service.
 
