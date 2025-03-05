@@ -10,4 +10,4 @@ Write EOL queries that print:
 
 Create a sample model that conforms to the software distribution DSL and run the queries against the sample model.
 
-TODO: Point to the metamodel + an existing model?
+<!-- TODO: Point to the metamodel + an existing model? -->
