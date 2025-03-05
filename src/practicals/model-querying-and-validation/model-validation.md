@@ -8,6 +8,9 @@ We now wish to write [EVL](https://eclipse.dev/epsilon/doc/evl) constraints for 
 
 ## Constraints C1-C3
 
+Below are reference implementations of these constraints.
+
+### conference-constraints.evl
 ```evl
 import "conference-queries.eol";
 
@@ -48,8 +51,32 @@ context Slot {
 
 - Both `C1` and `C2` check the validity of `Talk` model elements. As such they can be placed under the same `Talk` context.
 - The property `title` appears between back-ticks in the expression ``self.`title` `` because it is a reserved word (keyword) in EVL
-- In C3 we need to compare two `HH:MM`-encoded dates. We've already [written code](./conference-dsl-queries.md#conference-dsl-queries) that does this in the first part of this practical. As such, instead of duplicating this code, we can import the respective EOL file (see the `import conference-queries.eol;` statement at the top of the EVL program).
-- The message we have provided for C3 is too generic and not very helpful for locating offending slots. An improved version of the constraint that produces a more meaningful error message is below.
+- In C3 we need to compare two `HH:MM`-encoded dates. We've already [written code](./conference-dsl-queries.md#conference-dsl-queries) that does this in the first part of this practical, which we reuse here by importing `conference-queries.eol`.
+
+### conference-queries.eol
+
+```eol
+// Get the hours part of the string
+// and convert it to an integer
+// e.g. for 15:45 it returns 15
+operation String getHours() {
+    return self.split(":").at(0).asInteger();
+}
+
+// Same for the minutes part
+operation String getMinutes() {
+    return self.split(":").at(1).asInteger();
+}
+
+// Compares the string on which it is invoked
+// with its time parameter e.g.
+// "15:15".isBefore("18:00") returns true
+operation String isBefore(time : String) {
+    return (self.getHours() < time.getHours()) or 
+        (self.getHours() == time.getHours() and 
+        self.getMinutes() < time.getMinutes());
+}
+```
 
 ## Evaluating constraints
 
