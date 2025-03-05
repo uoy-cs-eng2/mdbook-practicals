@@ -21,8 +21,6 @@ Write a M2M transformation with ETL that produces a MiniVoiceXML model from a ca
     - `dtmf`: number (1-9) to be typed by caller
     - `next`: Dialog to traverse to if chosen
 
-<!--TODO: Include the actual MiniVoiceXML metamodel and a better screenshot -->
-
 ![The MiniVoiceXML metamodel](minivoicexml.png)
 
 ### The transformation
