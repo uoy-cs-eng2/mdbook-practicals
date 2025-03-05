@@ -22,7 +22,7 @@ Design the metamodel of a DSL for modelling conferences using Emfatic. Below are
 Try to design your own metamodel before you check out the solution below ([conference.emf](solutions/conference-dsl/conference.emf)).
 
 ```emfatic
-{{#include solutions/conference-dsl/conference.emf}}
+{{#include ../../../solutions/practical6/conference-dsl/conference.emf}}
 ```
 
 A diagrammatic representation of the metamodel above can be found below.
@@ -114,5 +114,5 @@ Create a model that conforms to the conference metamodel and exercises all its f
 Here is a sample model ([conference.model](solutions/conference-dsl/conference.model)) that conforms to the Conference DSL.
 
 ```xml
-{{#include solutions/conference-dsl/conference.model}}
+{{#include ../../../solutions/practical6/conference-dsl/conference.model}}
 ```

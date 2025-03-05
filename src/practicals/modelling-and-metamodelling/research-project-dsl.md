@@ -40,5 +40,5 @@ Below are a few screenshots of actual tables generated from a model of an EC-fun
 Try to design your own metamodel before you check out the solution below ([research-project.emf](solutions/research-project-dsl/research-project.emf)).
 
 ```emfatic
-{{#include solutions/research-project-dsl/research-project.emf}}
+{{#include ../../../solutions/practical6/research-project-dsl/research-project.emf}}
 ```
