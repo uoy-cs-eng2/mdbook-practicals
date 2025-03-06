@@ -37,7 +37,8 @@ Below are a few screenshots of actual tables generated from a model of an EC-fun
 
 ## Solution
 
-Try to design your own metamodel before you check out the solution below ([research-project.emf](solutions/research-project-dsl/research-project.emf)).
+Try to design your own metamodel before you check out the solution below.
+It is also available in the model solution [ZIP file](../../solutions/practical6.zip).
 
 ```emfatic
 {{#include ../../../solutions/practical6/research-project-dsl/research-project.emf}}

@@ -41,7 +41,7 @@ All these bundles are typically assembled from the same pool of components
 
 ## Solution
 
-Try to design your own metamodel before you check out the solution below ([sdl.emf](solutions/software-distribution-dsl/sdl.emf)).
+Try to design your own metamodel before you check out the solution below (part of the [solution ZIP](../../solutions/practical6.zip)).
 
 ```emfatic
 {{#include ../../../solutions/practical6/software-distribution-dsl/sdl.emf}}
