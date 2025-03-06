@@ -36,10 +36,10 @@ Add tests checking the producer is used as expected in those scenarios.
 
 ## Using OpenLibrary from a consumer
 
-Create a new Kafka consumer which will handle the records arriving to the `isbn-changed` topic.
+Create a new Kafka consumer which will handle the records arriving to the `isbn-updated` topic.
 
 Move the controller logic that uses the gateway to populate the Publisher there.
-Keep in mind that there may be a long delay between the book being created and the `isbn-changed` event being consumed, so you may want to tweak its logic somewhat.
+Keep in mind that there may be a long delay between the book being created and the `isbn-updated` event being consumed, so you may want to tweak its logic somewhat.
 We suggest something like this:
 
 * Try to fetch the book by ID. If it does not exist anymore, stop processing this event.
