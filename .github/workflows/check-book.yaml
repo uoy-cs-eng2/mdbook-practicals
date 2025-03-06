@@ -1,0 +1,26 @@
+name: Check book
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@ee69d230fe19748b7abf22df32acaa93833fad08
+        with:
+          mdbook-version: '0.4.43'
+      - name: Build Book
+        run: ./zip-solutions.sh && mdbook build
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --exclude-loopback --no-progress book
