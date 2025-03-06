@@ -1,0 +1,21 @@
+# Tools
+
+- A ready-to-use Eclipse bundle with all required tools (EMF, Emfatic, Flexmi) pre-installed is available in the lab machines
+- Once you have logged into Windows, search for `Epsilon 2.5` in the Start Menu
+- When prompted to select the location of your Eclipse workspace, you **must** select a folder under the `H:` drive e.g. `H:\eng2-workspace`
+
+![Workspace selection screenshot](workspace-selection.png)
+
+- Close the `Welcome` view
+
+![Closing the welcome view](close-welcome-view.png)
+
+- Open the `Epsilon` perspective
+
+![Open the Perspectives window](perspectives.png)
+![Select the Epsilon perspective](epsilon-perspective.png)
+
+## Installing the ENG2 tools on your computer
+
+- If you prefer to install the ENG2 tools in your computer, please follow the instructions under the `Tools and Resources` category on VLE
+- If you already have a copy of Eclipse installed in your computer, it will most likely **not** contain the tools you need for ENG2
