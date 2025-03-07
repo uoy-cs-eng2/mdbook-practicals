@@ -30,6 +30,10 @@ To do this, we will need to set up a new table to hold the appropriate state.
 Given that we will need to analyse the data at a different granularity level (grouped by area and minute, rather than per-desk), we will need to re-key the records that we're consuming from the simulation.
 The new key in this case will not be a single value like before: instead, it will be a composite `(area, minute)` key.
 
+The overall process will look like this:
+
+![Diagram of the overall process to be implemented](./stats-per-minute.svg)
+
 Let's break down the problem into steps, as usual.
 
 ## Adding the database migration
