@@ -2,7 +2,7 @@
 
 Design the metamodel of a DSL for modelling conferences using Emfatic. Below are key concepts and relationships your language must support.
 
-- A conference runs over [several days](editor-generation.md)
+- A conference runs over several days
 - On every day, there are several talks organised in (potentially parallel) tracks
 - There are breaks between tracks (e.g., for lunch/coffee)
 - Each track/break takes place in one room
