@@ -1,8 +1,7 @@
 # Practical 6: Metamodelling and modelling
 
-<!--TODO: Follow a consistent structure with intro like ../intro-micronaut/01-introduction.md and additional exercises like in ../intro-micronaut/07-additional-exercises.md -->
+This is the worksheet for the sixth practical in the Engineering 2 module.
 
-- For this practical you need to design a few domain-specific metamodels using [Emfatic](https://eclipse.dev/emfatic)
-    - You also need to design models conforming to these metamodels, using the reflective tree-based editor and/or [Flexmi](https://eclipse.dev/epsilon/doc/flexmi)
-- You **must** have watched the Eclipse Modelling Framework lecture before you attempt this practical
+In this practical you will define domain-specific metamodels and models that conform to them. You will use these metamodels and models in the remaining practicals of the module.
 
+Work through every section of the practical in sequence, without missing steps. You can use the "Previous" and "Next" buttons on the left and right sides to quickly go between sections.
