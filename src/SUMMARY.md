@@ -51,7 +51,7 @@
     - [Software Distribution DSL queries](./practicals/model-querying-and-validation/software-distribution-dsl-queries.md)
     - [Research Project DSL queries](./practicals/model-querying-and-validation/research-project-dsl-queries.md)
     - [Model validation](./practicals/model-querying-and-validation/model-validation.md)
-  - [Model Transformation](./practicals/model-transformation/index.md)
+  - [Model transformation](./practicals/model-transformation/index.md)
     - [Model-to-Text transformation](./practicals/model-transformation/m2t.md)
     - [Model-to-Model transformation](./practicals/model-transformation/m2m.md)
     

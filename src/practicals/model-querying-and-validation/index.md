@@ -1,4 +1,4 @@
-# Model querying and validation
+# Practical 8: Model querying and validation
 
 - In the previous practicals, you implemented three metamodels and constructed models that conform to them 
 - In this practical you will write model management programs and run them against models to
