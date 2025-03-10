@@ -12,22 +12,19 @@ While the `callcentre2java` model-to-text transformation discussed in the M2T le
 
 ## Preparation
 
-<!--TODO: Update the example so that the design project is in the first workspace -->
-<!--TODO: Also rename the repo from sirius-example to callcentre-sirius? -->
-
-- Clone [this Github repository](https://github.com/uoy-cs-eng2/sirius-example)
-    - Alternatively, [download a copy of its contents](https://github.com/uoy-cs-eng2/sirius-example/archive/refs/heads/main.zip)
+- Clone [this Github repository](https://github.com/uoy-cs-eng2/callcentre-sirius)
+    - Alternatively, [download a copy of its contents](https://github.com/uoy-cs-eng2/callcentre-sirius/archive/refs/heads/main.zip)
 - Run the Epsilon Eclipse distribution
 - Import only the following projects from the repository/zip file
     - `ac.uk.york.callcentre`
     - `ac.uk.york.callcentre.edit`
     - `ac.uk.york.callcentre.editor`
     - `ac.uk.york.callcentre.validation`
+    - `ac.uk.york.callcentre.design`
 - Make sure that all imported projects are under the `H:` or `C:` drives 
 - You can double-check their location by right-clicking on them in Eclipse and selecting the `Properties` menu item
 - Run a nested Eclipse instance by right-clicking on one of the projects above within Eclipse and selecting `Run as -> Eclipse Application`
 - In the nested Eclipse instance import only the following projects from the repository/zip file 
-    - `ac.uk.york.callcentre.design`
     - `ac.uk.york.callcentre.m2t`
     - `acmebank.model`
     - `acmebank.application`
