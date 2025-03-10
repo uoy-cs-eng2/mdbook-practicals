@@ -56,7 +56,7 @@ While the `callcentre2java` model-to-text transformation discussed in the M2T le
 
 - So far, you have been modifying the existing callcentre2java.egx M2T transformation
 - **Exercise #3**: write a new M2T transformation that transforms a call centre model into a set of HTML pages
-    - 1 HTML page for each step
+    - One HTML page for each step
     - Hyperlinks in the generated pages to represent transitions
 
 ![Generated HTML page](html.png)
