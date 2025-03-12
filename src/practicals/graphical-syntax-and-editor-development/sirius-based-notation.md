@@ -32,6 +32,6 @@ GitHub repository: [https://github.com/uoy-cs-eng2/docker-network-diagrams](http
 
 - [Getting Started with Sirius](https://eclipse.dev/sirius/getstarted.html)
 - [Sirius documentation](https://eclipse.dev/sirius/doc/)
-- [BasicFamily tutorial](https://wiki.eclipse.org/Sirius/Tutorials/BasicFamily)
+- [BasicFamily tutorial](https://obeo.ispringmarket.eu/content/10/info/Tutorial_-_Sirius_Desktop_-_Family)
 
-For additional resources, please check the links at the end of the Sirius lecture
+For additional resources, please check the links at the end of the Sirius lecture.
