@@ -96,6 +96,10 @@ The idea is to consume the records from the topics related to starting, completi
 }
 ```
 
+The overall process will look like this:
+
+![Diagram with an overview of the process to be implemented](./partitioned-checkin-stats.svg)
+
 This will take a number of steps: we will give you general pointers for each step.
 
 Remember that all changes should take place in your own application (`checkin-stats`).
