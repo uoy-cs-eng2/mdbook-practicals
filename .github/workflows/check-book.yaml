@@ -21,6 +21,6 @@ jobs:
         run: ./zip-solutions.sh && mdbook build
       - name: Link Checker
         id: lychee
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@f613c4a64e50d792e0b31ec34bbcbba12263c6a6
         with:
           args: --verbose --exclude-loopback --no-progress book
