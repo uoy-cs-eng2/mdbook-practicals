@@ -1,0 +1,60 @@
+<?nsuri http://cs.york.ac.uk/eng2/requirements/1.0?>
+<project>
+  <partner name="ImportantBank">
+    <uc name="hybridbank" description="Hybrid Bank"/>
+  </partner>
+  <partner name="EnvironmentalNGO">
+    <uc name="earthobs" description="Earth Observation"/>
+  </partner>
+  <partner name="MotorwayAuthority">
+    <uc name="mwmonitor" description="Motorway Monitoring"/>
+  </partner>
+  <partner name="CarManufacturer">
+    <uc name="smvehicles" description="Smart Vehicles"/>
+  </partner>
+  <workp name="queries" description="Queries on Textual Data">
+    <req id="63" description="The polystore query language should expose a relevant subset of the data types and operations of at least one of the following: Solr, Lucene">
+      <rp useCase="earthobs" prio="SHOULD"/>
+      <rp useCase="hybridbank" prio="SHOULD"/>
+      <rp useCase="mwmonitor" prio="NOT_APPLICABLE"/>
+      <rp useCase="smvehicles" prio="MAY"/>
+    </req>
+    <req id="64" description="In the text data queries it shall be possible to search for one or more keywords in one query">
+      <rp useCase="earthobs" prio="SHALL"/>
+      <rp useCase="hybridbank" prio="SHALL"/>
+      <rp useCase="mwmonitor" prio="SHOULD"/>
+      <rp useCase="smvehicles" prio="SHALL"/>
+    </req>
+    <req id="65" desc="Text data queries using patterns or full text search shall be supported">
+      <rp useCase="earthobs" prio="MAY"/>
+      <rp useCase="hybridbank" prio="MAY"/>
+      <rp useCase="mwmonitor" prio="SHALL"/>
+      <rp useCase="smvehicles" prio="SHALL"/>
+    </req>
+    <req id="66" desc="The text data queries may be able to autocorrect words">
+      <rp useCase="earthobs" prio="NOT_APPLICABLE"/>
+      <rp useCase="hybridbank" prio="MAY"/>
+      <rp useCase="mwmonitor" prio="MAY"/>
+      <rp useCase="smvehicles" prio="MAY"/>
+    </req>
+    <req id="67" desc="The text data queries may be able to recognize incorrect spellings and mark them">
+      <rp useCase="earthobs" prio="NOT_APPLICABLE"/>
+      <rp useCase="hybridbank" prio="MAY"/>
+      <rp useCase="mwmonitor" prio="MAY"/>
+      <rp useCase="smvehicles" prio="MAY"/>
+    </req>
+    <req id="68" desc="The text data queries may be able to recognise different spellings for one word (AE/BE)">
+      <rp useCase="earthobs" prio="NOT_APPLICABLE"/>
+      <rp useCase="hybridbank" prio="MAY"/>
+      <rp useCase="mwmonitor" prio="MAY"/>
+      <rp useCase="smvehicles" prio="MAY"/>
+    </req>
+    <req id="69" desc="The text data queries shall be able to recognize the German language">
+      <rp useCase="earthobs" prio="NOT_APPLICABLE"/>
+      <rp useCase="hybridbank" prio="NOT_APPLICABLE"/>
+      <rp useCase="mwmonitor" prio="SHOULD"/>
+      <rp useCase="smvehicles" prio="SHALL"/>
+    </req>
+  </workp>
+  
+</project>

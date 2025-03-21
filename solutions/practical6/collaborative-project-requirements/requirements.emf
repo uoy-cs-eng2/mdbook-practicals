@@ -1,0 +1,46 @@
+@namespace(uri="http://cs.york.ac.uk/eng2/requirements/1.0")
+package requirements;
+
+// A Project has partners that will drive the requirements
+class Project {
+	val Partner[*] partners;
+	val WorkPackage[*] workPackages;
+}
+
+// A partner contributes one or more use-cases
+class Partner {
+	attr String name;
+	val UseCase[*] useCases;
+}
+
+// Requirements are grouped into work-packages
+class WorkPackage {
+	attr String name;
+	attr String description;
+	val Requirement[*] requirements;
+}
+
+class Requirement {
+	id attr String identifier;
+	attr String description;
+	
+	// The importance of each requirement can be different for every use case
+	val RequirementPriority[*] priorities;
+}
+
+class RequirementPriority {
+	ref UseCase useCase;
+	attr Priority priority;
+}
+
+enum Priority {
+	SHALL;
+	SHOULD;
+	MAY;
+	NOT_APPLICABLE;
+}
+
+class UseCase {
+	attr String name;
+	attr String description;
+}
