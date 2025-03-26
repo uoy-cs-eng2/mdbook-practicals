@@ -5,7 +5,7 @@ In this practical you will create a graphical syntax for one of the languages fr
 ## What you should already know
 
 - You must be familiar with defining domain-specific metamodels using Emfatic.
-- You must have attended or watched the graphical modelling/Sirius lectures.
+- You must have attended or watched the graphical modelling / Sirius lectures.
 
 ## What you will learn
 

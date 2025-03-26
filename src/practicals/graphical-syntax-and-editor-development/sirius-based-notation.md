@@ -32,6 +32,7 @@ GitHub repository: [https://github.com/uoy-cs-eng2/docker-network-diagrams](http
 
 - [Getting Started with Sirius](https://eclipse.dev/sirius/getstarted.html)
 - [Sirius documentation](https://eclipse.dev/sirius/doc/)
+  - Within this documentation, the [Sirius Specifier Manual](https://eclipse.dev/sirius/doc/specifier/Sirius%20Specifier%20Manual.html) will be very useful if you are creating your own Sirius-based notation
 - [BasicFamily tutorial](https://obeo.ispringmarket.eu/content/10/info/Tutorial_-_Sirius_Desktop_-_Family)
 
 For additional resources, please check the links at the end of the Sirius lecture.
