@@ -39,7 +39,7 @@ class Effort {
 }
 
 class Partner {
-   attr String ~id;
+   id attr String ~id;
    attr String name;
    attr String country;
 }
