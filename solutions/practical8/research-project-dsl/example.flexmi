@@ -1,0 +1,16 @@
+<?nsuri research_project?>
+<project name="The Project" title="The Large Research Project">
+  <wp title="Requirements and Use Cases" leader="tog" type="research">
+    <task title="First task" start="1" end="3" partner="tog"/>
+    <task title="Second task" start="3" end="5" partner="cwi"/>
+    <deliv title="Project Requirements" due="6" nature="report" dis="public" partner="tog" />
+
+    <eff partner="tog" months="6" />
+    <eff partner="uda" months="2" />
+    <eff partner="cwi" months="5" />
+  </wp>
+  <partner id="tog" name="The Open Group" />
+  <partner id="uda" name="Universita degli Studi dell'Aquila" country="Italy" />
+  <partner id="cwi" name="CWI" />
+
+</project>

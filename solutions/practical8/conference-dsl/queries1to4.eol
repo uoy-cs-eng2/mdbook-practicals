@@ -1,0 +1,39 @@
+// Q1
+// Day.all returns a collection
+// with all the instances of
+// Day in our model
+Day.all.size().println();
+
+// Q2
+// Collect the affiliations of
+// all persons, and then filter
+// out duplicates using asSet()
+Person.all.collect(p|p.affiliation).asSet().println();
+
+// Q2
+// More verbose version that uses
+// a for loop instead of .collect()
+// You should avoid writing such code
+var affiliations : Set;
+for (p in Person.all) {
+    affiliations.add(p.affiliation);
+}
+affiliations.println();
+
+// Q3
+// Get a list with the durations
+// of all talks and compute their
+// sum
+Talk.all.collect(t|t.duration).sum().println();
+
+// ... or more concisely
+Talk.all.duration.sum().println();
+
+// Q4
+// Collect the rooms of all
+// breaks and then collect
+// the names of these rooms
+Break.all.collect(b|b.room).asSet().collect(r|r.name).println();
+
+// ... or more concisely
+Break.all.room.asSet().name.println();

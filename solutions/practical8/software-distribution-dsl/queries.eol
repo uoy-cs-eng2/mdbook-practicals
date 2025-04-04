@@ -1,0 +1,138 @@
+// Q1. Number of components with no dependencies
+Component.all
+  .select(c|c.dependencies.isEmpty())
+  .size()
+  .println('# of components with no dependencies: ');
+
+// Q2. Filenames of JARs not used by any component
+//
+// Option 1: start from Jar, go through every component
+// for each Jar. Not very efficient (repeated iteration). 
+Jar.all
+   .select(j | not Component.all.exists(c|c.jars.includes(j)))
+   .filename
+   .println('Filenames of JARs not used by any component (Option 1): ');
+
+// Option 2: compute the set of used Jars in one go, then
+// use a set difference operation to get all the unused JARs.
+//
+// flatten() turns a Collection of Collections back into a
+// single Collection (e.g. [[a, b], [c]] -> [a, b, c]).
+//
+// asSet() turns the Collection into a Set, avoiding duplicates
+// and making excludingAll more efficient.
+var usedJars = Component.all.jars.flatten().asSet();
+var notUsedJars = Jar.all.asSet().excludingAll(usedJars);
+notUsedJars.filename.println('Filenames of JARs not used by any component (Option 2): ');
+
+// Q3. Names of components not used in any bundle
+//
+// We can use the same two approaches as before. We'll
+// just show Option 2 in this case.
+//
+// Note: all the components are being used in at least
+// a bundle, so this will produce the empty set :-).
+
+var usedComponents = Bundle.all.components.flatten().asSet();
+var notUsedComponents = Component.all.asSet().excludingAll(usedComponents);
+notUsedComponents.name.println('Names of the components not used in any bundle: ');
+
+// Q4. Filenames of JARs not used in any bundle.
+//
+// This ends up matching Q2 because the bundles are using all the components,
+// as we know from Q3.
+
+// Option 1 - build used set and remove it from the full set of Jars
+//
+// Note that we can't just do Bundle.all.components.jars, because the elements
+// of Bundle.all.components are collections themselves and would not support the
+// .jar property. Instead, we do an explicit collect() call to obtain the collection
+// of collections of JARs, then flatten, then turn into a set.  
+usedJars = Bundle.all
+  .collect(b | b.components.jars)
+  .flatten().asSet();
+notUsedJars = Jar.all.asSet().excludingAll(usedJars);
+notUsedJars.filename.println('Filenames of the JARs that are not used in any bundle (Option 1): ');
+
+// Option 2 - start from full set and remove Jars we see being used
+notUsedJars = Jar.all.asSet();
+for (b in Bundle.all) {
+  for (c in b.components) {
+    notUsedJars.removeAll(c.jars);
+  }
+}
+notUsedJars.filename.println('Filenames of the JARs that are not used in any bundle (Option 2): ');
+
+// Q5. Names of the components involved in cyclic dependencies
+
+// We don't have any such component in the example model, so we'll
+// add one on the spot so have something to find. For simplicity,
+// it'll be a direct cycle (sales->new->sales), but it could be an
+// indirect cycle (sales->a->b->c->sales).
+
+var salesComponent = Component.all.selectOne(c|c.name='sales');
+var newComponent = new Component;
+newComponent.name = 'added as cycle';
+Vendor.all.first.components.add(newComponent);
+newComponent.dependencies.add(salesComponent);
+salesComponent.dependencies.add(newComponent);
+
+// Option 1 (the hard way that cannot be parallelised): use
+// extended properties.
+//
+// NOTE 1: this implies mutable state, so in this case we
+// would have to make sure to change the execution engine
+// to the 'Sequential' one in the launch configuration.
+// We already did this for you in the provided .launch file.
+//
+// NOTE 2: By default, Epsilon automatically parallelises
+// first-order operations like select() based on the number
+// of cores in our CPU.
+Component.all
+  .select(c|c.isInCycle())
+  .name
+  .println('Names of the components involved in cyclic dependencies (Option 1): ');
+
+// Option 2 (the easier and parallelisable way): use closure().
+//
+// closure() computes the transitive closure of the given expression.
+// The transitive closure of c2.dependencies is the set of all our
+// direct *and* indirect dependencies, so if we see ourselves in that
+// transitive closure, this means the component is part of a cycle.
+//
+// This version would be executable with the default Parallel execution
+// engine in Epsilon.
+Component.all
+  .select(c | c.closure(c2|c2.dependencies).includes(c))
+  .name
+  .println('Names of the components involved in cyclic dependencies (Option 2): ');
+
+// NOTE: we always have to put operations at the end of an EOL
+// file, after all the statements. Epsilon will not run any
+// top-level statements after the first operation in the file.
+
+operation Component isInCycle(): Boolean {
+  // We first mark all components as not visited yet
+  for (c in Component.all) {
+    c.~visited = false;
+    c.~inCycle = false;
+  }
+
+  // We now do a breadth-first traversal, and find
+  // cases where we visit the same dependency twice
+  self.markCycles();
+
+  // Is the current component part of a cycle?
+  return self.~inCycle;
+}
+
+operation Component markCycles() {
+  if (self.~visited) {
+    self.~inCycle = true;
+  } else {
+    self.~visited = true;
+    for (d in self.dependencies) {
+      d.markCycles();
+    }
+  }
+}
