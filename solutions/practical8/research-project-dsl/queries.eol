@@ -1,0 +1,69 @@
+// Q1: The names of all deliverables in the project, in chronological order
+Deliverable.all
+  .sortBy(d|d.due)
+  .title
+  .println('The names of all deliverables in the project, in chronological order: ');
+
+// Q2. Names of partners that allocated effort to a WP but don't contribute to any of its tasks
+
+for (wp in WP.all) {
+  var effPartners = wp.effort.partner.flatten().asSet();
+  var taskPartners = wp.tasks.partners.flatten().asSet();
+  effPartners.removeAll(taskPartners);
+
+  if (not effPartners.isEmpty()) {
+    effPartners.name
+      .println('In ' + wp.title + ', these partners have effort but do not contribute to tasks: ');
+  }
+}
+
+// Q3. Label all tasks based on WP index + task index
+for (wp in WP.all) {
+  // loopCount is a special read-only variable that is
+  // automatically set to the 1-based index of the current
+  // item. We need to save its current value to a variable
+  // as it'll be shadowed within the nested for loop below
+  // by its own loopCount variable.
+  var wpIndex = loopCount;
+
+  for (t in wp.tasks) {
+    t.title.println('Task T' + wpIndex + '.' + loopCount + ': ');
+  }
+}
+
+// Q4. Title of deliverables due before start / after end
+// of the workpackage in which they are contained.
+
+// Option 1: loop with for
+var outOfScheduleDeliverables : Sequence;
+for (wp in WP.all) {
+  for (d in wp.deliverables) {
+    if (d.due < wp.start() or d.due > wp.end()) {
+      outOfScheduleDeliverables.add(d);
+    }
+  }
+}
+outOfScheduleDeliverables.title.println('Deliverables that are due outside their WP (Option 1): ');
+
+// Option 2: use select and eContainer
+//
+// Note: from the structure of our metamodel, we know that
+// Deliverables will always be inside a WP, so we can use
+// d.eContainer to get the WP from the Deliverable d.
+outOfScheduleDeliverables = Deliverable.all
+  .select(d|d.due < d.eContainer.start() or d.due > d.eContainer.end())
+  .title
+  .println('Deliverables that are due outside their WP (Option 2): ');
+
+
+// NOTE: @cached can be used to cache the result of calling
+// this operation, and reusing it in later calls.
+@cached
+operation WP start(): Integer {
+  return self.tasks.start.min();
+}
+
+@cached
+operation WP end(): Integer {
+  return self.tasks.end.max();
+}
