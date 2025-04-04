@@ -10,4 +10,8 @@ Write EOL queries that print:
 
 Create a sample model that conforms to the software distribution DSL and run the queries against the sample model.
 
+## Solutions
+
+Model solutions for the exercises are available in [this ZIP file](../../solutions/practical8.zip).
+
 <!-- TODO: Point to the metamodel + an existing model? -->

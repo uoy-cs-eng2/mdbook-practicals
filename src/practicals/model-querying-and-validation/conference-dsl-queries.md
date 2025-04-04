@@ -14,84 +14,13 @@ Instructions for running your EOL queries against a conference model are provide
 ## Solutions
 
 ```eol
-// Q1
-// Day.all returns a collection
-// with all the instances of
-// Day in our model
-Day.all.size().println();
-```
-
-```eol
-// Q2
-// Collect the affiliations of
-// all persons, and then filter
-// out duplicates using asSet()
-Person.all.collect(p|p.affiliation).asSet().println();
-```
-
-```eol
-// Q2
-// More verbose version that uses
-// a for loop instead of .collect()
-// You should avoid writing such code
-var affiliations : Set;
-for (p in Person.all) {
-    affiliations.add(p.affiliation);
-}
-affiliations.println();
-```
-
-```eol
-// Q3
-// Get a list with the durations
-// of all talks and compute their
-// sum
-Talk.all.collect(t|t.duration).sum().println();
-
-// ... or more concisely
-Talk.all.duration.sum().println();
-```
-
-```eol
-// Q4
-// Collect the rooms of all
-// breaks and then collect
-// the names of these rooms
-Break.all.collect(b|b.room).asSet().collect(r|r.name).println();
-
-// ... or more concisely
-Break.all.room.asSet().name.println();
+{{#include ../../../solutions/practical8/conference-dsl/queries1to4.eol}}
 ```
 
 For Q5, we will need to define a few helper operations for working with `HH:MM`-formatted times first. For now, we assume that string values under `Slot.start` and `Slot.end` conform to the `HH:MM` format. Later on, we will encode (and check) this assumption using a validation constraint.
 
 ```eol
-// Q5
-// Select all tracks that start before noon
-// and compute the size of the returned collection
-Track.all.select(t|t.start.isBefore("12:00")).size().println();
-
-
-// Get the hours part of the string
-// and convert it to an integer
-// e.g. for 15:45 it returns 15
-operation String getHours() {
-    return self.split(":").at(0).asInteger();
-}
-
-// Same for the minutes part
-operation String getMinutes() {
-    return self.split(":").at(1).asInteger();
-}
-
-// Compares the string on which it is invoked
-// with its time parameter e.g.
-// "15:15".isBefore("18:00") returns true
-operation String isBefore(time : String) {
-    return (self.getHours() < time.getHours()) or 
-        (self.getHours() == time.getHours() and 
-        self.getMinutes() < time.getMinutes());
-}
+{{#include ../../../solutions/practical8/conference-dsl/query5.eol}}
 ```
 
 <div class="warning">
