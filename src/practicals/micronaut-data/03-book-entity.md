@@ -190,6 +190,39 @@ One of the containers uses the `mariadb:latest` image: this is the MariaDB serve
 This server will be automatically destroyed when we shut down the application.
 You can also note that its Port is `62544:3306`: this means that port `62544` in our local machine points to port `3306` inside the container (3306 is the default MariaDB port).
 
+## Logging SQL queries for inspection
+
+In some cases, you may want to log all SQL queries being executed.
+For example, to check if they may be running an inefficient query that could potentially take a long time.
+To do this, add the following to your `application.properties` file:
+
+```properties
+# Logs all queries
+jpa.default.properties.hibernate.show_sql=true
+jpa.default.properties.hibernate.format_sql=true
+```
+
+Try restarting your application, and listing all books.
+You should see text like this in your IntelliJ console:
+
+```
+Hibernate:
+    select
+        b1_0.id,
+        b1_0.publisher_id,
+        b1_0.title
+    from
+        book b1_0
+```
+
+<div class="warning">
+<b>Do not use this in production!</b>
+
+You should remove these logging lines once done, as otherwise they could reveal sensitive information in the logs, and they would significantly increase their size.
+They should only be used during development, and never in production environments.
+</div>
+
+
 ## (Optional) Integrated database client in IntelliJ Ultimate
 
 Knowing the local port can be useful if we want to inspect the database ourselves.
