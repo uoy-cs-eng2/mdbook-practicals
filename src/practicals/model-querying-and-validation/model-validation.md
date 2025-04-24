@@ -11,6 +11,7 @@ We now wish to write [EVL](https://eclipse.dev/epsilon/doc/evl) constraints for 
 Below are reference implementations of these constraints.
 
 ### conference-constraints.evl
+
 ```evl
 import "conference-queries.eol";
 
@@ -118,3 +119,7 @@ Write and run the following constraints for the Conference DSL similarly to C1-C
     - e.g. a track that is one hour long cannot accommodate three 30-minute talks
 - **C5**: Breaks don't overlap with tracks
 - **C6**: Slots that overlap in time do not use the same room
+
+## Solutions
+
+Model solutions for the exercises are available in [this ZIP file](../../solutions/practical8.zip).
