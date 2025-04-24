@@ -1,0 +1,71 @@
+// Get the hours part of the string
+// and convert it to an integer
+// e.g. for 15:45 it returns 15
+operation String getHours() {
+    return self.split(":").at(0).asInteger();
+}
+
+// Same for the minutes part
+operation String getMinutes() {
+    return self.split(":").at(1).asInteger();
+}
+
+// Compares the string on which it is invoked
+// with its time parameter e.g.
+// "15:15".isBefore("18:00") returns true
+operation String isBefore(time : String) {
+    return (self.getHours() < time.getHours()) or 
+        (self.getHours() = time.getHours() and 
+        self.getMinutes() < time.getMinutes());
+}
+
+operation String isBeforeOrEqual(time: String) {
+  return (
+    self.getHours() = time.getHours() and
+    self.getMinutes() = time.getMinutes()
+  ) or self.isBefore(time); 
+}
+
+/*
+ * Returns the minutes that a slot lasts for.
+ * Assumes that the slot start time is before the
+ * end time (this should have been validated first).
+ *
+ * @cached means that the result will be cached
+ * after the first call and reused later (only
+ * works for 0-argument contextful operations).
+ */
+@cached
+operation Slot getDurationMinutes(): Integer {
+  var startMinutes = self.start.getHours() * 60 + self.start.getMinutes();
+  var endMinutes = self.end.getHours() * 60 + self.end.getMinutes();
+  return endMinutes - startMinutes;
+}
+
+operation Slot overlaps(other: Slot): Boolean {
+  if (self.end.isBeforeOrEqual(other.start)) {
+    // We end before or at the same time the other starts: no overlap
+    return false;
+  } else if (self.start.isBefore(other.end)) {
+    // We end after the other starts,
+    // and we start before the other ends:
+    // there is overlap
+    return true;
+  } else {
+    // We end after the other starts, but we
+    // start after the other ends: no overlap
+    return false;
+  }
+}
+
+// These operations are to have a consistent
+// method for producing messages across all concrete
+// Slot subtypes.
+
+operation Break getDescription() {
+  return "Break " + self.reason + " on " + self.eContainer.name;
+}
+
+operation Track getDescription() {
+  return "Track " + self.title + " on " + self.eContainer.name;
+}

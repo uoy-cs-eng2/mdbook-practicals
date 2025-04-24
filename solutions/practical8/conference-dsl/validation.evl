@@ -1,0 +1,68 @@
+import "common.eol";
+
+context Talk {
+  // C1
+  constraint SpeakerCannotBeDiscussant {
+    check : self.speaker <> self.discussant
+    message : "The speaker and the discussant of talk " 
+              + self.`title` + " are the same person"
+  }
+
+  // C2
+  constraint DurationMustBePositive {
+      check : self.duration > 0
+      message : "The duration of talk " + self.`title` +
+          " is not a positive number"
+  }
+}
+
+context Slot {
+  // C3
+  constraint StartBeforeEnd {
+    check: self.start.isBefore(self.end)
+    message: self.getDescription() + " start time (" + self.start + ") is not before end time (" + self.end + ")"
+  }
+
+  // C6
+  constraint OverlappingUseDifferentRoom {
+    guard: self.satisfies('StartBeforeEnd')
+    check {
+      var overlappingSameRoom = self.eContainer.slots.selectOne(s
+        | s <> self and self.overlaps(s) and s.room = self.room);
+      return not overlappingSameRoom.isDefined(); 
+    }
+    message: self.getDescription()
+      + " overlaps with "
+      + overlappingSameRoom.getDescription()
+      + " and is in the same room ("
+      + self.room.name + ")"
+  }
+}
+
+context Track {
+  // C4
+  constraint MustFitTalks {
+    guard: self.satisfies('StartBeforeEnd')
+    check {
+      var talksSum = self.talks.duration.sum();
+      return self.getDurationMinutes() >= talksSum; 
+    }
+
+    // Backticks are needed because "title" is a reserved keyword in EVL
+    message: "Track " + self.`title` + " ("
+      + self.getDurationMinutes() + " minutes) is not long enough to fit all its talks  ("
+      + talksSum + " minutes)"
+  }
+}
+
+context Break {
+  // C5
+  constraint NoOverlapWithTrack {
+    guard: self.satisfies('StartBeforeEnd')
+    check {
+      var overlapping = self.eContainer.slots.selectOne(t:Track | self.overlaps(t));
+      return not overlapping.isDefined();
+    }
+    message: self.getDescription() + " overlaps with " + overlapping.getDescription()
+  }
+}

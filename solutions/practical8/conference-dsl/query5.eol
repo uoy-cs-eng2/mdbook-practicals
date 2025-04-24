@@ -1,26 +1,6 @@
+import "common.eol";
+
 // Q5
 // Select all tracks that start before noon
 // and compute the size of the returned collection
 Track.all.select(t|t.start.isBefore("12:00")).size().println();
-
-
-// Get the hours part of the string
-// and convert it to an integer
-// e.g. for 15:45 it returns 15
-operation String getHours() {
-    return self.split(":").at(0).asInteger();
-}
-
-// Same for the minutes part
-operation String getMinutes() {
-    return self.split(":").at(1).asInteger();
-}
-
-// Compares the string on which it is invoked
-// with its time parameter e.g.
-// "15:15".isBefore("18:00") returns true
-operation String isBefore(time : String) {
-    return (self.getHours() < time.getHours()) or 
-        (self.getHours() == time.getHours() and 
-        self.getMinutes() < time.getMinutes());
-}
