@@ -57,3 +57,7 @@ While the `callcentre2java` model-to-text transformation discussed in the M2T le
     - Hyperlinks in the generated pages to represent transitions
 
 ![Generated HTML page](html.png)
+
+## Solutions
+
+Model solutions for the exercises are available in [this ZIP file](../../solutions/practical9.zip).
