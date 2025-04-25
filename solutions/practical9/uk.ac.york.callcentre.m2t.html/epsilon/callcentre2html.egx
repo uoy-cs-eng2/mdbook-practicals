@@ -1,0 +1,4 @@
+rule Model2MainPage transform m: Model {
+  template: "index.egl"
+  target: "index.html"
+}
