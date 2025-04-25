@@ -1,0 +1,36 @@
+package [%=m.name.toLowerCase()%];
+
+import java.util.Scanner;
+
+public class [%=iq.name.ftuc()%] {
+	
+	protected String value;
+	
+	public void run([%=m.name.ftuc()%] [%=m.name%]) {
+	
+		boolean validValue = false;
+		while (!validValue) {
+			System.out.println("[%=iq.text%]");
+			value = new Scanner(System.in).nextLine();
+			validValue = validate([%=m.name%]);
+		}
+		[%=m.name%].get[%=iq.getNextStep().name.ftuc()%]().run([%=m.name%]);
+	}
+	
+	protected boolean validate([%=m.name.ftuc()%] [%=m.name%]) {
+		[%=out.startPreserve("/*", "*/", "validate-body", true)%]
+		return true;
+		[%=out.stopPreserve()%]
+	}
+	
+	public String getValue() {
+		return value;
+	}
+	
+}
+
+[%
+operation Step getNextStep() {
+	return self.outgoing.first().to;
+}
+%]

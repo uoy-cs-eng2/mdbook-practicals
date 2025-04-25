@@ -1,0 +1,15 @@
+<project default="main">
+	<target name="main">
+		<epsilon.emf.loadModel name="M" 
+			modelfile="../acmebank.model/acmebank.callcentre" 
+			metamodeluri="http://www.york.ac.uk/callcentre/1.1.0" read="true" store="false"/>
+		
+		<epsilon.evl src="validation.evl">
+			<model ref="M"/>
+		</epsilon.evl>	
+		
+		<epsilon.egl src="callcentre2java.egx" outputroot="../acmebank.application">
+			<model ref="M"/>
+		</epsilon.egl>
+	</target>
+</project>

@@ -1,0 +1,36 @@
+package [%=m.name.toLowerCase()%];
+
+public class [%=m.name.ftuc()%] {
+	
+	[%for (step in Step.all) { %]
+	protected [%=step.name.ftuc()%] [%=step.name%] = create[%=step.name.ftuc()%]();
+	[%}%]
+	
+	public static void main(String[] args) {
+		new [%=m.name.ftuc()%]().run();
+	}
+	
+	public void run() {
+		get[%=m.getEntryPoint().name.ftuc()%]().run(this);	
+	}
+	
+	[%for (step in m.steps){%]
+	protected [%=step.name.ftuc()%] create[%=step.name.ftuc()%]() {
+		return new [%=step.name.ftuc()%]();
+	}
+	
+	public [%=step.name.ftuc()%] get[%=step.name.ftuc()%]() {
+		return [%=step.name%];
+	}
+	
+	[%}%]
+	
+	
+	
+}
+
+[%
+operation Model getEntryPoint() {
+	return Step.all.selectOne(s|s.incoming.isEmpty());
+}
+%]

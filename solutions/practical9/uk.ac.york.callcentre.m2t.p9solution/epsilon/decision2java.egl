@@ -1,0 +1,27 @@
+package [%=m.name.toLowerCase()%];
+
+import java.util.Scanner;
+
+public class [%=d.name.ftuc()%] {
+	
+	public void run([%=m.name.ftuc()%] [%=m.name%]) {
+		System.out.println("[%=d.text%]");
+		
+		[%for (t in d.outgoing){%]
+		System.out.println("[%=loopCount%]. [%=t.text%]");
+		[%}%]
+		
+		while (true) {
+			String response = new Scanner(System.in).nextLine();
+			[%for (t in d.outgoing){%]
+			if (response.equals("[%=loopCount%]") || response.trim().equalsIgnoreCase("[%=t.text%]")) {
+				[%=m.name%].get[%=t.to.name.ftuc()%]().run([%=m.name%]);
+				return;
+			}
+			[%}%]
+			System.out.println("Invalid option selected. Please select a valid option");
+		}
+		
+	}
+	
+}

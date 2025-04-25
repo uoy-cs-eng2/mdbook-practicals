@@ -1,0 +1,61 @@
+rule Model2App 
+	transform m : Model {
+
+	template : "model2java.egl"
+
+	parameters : Map{}
+
+	target : m.name.toLowerCase() + "/" + m.name.ftuc() + ".java"
+}
+
+rule Statement2Java 
+	transform s : Statement {
+
+	template : "statement2java.egl"
+
+	parameters : Map{
+		"m" = s.eContainer()
+	}
+
+	target : s.getJavaFileName()
+}
+
+rule Decision2Java 
+	transform d : Decision {
+
+	template : "decision2java.egl"
+
+	parameters : Map{
+		"m" = d.eContainer()
+	}
+
+	target : d.getJavaFileName()
+}
+
+rule InputQuestion2Java 
+	transform iq : InputQuestion {
+
+	template : "inputquestion2java.egl"
+
+	parameters : Map{
+		"m" = iq.eContainer()
+	}
+
+	target : iq.getJavaFileName()
+}
+
+rule CallRedirection2Java 
+	transform cr : CallRedirection {
+
+	template : "callredirection2java.egl"
+
+	parameters : Map{
+		"m" = cr.eContainer()
+	}
+
+	target : cr.getJavaFileName()
+}
+
+operation Step getJavaFileName() {
+	return self.eContainer.name.toLowerCase() + "/" + self.name.ftuc() + ".java";
+}

@@ -1,0 +1,18 @@
+package [%=m.name.toLowerCase()%];
+
+public class [%=s.name.ftuc()%] {
+	
+	public void run([%=m.name.ftuc()%] [%=m.name%]) {
+		System.out.println("[%=s.text%]");
+		[% if (s.getNextStep().isDefined()) { %]
+		[%=m.name%].get[%=s.getNextStep().name.ftuc()%]().run([%=m.name%]);
+		[% } %]
+	}
+	
+}
+
+[%
+operation Step getNextStep() {
+	return self.outgoing.first()?.to;
+}
+%]

@@ -1,0 +1,69 @@
+context Decision {
+
+	constraint AtLeastTwoOutgoing {
+
+		check: self.outgoing.size() >= 2
+
+		message: "Decision " + self.text + 
+			" must have at least 2 outgoing" +
+			" transitions"
+	}
+	
+}
+
+context Model {
+	
+	constraint OneEntryPoint {
+	
+		check : self.steps.select(s|s.incoming.isEmpty()).size() = 1
+		
+		message : "The model has mutliple entry points: " +
+			self.steps.select(s|s.incoming.isEmpty()).text.concat(", ")
+		
+	}
+}
+
+context Step {
+	
+	constraint NameIsDefined {
+		
+		check: self.name.isDefined()
+		
+		message: "Unnamed " + self.eClass.name 
+		
+	}
+	
+	constraint TextIsDefined {
+		
+		guard : not self.isTypeOf(CallRedirection)
+	
+		check: self.text.isDefined()
+		
+		message : "The text of a step cannot be empty"
+	}
+
+	critique TextStartsWithUC {
+
+		guard: self.satisfies("TextIsDefined")
+
+		check {
+			var firstCharacter = self.text.
+				toCharSequence().first();
+			return firstCharacter.toUpperCase() ==
+				firstCharacter;
+		}
+		
+		message: "The text of step '" + self.text + "' must start "
+			+ "with an upper-case letter"
+		
+		fix {
+			title: "Rename to " + 
+				self.text.firstToUpperCase()
+
+			do {
+				self.text = self.text.
+					firstToUpperCase();
+			}
+		}
+	}
+}

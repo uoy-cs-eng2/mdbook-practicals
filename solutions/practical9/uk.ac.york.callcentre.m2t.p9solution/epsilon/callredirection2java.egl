@@ -1,0 +1,10 @@
+package [%=m.name.toLowerCase()%];
+
+public class [%=cr.name.ftuc()%] {
+	
+	public void run([%=m.name.ftuc()%] [%=m.name%]) {
+		System.out.println("Redirecting to [%=cr.number%]");
+		return;
+	}
+	
+}
