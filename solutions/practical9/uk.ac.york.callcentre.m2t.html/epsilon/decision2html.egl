@@ -1,0 +1,6 @@
+[%
+  import "common.egl";
+  header();
+  d.listTransitions();
+  footer();
+%]

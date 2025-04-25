@@ -1,0 +1,9 @@
+[%
+  import "common.egl";
+  header();
+%]
+    <p>Redirect to [%=cr.number%]</p>
+[%
+  cr.listTransitions();
+  footer();
+%]

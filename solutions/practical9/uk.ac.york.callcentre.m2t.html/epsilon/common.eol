@@ -1,0 +1,31 @@
+operation Model getEntryPoint() {
+	return Step.all.selectOne(s|s.incoming.isEmpty());
+}
+
+operation Model getLinkPath() {
+  return "index.html";
+}
+
+operation Model getPageTitle() {
+  return "Main page";
+}
+
+operation Statement getPageTitle() {
+  return self.eContainer.name;
+}
+
+operation Step getLinkText() {
+  return self.text;
+}
+
+operation Step getLinkPath() {
+  return self.name.firstToLowerCase() + ".html";
+}
+
+operation Step getPageTitle() {
+  return self.eContainer.name + " - "  + self.text;
+}
+
+operation Step getNextStep(): Step {
+  return self.outgoing.first?.to;
+}

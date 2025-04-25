@@ -1,0 +1,40 @@
+[% import "common.eol";
+
+// @template means the result is returned as a string instead
+// of being directly added to the output (so we can trim it)
+@template
+operation Step link() {%]
+<a href="[%=self.getLinkPath()%]">[%=self.getLinkText()%]</a>
+[%}
+
+// Link for a transition, rather than to a step directly
+@template
+operation Transition link() {%]
+<a href="[%=self.to.getLinkPath()%]">[%=self.text ?: self.to.text%]</a>
+[%}
+
+operation header() {%]
+<html>
+  <head>
+    <title>[%=m.name%] Call Centre</title>
+  </head>
+  <body>
+    <h1>[%=pageTitle%]</h1>
+[%
+}
+
+operation footer() {%]
+  </body>
+</html>
+[% }
+
+operation Step listTransitions() {%]
+  <ul>
+  [% for (t in self.outgoing) {%]
+    <li>[%=t.link().trim()%]</li>
+  [% } %]
+  </ul>
+[%
+}
+
+%]

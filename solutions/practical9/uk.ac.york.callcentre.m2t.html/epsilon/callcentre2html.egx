@@ -1,4 +1,46 @@
+import "common.eol";
+
 rule Model2MainPage transform m: Model {
   template: "index.egl"
-  target: "index.html"
+  target: m.getLinkPath()
+  parameters: Map {
+    "entryPoint" = m.getEntryPoint(),
+    "pageTitle" = m.getPageTitle()
+  }
+}
+
+rule CallRedirection2Page transform cr: CallRedirection {
+  template: "callredirection2html.egl"
+  target: cr.getLinkPath()
+  parameters: Map {
+    "m" = cr.eContainer,
+    "pageTitle" = cr.getPageTitle()
+  }
+}
+
+rule Decision2Page transform d: Decision {
+  template: "decision2html.egl"
+  target: d.getLinkPath()
+  parameters: Map {
+    "m" = d.eContainer,
+    "pageTitle" = d.getPageTitle()
+  }
+}
+
+rule InputQuestion2Page transform iq: InputQuestion {
+  template: "inputquestion2html.egl"
+  target: iq.getLinkPath()
+  parameters: Map {
+    "m" = iq.eContainer,
+    "pageTitle" = iq.getPageTitle()
+  }
+}
+
+rule Statement2Page transform st: Statement {
+  template: "statement2html.egl"
+  target: st.getLinkPath()
+  parameters: Map {
+    "m" = st.eContainer,
+    "pageTitle" = st.getPageTitle()
+  }
 }

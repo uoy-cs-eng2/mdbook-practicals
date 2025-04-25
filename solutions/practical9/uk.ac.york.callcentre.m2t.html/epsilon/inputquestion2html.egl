@@ -1,0 +1,11 @@
+[%
+  import "common.egl";
+  header();
+%]
+  <form action="[%=iq.getNextStep().getLinkPath()%]" method="get">
+    <input type="text" name="[%=iq.variable%]"/>
+    <input type="submit"/>
+  </form>
+[%
+  footer();
+%]

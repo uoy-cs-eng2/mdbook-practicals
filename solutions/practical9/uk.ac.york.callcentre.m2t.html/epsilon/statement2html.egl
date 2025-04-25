@@ -1,0 +1,9 @@
+[%
+  import "common.egl";
+  header();
+%]
+  <p>[%=st.text%]</p>
+[%
+  st.listTransitions();
+  footer();
+%]
