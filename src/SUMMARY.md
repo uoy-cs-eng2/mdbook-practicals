@@ -60,5 +60,8 @@
     - [Model-to-text transformation](./practicals/model-transformation/m2t.md)
     - [Model-to-model transformation](./practicals/model-transformation/m2m.md)
     - [Additional exercises](./practicals/model-transformation/additional-exercises.md)
-    
-    
+  - [Model workflows](./practicals/model-workflows/index.md)
+    - [Introduction](./practicals/model-workflows/01-introduction.md)
+    - [Ant workflows](./practicals/model-workflows/02-ant-workflows.md)
+    - [EUnit testing](./practicals/model-workflows/03-eunit.md)
+    - [Additional exercises](./practicals/model-workflows/04-additional-exercises.md)

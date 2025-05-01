@@ -1,0 +1,17 @@
+<project default="main">
+    <target name="main">
+        <!-- Load the model.flexmi EMF model -->
+        <epsilon.emf.loadModel name="M" modelfile="model.flexmi" metamodelfile="metamodel.emf" />
+        
+        <!-- Run program.egx against it -->
+        <epsilon.egl src="program.egx">
+            <model ref="M" />
+        </epsilon.egl>
+        
+        <!-- Dispose of the model -->
+        <epsilon.disposeModel model="M"/>
+
+        <!-- Refresh the project to pick up any created or updated files -->
+    	<eclipse.refreshLocal resource="playground-example" depth="infinite"/>
+    </target>
+</project>
