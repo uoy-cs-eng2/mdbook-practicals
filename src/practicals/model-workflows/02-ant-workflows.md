@@ -20,17 +20,29 @@ Click Run.
 
 Modify `build.xml` so that the constraints in [the related EVL example](https://eclipse.dev/epsilon/playground/?evl) are executed before the EGL model-to-text transformation. For more information, see slide 7 of the Model Management Workflows lecture.
 
-Note that there are several ways to do this:
+First, paste the Ant tasks in the main target of the EVL `build.xml` before the ones in the EGL `build.xml` file.
+Ensure this works as intended, by changing `model.flexmi` so that it violates one of the EVL constraints (e.g. set the duration of the Analysis task to a negative number), and running `build.xml` again: the build should fail in the validation step and code generation should not take place.
 
-* The most obvious one is to simply paste the Ant tasks in the main target of the EVL `build.xml` before the ones in the EGL `build.xml` file.
-* The above example would result in a significant amount of duplication, however, and it would also mean loading the model twice (once before EVL, and again before EGL). You could change the buildfile so it only loads the model once at the beginning, runs EVL, then EGL, disposes of the model, and refreshes the project in Eclipse.
-* You could go further and use the ability of Ant targets to [depend on each other](https://ant.apache.org/manual/targets.html), and set up a structure like this:
-  * `load-model` target only loads the model.
-  * `dispose-model` target disposes of the model and refreshes the project.
-  * `run-evl` target only runs the EVL script.
-  * `run-egl` target only runs the EGL script.
-  * `main` target depends on `load-model`, `run-evl`, `run-egl`, and `dispose-model`, in that order.
+The above approach would result in a significant amount of duplication, and it would also mean loading the model twice (once before EVL, and again before EGL). Change the buildfile so it only loads the model once at the beginning, runs EVL, then EGL, disposes of the model, and refreshes the project in Eclipse.
 
-Change `model.flexmi` so that it violates one of the EVL constraints (e.g. set the duration of the Analysis task to a negative number).
+Finally, let's take advantage of the fact that Ant targets can [depend on each other](https://ant.apache.org/manual/targets.html), like this:
 
-Run `build.xml` again: the build should fail in the validation step and code generation should not take place.
+```xml
+<!-- A, B, and C will be automatically run before X starts -->
+<target name="X" depends="A,B,C">
+  ...
+</target>
+```
+
+Reorganise the `build.xml` so it has these targets:
+* `load-model` target only loads the model.
+* `dispose-model` target disposes of the model and refreshes the project.
+* `run-evl` target only runs the EVL script, and depends on `load-model`.
+* `run-egl` target only runs the EGL script, and depends on `load-model`.
+* `main` target depends on `run-evl`, `run-egl`, and `dispose-model`, in that order, and is otherwise empty.
+
+Ensure the build still works as expected before moving on.
+
+## Solutions
+
+Model solutions for the exercises are available in [this ZIP file](../../solutions/practical10.zip).

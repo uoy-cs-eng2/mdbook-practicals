@@ -1,0 +1,8 @@
+@test
+operation expectedCodeIsProduced() {
+  runTarget('run-test-egl');
+  assertEqualDirectories(
+    basedir + '/tests/expected',
+    basedir + '/tests/output/gen'
+  );
+}

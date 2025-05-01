@@ -1,0 +1,61 @@
+@model
+operation initialModel() {
+  var p = new Person;
+  var t = new Task;
+  t.start = 1;
+  t.duration = 3;
+
+  var e = new Effort;
+  t.effort.add(e);
+  e.person = p;
+}
+
+@test
+operation goodModel() {
+  var errors = validateModel();
+  assertEquals(0, errors.size);
+}
+
+@test
+operation task_badStart() {
+  Task.all.first.start = -1;
+
+  var errors = validateModel();
+  assertEquals(1, errors.size);
+  assertEquals(t, errors.first.instance);
+  assertEquals("ValidStart", errors.first.constraint.name);
+}
+
+@test
+operation task_negativeDuration() {
+  Task.all.first.duration = -3;
+
+  var errors = validateModel();
+  assertEquals(1, errors.size);
+  assertEquals(t, errors.first.instance);
+  assertEquals("ValidDuration", errors.first.constraint.name);
+}
+
+@test
+operation task_tooLongDuration() {
+  Task.all.first.duration = 15;
+
+  var errors = validateModel();
+  assertEquals(1, errors.size);
+  assertEquals(t, errors.first.instance);
+  assertEquals("TaskNotTooLong", errors.first.constraint.name);
+}
+
+@test
+operation person_notInvolved() {
+  delete Effort.all.first;
+  var errors = validateModel();
+  assertEquals(1, errors.size);
+  assertEquals(p, errors.first.instance);
+  assertEquals("IsInvolvedInATask", errors.first.constraint.name);
+}
+
+operation validateModel() {
+  runTarget('run-test-evl');
+  return EVL!UnsatisfiedConstraint.all;
+}

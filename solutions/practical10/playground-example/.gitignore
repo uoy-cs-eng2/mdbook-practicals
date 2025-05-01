@@ -1,1 +1,3 @@
 gen/
+TEST-*.xml
+tests/output
