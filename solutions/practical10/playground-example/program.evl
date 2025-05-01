@@ -1,0 +1,37 @@
+// For every task
+context Task {
+	
+	// Check that the start month is positive
+	constraint ValidStart {
+		check: self.start > 0
+		message: "The start month of a task must be positive"
+	}
+
+	// Check that the duration is positive
+	constraint ValidDuration {
+		check: self.duration > 0
+		message: "The duration of a task must be positive"
+	}
+
+	// Check that the duration is no more than 12 months
+	constraint TaskNotTooLong {
+		check: self.duration <= 12
+		message: "The duration of a task must not exceed 12 months"
+	}
+
+}
+
+// For every person
+context Person {
+	
+	// Check that the person is involved
+	// in at least one task
+	critique IsInvolvedInATask {
+		check: Effort.all.
+			exists(e|e.person = self)
+
+		message: self.name + 
+			" is not involved in the project"
+	}
+
+}
