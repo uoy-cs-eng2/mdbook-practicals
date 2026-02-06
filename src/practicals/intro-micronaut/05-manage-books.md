@@ -21,7 +21,7 @@ public void createBook(@Body Book book) {}
 ```
 
 Note how the method has a `book` parameter annotated with `@Body`: this indicates to Micronaut that the endpoint will deserialise a JSON-formattted `Book` object from the HTTP request body.
-All the possible ways in which you can take parts of the HTTP request and bind them to variables are listed in the [official Micronaut documentation](https://docs.micronaut.io/4.7.11/guide/#binding).
+All the possible ways in which you can take parts of the HTTP request and bind them to variables are listed in the [official Micronaut documentation](https://docs.micronaut.io/4.10.13/guide/#binding).
 
 Using the Java Collections Framework, add a map from integers to `Book` objects to your `BooksController`.
 If you are unfamiliar with the JCF, consult the Java Collections Framework resources in the Java knowledge map of the VLE.

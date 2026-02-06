@@ -42,4 +42,4 @@ You should be familiar with these concepts from the Week 5 lectures:
 
 ## What you will do
 
-You will start from a solution of Practical 4 (either yours, or [our model solution](../../solutions/practical4.zip)) and work through the rest of the sections.
+You will start from a solution of Practical 4 (either yours, or [our model solution](../../solutions/practical3.zip)) and work through the rest of the sections.

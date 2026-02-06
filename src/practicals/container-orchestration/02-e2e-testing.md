@@ -28,7 +28,7 @@ Use [Micronaut Launch](https://micronaut.io/launch/) as usual, but this time, do
 * Features: do not select any features.
 
 Download the project and import it to your IDE.
-For this practical, you will need to have in your IDE both a solution to Practical 4 (either yours or the [model solution](../../solutions/practical4.zip)), and the end-to-end test project.
+For this practical, you will need to have in your IDE both a solution to Practical 4 (either yours or the [model solution](../../solutions/practical3.zip)), and the end-to-end test project.
 
 *NOTE*: in this practical we will not make *any* changes to `book-microservice` at all.
 We will only develop `e2e-tests` and a Compose file that deploys `book-microservice`.

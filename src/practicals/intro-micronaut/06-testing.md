@@ -6,7 +6,7 @@ Micronaut has specific facilities for helping with tests, while emulating real H
 ## Creating the declarative HTTP client
 
 In order to test all the steps that real requests would go through, our tests will send HTTP requests to our application, instead of directly calling the methods of the controller.
-To simplify that task, we will use the [declarative HTTP client support](https://docs.micronaut.io/4.7.11/guide/#clientAnnotation) in Micronaut.
+To simplify that task, we will use the [declarative HTTP client support](https://docs.micronaut.io/4.10.13/guide/#clientAnnotation) in Micronaut.
 
 Within the `test` folder (which should have all the code for our tests, so we do not unnecessarily bundle it with a regular release), create a `resources` subpackage within `uk.ac.york.cs.eng2.books`.
 
@@ -57,7 +57,7 @@ private BooksClient booksClient;
 ```
 
 `@Inject` is one of several standard annotations for dependency injection: these are originally from the [JSR-330 specification](https://jcp.org/en/jsr/detail?id=330) (starting with `javax.inject`), which were later renamed to `jakarta.inject`.
-Micronaut supports a wide range of dependency injection mechanisms: here we use the simplest form of [field injection](https://docs.micronaut.io/4.7.11/guide/#fieldInjection).
+Micronaut supports a wide range of dependency injection mechanisms: here we use the simplest form of [field injection](https://docs.micronaut.io/4.10.13/guide/#fieldInjection).
 
 Let's add the most basic test one could imagine: if we ask for the list of books without having added anything yet, we should get the empty list.
 It would look like this:
@@ -132,7 +132,7 @@ We still need to write test methods for these scenarios:
 * Update a book that doesn't exist.
 * Delete a book that doesn't exist.
 
-However, there is a slight complication: 404 errors [are not rethrown as exceptions from the Micronaut declarative client](https://docs.micronaut.io/4.7.11/guide/#clientError).
+However, there is a slight complication: 404 errors [are not rethrown as exceptions from the Micronaut declarative client](https://docs.micronaut.io/4.10.13/guide/#clientError).
 We were able to test the scenario where we try to fetch a missing book by asserting that the declarative client returned `null` instead of a `Book` object, but our `updateBook` and `deleteBook` methods simply return `void`, so we do not have anything to check in a JUnit assertion.
 
 Go to the `BooksClient` declarative HTTP client interface, and change the return type of `updateBook` and `deleteBook` to `HttpResponse`.
