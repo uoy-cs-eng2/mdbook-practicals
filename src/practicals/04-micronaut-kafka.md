@@ -1,4 +1,4 @@
-# Practical 3: Reacting to events
+# Practical 4: Reacting to events
 
 This is the worksheet for the third practical in the Engineering 2 module.
 

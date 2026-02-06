@@ -1,4 +1,4 @@
-# Practical 4: Integrating external services
+# Practical 3: Integrating external services
 
 This is the worksheet for the fourth practical in the Engineering 2 module.
 

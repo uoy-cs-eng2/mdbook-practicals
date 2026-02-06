@@ -1,20 +1,8 @@
 # Practicals
 
-These are the practicals that have been migrated to the new format so far.
-More practicals will be available as the module progresses.
+These are the worksheets for the practicals of the "Engineering 2: Automated Software Engineering" module at the University of York.
 
-## Part 1: data-intensive systems
+The practicals are divided into two parts:
 
-1. [Micronaut basics](practicals/01-micronaut-basics.md)
-1. [ORM with Micronaut Data](practicals/02-micronaut-data.md)
-1. [Reacting to events with Micronaut Kafka](practicals/03-micronaut-kafka.md)
-1. [Integrating external services](practicals/04-service-integration.md)
-1. [Deploying via container orchestration](practicals/05-container-orchestration.md)
-
-## Part 2: model-driven engineering
-
-1. [Metamodelling and modelling](practicals/modelling-and-metamodelling/index.md)
-1. [Graphical syntax and editor development](practicals/graphical-syntax-and-editor-development/index.md)
-1. [Model querying and validation](practicals/model-querying-and-validation/index.md)
-1. [Model transformation](practicals/model-transformation/index.md)
-1. [Model workflows](practicals/model-workflows/index.md)
+* [Part 1](./practicals/part1.md) covers data-intensive systems with the [Micronaut](https://micronaut.io/) framework.
+* [Part 2](./practicals/part2.md) covers model-driven engineering within the Eclipse modelling ecosystem ([EMF](https://eclipse.dev/emf/), [Epsilon](https://eclipse.dev/epsilon/), and [Sirius](https://eclipse.dev/sirius/)).
