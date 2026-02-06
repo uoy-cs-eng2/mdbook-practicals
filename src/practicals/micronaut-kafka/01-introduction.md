@@ -36,4 +36,4 @@ You should be familiar with these concepts from the lectures:
 
 ## What you will do
 
-You will create a new Micronaut project that will consume the events from [this simulator](../../solutions/practical3-simulator.zip) (also written as a Micronaut application).
+You will create a new Micronaut project that will consume the events from [this simulator](../../solutions/practical4-simulator.zip) (also written as a Micronaut application).

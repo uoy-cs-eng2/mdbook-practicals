@@ -2,7 +2,7 @@
 
 For this practical, you will need to run two Micronaut applications at the same time:
 
-* The simulator available [here](../../solutions/practical3-simulator.zip), which you should download, unzip, and open in your IDE. You should only need to run its `run` Gradle task (with Docker Desktop running) to have it start producing events.
+* The simulator available [here](../../solutions/practical4-simulator.zip), which you should download, unzip, and open in your IDE. You should only need to run its `run` Gradle task (with Docker Desktop running) to have it start producing events.
 * A new `checkin-stats` Micronaut application that you will have to create via [Micronaut Launch](https://micronaut.io/launch/).
 
 ## Using Micronaut Launch
