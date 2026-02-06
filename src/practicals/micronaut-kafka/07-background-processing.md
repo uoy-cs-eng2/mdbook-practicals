@@ -1,6 +1,6 @@
 # Background processing
 
-In the previous section, we changed the controller so it would immediately try to obtain the publisher while adding or updating a book.
+In Practical 3, we changed the controller so it would immediately try to obtain the publisher while adding or updating a book.
 
 That created *temporal coupling* between our application and the external service, as it requires OpenLibrary to be available at the same time a book is being added or updated.
 This may not always be the case: OpenLibrary may be down at that time, in which case we may want to leave that until later.
@@ -13,7 +13,7 @@ This means adding books will feel faster again, but users may not immediately se
 
 ## Adding Kafka to the project
 
-Add Kafka support to your project.
+Add Kafka support to your Practical 3 project.
 Remember from [Practical 2](../micronaut-data/02-libraries.md#updating-our-project) that you can use the "Diff" button in [Micronaut Launch](https://micronaut.io/launch) to tell you what needs to be changed to support a new feature (in this case, the `kafka` one).
 
 ## Creating the Kafka topic

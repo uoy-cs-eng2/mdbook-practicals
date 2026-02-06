@@ -6,15 +6,6 @@ We hope that you found it interesting to use the Gateway pattern and use it both
 
 Here are some ideas on things you could try to expand upon what we have covered in this practical.
 
-## Create a "dead-letter" topic
-
-In the previous section, when the gateway threw an error, we asked you to simply print an error message.
-
-Beyond this, you could create a separate topic where we will keep the events that we couldn't process.
-
-This is known as a "dead-letter" topic (from the US English term used for undeliverable mail due to an incomplete address).
-It can be useful for system administrators and developers to inspect this topic periodically and investigate what may have happened.
-
 ## Enable caching in the gateway
 
 To reduce the load imposed on OpenLibrary from our application and improve its responsiveness, it may be good to adopt [Micronaut Cache](https://micronaut-projects.github.io/micronaut-cache/5.1.0/guide/) to automatically cache the results from our gateway.

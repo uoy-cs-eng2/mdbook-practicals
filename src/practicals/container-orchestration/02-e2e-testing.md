@@ -100,7 +100,7 @@ await().atMost(Duration.ofSeconds(SECONDS)).until(callable_of_expectation);
 In the above code:
 
 * `SECONDS` is the number of seconds you want to wait for.
-* `callable_of_expectation` is a `Callable<Boolean>` object which encodes your expectation as to what should be the eventual state of the system (in this case, that asking for the publisher of the book would give you the expected result). It's common to instantiate such a `Callable<Boolean>` through [lambda expressions](https://dev.java/learn/lambdas/first-lambdas/) (which we discussed in the Week 4 lectures).
+* `callable_of_expectation` is a `Callable<Boolean>` object which encodes your expectation as to what should be the eventual state of the system (in this case, that asking for the publisher of the book would give you the expected result). It's common to instantiate such a `Callable<Boolean>` through [lambda expressions](https://dev.java/learn/lambdas/first-lambdas/) (which we discussed in the Week 3 lectures).
 
 ### Re-running the end-to-end test from a clean slate
 
