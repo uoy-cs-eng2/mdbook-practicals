@@ -13,7 +13,8 @@ This means adding books will feel faster again, but users may not immediately se
 
 ## Adding Kafka to the project
 
-Add Kafka support to your Practical 3 project.
+Add Kafka support to your Practical 3 project (or start from [its model solution](../../solutions/practical3.zip)).
+
 Remember from [Practical 2](../micronaut-data/02-libraries.md#updating-our-project) that you can use the "Diff" button in [Micronaut Launch](https://micronaut.io/launch) to tell you what needs to be changed to support a new feature (in this case, the `kafka` one).
 
 ## Creating the Kafka topic
