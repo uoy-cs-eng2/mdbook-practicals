@@ -5,6 +5,8 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.exceptions.HttpStatusException;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -12,8 +14,8 @@ import uk.ac.york.cs.eng2.books.domain.Author;
 import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
-import uk.ac.york.cs.eng2.books.events.BookIsbnChange;
-import uk.ac.york.cs.eng2.books.events.BooksProducer;
+import uk.ac.york.cs.eng2.books.gateways.BookCatalogGateway;
+import uk.ac.york.cs.eng2.books.gateways.BookCatalogInfo;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
@@ -21,6 +23,7 @@ import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 import java.net.URI;
 import java.util.*;
 
+@ExecuteOn(TaskExecutors.BLOCKING)
 @Tag(name="books")
 @Controller("/books")
 public class BooksController {
@@ -34,7 +37,7 @@ public class BooksController {
   private AuthorRepository authorRepository;
 
   @Inject
-  private BooksProducer booksProducer;
+  private BookCatalogGateway catalogGateway;
 
   @Get
   public List<Book> getBooks() {
@@ -49,7 +52,6 @@ public class BooksController {
     updatePublisher(dto, book);
 
     book = repository.save(book);
-    booksProducer.isbnChanged(book.getId(), new BookIsbnChange(null, dto.getIsbn()));
     return HttpResponse.created(URI.create("/books/" + book.getId()));
   }
 
@@ -60,8 +62,30 @@ public class BooksController {
         throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Publisher not found");
       }
       book.setPublisher(publisher.get());
+    } else if (dto.getIsbn() != null) {
+      Optional<BookCatalogInfo> oPublishers = catalogGateway.findByIsbn(dto.getIsbn());
+      if (oPublishers.isPresent()) {
+        handleGatewayResponse(oPublishers.get(), book);
+      }
     } else {
       book.setPublisher(null);
+    }
+  }
+
+  protected void handleGatewayResponse(BookCatalogInfo info, Book book) {
+    List<String> publishers = info.getPublishers();
+    if (!publishers.isEmpty()) {
+      String publisherName = publishers.get(0);
+
+      Optional<Publisher> p = publisherRepository.findByName(publisherName);
+      if (p.isPresent()) {
+        book.setPublisher(p.get());
+      } else {
+        Publisher newPublisher = new Publisher();
+        newPublisher.setName(publisherName);
+        newPublisher = publisherRepository.save(newPublisher);
+        book.setPublisher(newPublisher);
+      }
     }
   }
 
@@ -124,14 +148,9 @@ public class BooksController {
     Book book = oBook.get();
 
     book.setTitle(dto.getTitle());
-    String oldIsbn = book.getIsbn();
     book.setIsbn(dto.getIsbn());
-
     updatePublisher(dto, book);
     repository.save(book);
-    if (!Objects.equals(oldIsbn, dto.getIsbn())) {
-      booksProducer.isbnChanged(book.getId(), new BookIsbnChange(oldIsbn, dto.getIsbn()));
-    }
   }
 
   @Delete("/{id}")
