@@ -21,7 +21,7 @@ Successfully tagged book-microservice:latest
 
 This means that your local Docker installation now has a `book-microservice` image, with the `latest` tag.
 
-In a real-world environment you would normally push this image to a repository (e.g. Docker Hub, Github Packages, or your company's), but in ENG2 we will limit ourselves to local images.
+In a real-world environment you would normally push this image to a registry (e.g. Docker Hub, Github Packages, or your company's), but in ENG2 we will limit ourselves to local images.
 
 ## Starting the Compose file: initial skeleotn
 
@@ -49,7 +49,7 @@ Looking at their instructions, we figure out that we want to update our Compose 
 ```yaml
 services:
   db:
-    image: mariadb:11
+    image: mariadb:12
     environment:
       MARIADB_USER: books
       MARIADB_PASSWORD: bookspw
@@ -67,7 +67,7 @@ volumes:
 
 The above fragment means the following:
 
-* The `db` service runs the MariaDB 11 image from the Docker Hub.
+* The `db` service runs the MariaDB 12 image from the Docker Hub.
 * The `db` service mounts the `mariadb_data` named volume into `/var/lib/mysql` so the database can survive the re-creation of the container, as suggested in the image documentation (see "Where to Store Data").
 * The `db` service sets a few environment variables that are used by the image to set the username and password for the default database, as well as the password of the root MariaDB user.
 * The `db` service includes an automated healthcheck (based on the image instructions). This is used in two ways:
@@ -132,25 +132,23 @@ If you copied over the `kafka-ui` service, you should also be able to [access it
 Here are some details of how we have configured this cluster.
 If you would like to know more, read on, otherwise go to the next step:
 
-* We use the [Bitnami Kafka image](https://hub.docker.com/r/bitnami/kafka) as they are non-root containers, which offer an additional layer of security over the more standard [Confluent Kafka](https://hub.docker.com/r/confluentinc/cp-kafka) image. 
+* We use the [Apache Kafka image](https://hub.docker.com/r/apache/kafka), which is based from its open-source release without any Confluent extras. 
 * We choose 3 nodes as that is the minimal number we need in order to reach consensus (2 nodes would run into ties).
   The overall multi-node setup is as follows:
-  * Each node has a unique ID (`KAFKA_CFG_NODE_ID`) within the cluster.
-  * Kafka nodes can have different roles (controller, broker), but here we have all 3 nodes take on both roles (`KAFKA_CFG_PROCESS_ROLES`).
-  * Nodes need to know about each other for voting processes (`KAFKA_CFG_CONTROLLER_QUORUM_VOTERS`).
-  * Kafka uses a consensus protocol to agree on the overall cluster state. Kafka used to rely on a separate [ZooKeeper cluster](https://zookeeper.apache.org/) for this, but recent versions can instead use the [KRaft protocol](https://developer.confluent.io/learn/kraft/).
-    The `KAFKA_KRAFT_CLUSTER_ID` variable provides a unique identifier for the KRaft cluster this node belongs to.
-    In a production environment, this would be a pseudorandom string.
+  * Each node has a unique ID (`KAFKA_NODE_ID`) within the cluster.
+  * Kafka nodes can have different roles (controller, broker), but here we have all 3 nodes take on both roles (`KAFKA_PROCESS_ROLES`).
+  * Nodes need to know about each other for voting processes (`KAFKA_CONTROLLER_QUORUM_VOTERS`).
 * Each node has a number of "listeners" that accept connections, with different roles:
   * Within the Compose network, regular users (like our microservice) will use the `PLAINTEXT` listeners which listen on port 9092.
   * Controllers will talk to each other via the `CONTROLLER` listeners bound to port 9093.
-  * Only the `PLAINTEXT` listener is advertised to regular users (`KAFKA_CFG_ADVERTISED_LISTENERS`).
-  * We use plaintext security for both listeners (`KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP`): in a production environment we will use stronger security.
-  * We use `KAFKA_CFG_CONTROLLER_LISTENER_NAMES` and `KAFKA_CFG_INTER_BROKER_LISTENER_NAME` to indicate the listeners used for inter-controller and inter-broker communication.
-* We have some default topic settings: 6 partitions, and replication factor of 3.
+  * Only the `PLAINTEXT` listener is advertised to regular users (`KAFKA_ADVERTISED_LISTENERS`).
+  * We use plaintext security for both listeners (`KAFKA_LISTENER_SECURITY_PROTOCOL_MAP`): in a production environment we will use stronger security.
+  * We use `KAFKA_CONTROLLER_LISTENER_NAMES` and `KAFKA_INTER_BROKER_LISTENER_NAME` to indicate the listeners used for inter-controller and inter-broker communication.
+* We have some default topic settings: 6 partitions (`KAFKA_NUM_PARTITIONS`), 3 replicas (`KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR`, `KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR`), and a minimum of 2 replicas must confirm each write when producing events (`KAFKA_TRANSACTION_STATE_LOG_MIN_ISR`).
   * The settings in our `NewTopic` instances take precedence over these, however.
-* We have disabled topic autocreation: instead, we use our topic factories. This prevents unintentional creation of topics.
-* There are some options for integrating the [Java Management Extensions](https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html) instrumentation to automatically obtain certain metrics, such as memory usage.
+* We have disabled topic autocreation (`KAFKA_AUTO_CREATE_TOPICS_ENABLE`): instead, we use our topic factories. This prevents unintentional creation of topics.
+* `JMX_PORT` enables the [Java Management Extensions](https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html) instrumentation to automatically obtain certain metrics, such as memory usage.
+  * In this module, we will not secure it to keep things simple, but this must be done for a production environment.
 
 ## Adding the microservice
 

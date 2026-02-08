@@ -13,9 +13,9 @@ This will help us test that the container orchestration is working as intended.
 
 You should be able to:
 
-* Generate clients from OpenAPI specifications (from Practical 4).
+* Generate clients from OpenAPI specifications (from [Practical 3](../03-service-integration.md)).
 
-You should be familiar with these concepts from the Week 4 lectures:
+You should be familiar with these concepts from the Week 3 lectures:
 
 * How to write test assertions about the expected eventual state of the system using Awaitility.
 
@@ -42,4 +42,4 @@ You should be familiar with these concepts from the Week 5 lectures:
 
 ## What you will do
 
-You will start from a solution of Practical 4 (either yours, or [our model solution](../../solutions/practical3.zip)) and work through the rest of the sections.
+You will start from a solution of the [Background Processing](../micronaut-kafka/07-background-processing.md) exercise of Practical 4 (either yours, or [our model solution](../../solutions/practical4-books.zip)) and work through the rest of the sections.
