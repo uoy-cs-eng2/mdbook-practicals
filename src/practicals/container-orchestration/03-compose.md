@@ -170,6 +170,10 @@ books:
       condition: service_healthy
     kafka-0:
       condition: service_healthy
+    kafka-1:
+      condition: service_healthy
+    kafka-2:
+      condition: service_healthy
 ```
 
 This service uses the image we built before, and has some settings of its own:
@@ -185,8 +189,7 @@ This service uses the image we built before, and has some settings of its own:
   * `KAFKA_BOOTSTRAP_SERVERS` is equivalent to setting `kafka.bootstrap.servers` in our `application.properties`.
     It is a comma-separated list of the Kafka brokers that the microservice should connect to, which matches the `PLAINTEXT` listeners we set up to listen on port 9092 of each Kafka node.
     Note again how the hostnames match the service names of the Compose file.
-* We use `depends_on` to indicate that this service should only be started after `db` and `kafka-0` have started.
-  In fact, we go even further and wait for them to be healthy, by using the `condition: service_healthy` option.
+* We use `depends_on` to indicate that this service should only be started after `db` and all Kafka nodes have started and passed their health check, by using the `condition: service_healthy` option.
 
 Save your `compose.yml` file and click on the "Run All" button next to its `services:` line.
 After some time, you should see the `books` service running as well (with a green icon):
