@@ -30,8 +30,21 @@ You should be familiar with these concepts from the lectures:
 * An IDE with Gradle and Java support: in this worksheet, we discuss [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 * A local installation of [Docker Desktop](https://www.docker.com/get-started/).
   Ensure Docker Desktop is running before you start this practical.
-  *  Note: if using a lab machine, you will need to boot Windows as Docker
-     Desktop is not installed in the Linux image.
+  * Note: if using a lab machine, you will need to boot Windows as Docker
+    Desktop is not installed in the Linux image.
+
+If you have a recent installation of Docker Desktop (using Docker Engine 29 or newer), you will need to tell the Docker Java libraries to use version 1.44 of the Docker API, until [this issue in Micronaut](https://github.com/micronaut-projects/micronaut-test-resources/issues/941) is fixed.
+From a Linux/Mac terminal, or from Git Bash in Windows, run this command:
+
+```shell
+echo api.version=1.44 > $HOME/.docker-java.properties
+```
+
+If you do not have Git Bash on Windows, you can run this from PowerShell instead:
+
+```
+"api.version=1.44" | set-content $HOME/.docker-java.properties -Encoding Ascii
+```
 
 ## What you will do
 
