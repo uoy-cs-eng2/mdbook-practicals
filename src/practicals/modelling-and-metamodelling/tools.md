@@ -1,7 +1,7 @@
 # Tools
 
 - A ready-to-use Eclipse bundle with all required tools (EMF, Emfatic, Flexmi) pre-installed is available in the lab machines
-- Once you have logged into Windows, search for `Epsilon 2.5` in the Start Menu
+- Once you have logged into Windows, search for `Epsilon 2.8` in the Start Menu
 - When prompted to select the location of your Eclipse workspace, you **must** select a folder under the `H:` drive e.g. `H:\eng2-workspace`
 
 ![Workspace selection screenshot](workspace-selection.png)
