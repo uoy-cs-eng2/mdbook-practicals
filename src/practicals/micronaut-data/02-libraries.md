@@ -42,15 +42,15 @@ Here is a quick summary of the notation:
   `OLD_FILE` and `NEW_FILE` may be the same if the file has not been moved.
 * `@@ -oldL, oldS +newL, newS@@` start a `hunk` describing a change in the file.
   The hunk refers to the lines from `oldL` to `oldL+oldS` in the old file, and to the lines from `newL` to `newL+newS` in the new file.
-* Lines starting with `-` are the old lines to be removed.
-* Lines starting with `+` are the new lines to be added.
+* Lines starting with `-` are the old lines to be removed, compared to a default Micronaut configuration.
+* Lines starting with `+` are the new lines to be added, compared to a default Micronaut configuration.
 * Lines starting with a space are just context to help understand the change.
 
 If you read through the changes, you will see that you have to do the following:
 
 * Optionally, add a few `features` to the list in `micronaut-cli.yml`, which match the ones you selected in Micronaut Launch. This is only used by Micronaut CLI, which is not used in the module: you may skip this.
 * Add the `io.micronaut.test-resources` plugin to the list in your `build.gradle` file.
-* Add the listed dependencies to the `dependencies` block in your `build.gradle` file.
+* Add any dependencies you don't have already to the `dependencies` block in your `build.gradle` file.
 * Optionally, add some text to your `README.md` file with some useful links to the relevant documentation.
 * Create a new `src/test/resources/application-test.properties` file with some content within your project.
 * Add a few lines to your `src/main/resources/application.properties` file.
