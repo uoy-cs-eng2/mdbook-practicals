@@ -11,10 +11,8 @@ You should be able to:
 
 * Implement basic Micronaut microservices that respond to HTTP requests (from Practical 1).
 * Query and update a relational database within a Micronaut microservice using Micronaut Data (from Practical 2).
-* Write Kafka consumers and producers (from Practical 3).
-* Use interaction-based testing (e.g. Mockito) (from Practical 3).
 
-You should be familiar with these concepts from the Week 4 lectures:
+You should be familiar with these concepts from the lectures:
 
 * The differences between in-process and inter-process communication.
 * How the Gateway pattern helps encapsulate the details of interacting with an external service.

@@ -10,6 +10,7 @@ You should be able to:
 
 * Implement basic Micronaut microservices that respond to HTTP requests (from Practical 1).
 * Query and update a relational database within a Micronaut microservice using Micronaut Data (from Practical 2).
+* Calling other microservices from your own microservice (from Practical 3).
 
 You should be familiar with these concepts from the lectures:
 
