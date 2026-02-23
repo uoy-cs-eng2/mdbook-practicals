@@ -2,7 +2,7 @@
 
 Congratulations on completing this practical!
 
-We hope that you found it interesting to use the Gateway pattern and use it both from a controller, and from a background job via Kafka.
+We hope that you found it interesting to use the Gateway pattern and use it from a controller.
 
 Here are some ideas on things you could try to expand upon what we have covered in this practical.
 

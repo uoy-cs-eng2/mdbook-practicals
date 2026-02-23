@@ -4,6 +4,9 @@ In this practical, you will write a microservice that will consume the events fr
 
 To do so, you will use [Micronaut Kafka](https://micronaut-projects.github.io/micronaut-kafka/latest/guide/).
 
+You will also revisit the solution from Practical 3 and rework it to fetch information in the background, to reduce the latency of requests to add books.
+To do so, we will use Kafka consumers and producers to decouple the processing of book requests from the use of the external API.
+
 ## What you should already know
 
 You should be able to:
@@ -51,3 +54,5 @@ If you do not have Git Bash on Windows, you can run this from PowerShell instead
 ## What you will do
 
 You will create a new Micronaut project that will consume the events from [this simulator](../../solutions/practical4-simulator.zip) (also written as a Micronaut application).
+
+You will also revisit your solution to Practical 3 (or its [model solution](../../solutions/practical3.zip)) to move the invocations to OpenLibrary to a background process.

@@ -2,9 +2,6 @@
 
 In this practical, you will extend the book-related microservice by adding an integration with the [OpenLibrary APIs](https://openlibrary.org/developers/api) to fetch more information about the books that are added to the database.
 
-This fetching will take place in the background, to avoid increasing the latency of requests to add books.
-To do so, we will use Kafka consumers and producers to decouple the processing of book requests from the use of the external API.
-
 ## What you should already know
 
 You should be able to:
