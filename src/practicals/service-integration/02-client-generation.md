@@ -19,16 +19,12 @@ If we want to generate clients from the OpenLibrary OpenAPI spec, we will need t
 Open your `build.gradle` file, and add this line to the `plugins` section:
 
 ```groovy
-id("io.micronaut.openapi") version "4.4.4"
+id("io.micronaut.openapi") version "4.6.1"
 ```
-
-Save the file and reload all Gradle projects as we did [at the end of the first section of Practical 2](../micronaut-data/02-libraries.md#ready-to-move-on).
-
-If you did it correctly, the "Gradle" drawer in IntelliJ should show a new "Tasks - micronaut openapi" folder.
 
 ## Configuring the Micronaut OpenAPI Gradle plugin
 
-We need to let the Micronaut OpenAPI Gradle know about the OpenLibrary spec.
+We also need to let the Micronaut OpenAPI Gradle know about the OpenLibrary spec.
 Within the `micronaut` section of the `build.gradle` file, add this block:
 
 ```groovy
@@ -42,7 +38,11 @@ openapi {
 }
 ```
 
-Reload all Gradle projects again, and try running the `build` Gradle task.
+Save the file and reload all Gradle projects as we did [at the end of the first section of Practical 2](../micronaut-data/02-libraries.md#ready-to-move-on).
+
+If you did it correctly, the "Gradle" drawer in IntelliJ should show a new "Tasks - micronaut openapi" folder.
+
+Try running the `build` Gradle task.
 You will see that a number of classes ending in `Api` were generated for us within the `build/generated/openapi` folder:
 
 ![Screenshot of some of the generated clients](./openlibrary-genclient.png)
