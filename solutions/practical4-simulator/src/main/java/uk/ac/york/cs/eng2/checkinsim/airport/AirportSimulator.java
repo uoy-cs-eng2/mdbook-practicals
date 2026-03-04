@@ -118,7 +118,7 @@ public class AirportSimulator {
 			return stuck;
 		}
 
-		public boolean isDuringCheckin() {
+		public boolean isDuringCheckIn() {
 			return checkinEnd != null;
 		}
 
@@ -131,7 +131,7 @@ public class AirportSimulator {
 			if (checkinEnd == null) {
 				if (random.nextDouble() < CHECKIN_PROBABILITY) {
 					fireEvent(EventType.CHECK_IN, Terminal.this);
-					computeCheckinEnd();
+					computeCheckInEnd();
 				}
 			} else if (paperLeft > 0 && checkinEnd.isBefore(Instant.now())) {
 				fireEvent(EventType.COMPLETED, Terminal.this);
@@ -152,7 +152,7 @@ public class AirportSimulator {
 			}
 		}
 
-		private void computeCheckinEnd() {
+		private void computeCheckInEnd() {
 			final int checkinSeconds = CHECKIN_MINIMUM_SECONDS + random.nextInt(CHECKIN_MAXIMUM_SECONDS - CHECKIN_MINIMUM_SECONDS);
 			checkinEnd = Instant.now().plus(Duration.ofSeconds(checkinSeconds).dividedBy(speedupFactor));
 		}
@@ -162,8 +162,8 @@ public class AirportSimulator {
 			final int originalPaper = this.paperLeft;
 			this.paperLeft = FULL_PAPER_AMOUNT;
 			if (originalPaper == 0 && checkinEnd != null) {
-				// Checkin stopped due to no paper: restart it
-				computeCheckinEnd();
+				// Check-in stopped due to no paper: restart it
+				computeCheckInEnd();
 			}
 		}
 
@@ -173,8 +173,8 @@ public class AirportSimulator {
 				crashed = false;
 				stuck = false;
 				if (checkinEnd != null) {
-					// Checkin stopped to due crash: restart it
-					computeCheckinEnd();
+					// Check-in stopped to due crash: restart it
+					computeCheckInEnd();
 				}
 			}
 		}
@@ -224,7 +224,7 @@ public class AirportSimulator {
 	 * This method should be overridden if we want to do something more interesting with these events.
 	 */
 	protected void fireEvent(EventType type, Terminal t) {
-		System.out.printf("Terminal %s at time %s: generated event %s%s%n", t.getId(), Instant.now(), type, t.isDuringCheckin() ? " (during check-in)" : "");
+		System.out.printf("Terminal %s at time %s: generated event %s%s%n", t.getId(), Instant.now(), type, t.isDuringCheckIn() ? " (during check-in)" : "");
 	}
 
 }

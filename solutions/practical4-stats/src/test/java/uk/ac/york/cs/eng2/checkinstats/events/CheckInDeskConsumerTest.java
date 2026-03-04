@@ -12,7 +12,7 @@ import java.time.Instant;
 import static org.junit.jupiter.api.Assertions.*;
 
 @MicronautTest(transactional = false)
-public class CheckinDeskConsumerTest {
+public class CheckInDeskConsumerTest {
 
   @Inject
   private CheckInDeskConsumer consumer;
@@ -32,7 +32,7 @@ public class CheckinDeskConsumerTest {
 
     CheckInDesk checkInDesk = repo.findByDeskId(123).get();
     assertEquals(123, checkInDesk.getDeskId());
-    assertEquals(nowMillis, checkInDesk.getCheckinStartedAt().toEpochMilli());
+    assertEquals(nowMillis, checkInDesk.getCheckInStartedAt().toEpochMilli());
     assertNull(checkInDesk.getLastStatusAt());
     assertFalse(checkInDesk.getOutOfOrder());
   }
@@ -45,7 +45,7 @@ public class CheckinDeskConsumerTest {
 
     CheckInDesk checkInDesk = repo.findByDeskId(123).get();
     assertEquals(123, checkInDesk.getDeskId());
-    assertNull(checkInDesk.getCheckinStartedAt());
+    assertNull(checkInDesk.getCheckInStartedAt());
     assertNull(checkInDesk.getLastStatusAt());
     assertFalse(checkInDesk.getOutOfOrder());
   }
@@ -58,7 +58,7 @@ public class CheckinDeskConsumerTest {
 
     CheckInDesk checkInDesk = repo.findByDeskId(123).get();
     assertEquals(123, checkInDesk.getDeskId());
-    assertEquals(nowMillis, checkInDesk.getCheckinStartedAt().toEpochMilli());
+    assertEquals(nowMillis, checkInDesk.getCheckInStartedAt().toEpochMilli());
     assertNull(checkInDesk.getLastStatusAt());
     assertTrue(checkInDesk.getOutOfOrder());
   }

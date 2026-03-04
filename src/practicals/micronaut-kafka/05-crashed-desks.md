@@ -24,7 +24,7 @@ Update the `CheckInDesk` entity to reflect this new column.
 
 ## Creating the consumer
 
-Create the `StatusUpdateConsumer` that will consume the `CheckinTopics.TOPIC_STATUS` records,
+Create the `StatusUpdateConsumer` that will consume the `CheckInTopics.TOPIC_STATUS` records,
 and update the `lastStatusAt` field in `CheckInDesk` to the timestamp of the given Kafka record.
 
 ## Testing the consumer

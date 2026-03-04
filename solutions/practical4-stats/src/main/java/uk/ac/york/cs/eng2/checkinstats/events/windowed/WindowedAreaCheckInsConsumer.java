@@ -6,15 +6,15 @@ import io.micronaut.configuration.kafka.annotation.OffsetReset;
 import io.micronaut.configuration.kafka.annotation.Topic;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import uk.ac.york.cs.eng2.checkinstats.domain.WindowedAreaCheckinStat;
+import uk.ac.york.cs.eng2.checkinstats.domain.WindowedAreaCheckInStat;
 import uk.ac.york.cs.eng2.checkinstats.events.CheckInTopics;
 import uk.ac.york.cs.eng2.checkinstats.events.TerminalInfo;
-import uk.ac.york.cs.eng2.checkinstats.repositories.WindowedAreaCheckinStatRepository;
+import uk.ac.york.cs.eng2.checkinstats.repositories.WindowedAreaCheckInStatRepository;
 
 import java.time.Instant;
 
-@KafkaListener(groupId = "windowed-area-checkins", threads=3, offsetReset = OffsetReset.EARLIEST)
-public class WindowedAreaCheckinsConsumer {
+@KafkaListener(groupId = "windowed-area-check-ins", threads=3, offsetReset = OffsetReset.EARLIEST)
+public class WindowedAreaCheckInsConsumer {
 
   /*
    * Time windows are "tumbling": they start at the epoch (midnight on
@@ -23,10 +23,10 @@ public class WindowedAreaCheckinsConsumer {
   public static final int WINDOW_SIZE_MILLIS = 60_000;
 
   @Inject
-  private WindowedAreaCheckinsProducer producer;
+  private WindowedAreaCheckInsProducer producer;
 
   @Inject
-  private WindowedAreaCheckinStatRepository repo;
+  private WindowedAreaCheckInStatRepository repo;
 
   @Topic({ CheckInTopics.TOPIC_CHECKIN, CheckInTopics.TOPIC_COMPLETED, CheckInTopics.TOPIC_CANCELLED })
   public void checkInEvent(@KafkaKey long deskId, TerminalInfo tInfo, String topic, long timestamp) {
@@ -37,8 +37,8 @@ public class WindowedAreaCheckinsConsumer {
   }
 
   @Transactional
-  @Topic(WindowedAreaCheckinsTopicFactory.TOPIC_WINDOWED_CHECKINS)
-  public void windowedCheckin(@KafkaKey CheckInAreaWindow key, String originalTopic) {
+  @Topic(WindowedAreaCheckInsTopicFactory.TOPIC_WINDOWED_CHECKINS)
+  public void windowedCheckIn(@KafkaKey CheckInAreaWindow key, String originalTopic) {
     String statName = switch(originalTopic) {
       case CheckInTopics.TOPIC_CHECKIN -> "started";
       case CheckInTopics.TOPIC_COMPLETED -> "completed";
@@ -53,9 +53,9 @@ public class WindowedAreaCheckinsConsumer {
     }
 
     Instant windowStartAt = Instant.ofEpochMilli(key.windowStartEpochMillis());
-    WindowedAreaCheckinStat stat = repo
+    WindowedAreaCheckInStat stat = repo
         .findByAreaAndWindowStartAtAndName(key.area(), windowStartAt, statName)
-        .orElse(new WindowedAreaCheckinStat(key.area(), windowStartAt, statName));
+        .orElse(new WindowedAreaCheckInStat(key.area(), windowStartAt, statName));
 
     stat.setValue(stat.getValue() + 1);
     repo.save(stat);

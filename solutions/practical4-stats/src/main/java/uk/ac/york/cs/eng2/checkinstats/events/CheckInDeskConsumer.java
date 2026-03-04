@@ -18,7 +18,7 @@ public class CheckInDeskConsumer {
   @Topic(CheckInTopics.TOPIC_CHECKIN)
   public void checkInStarted(@KafkaKey long deskId, TerminalInfo tInfo, long timestamp) {
     CheckInDesk desk = repo.findByDeskId(deskId).orElse(new CheckInDesk(deskId));
-    desk.setCheckinStartedAt(Instant.ofEpochMilli(timestamp));
+    desk.setCheckInStartedAt(Instant.ofEpochMilli(timestamp));
     desk.setOutOfOrder(false);
     repo.save(desk);
   }
@@ -27,7 +27,7 @@ public class CheckInDeskConsumer {
   @Topic({CheckInTopics.TOPIC_CANCELLED, CheckInTopics.TOPIC_COMPLETED})
   public void checkInDone(@KafkaKey long deskId, TerminalInfo tInfo, long timestamp) {
     CheckInDesk desk = repo.findByDeskId(deskId).orElse(new CheckInDesk(deskId));
-    desk.setCheckinStartedAt(null);
+    desk.setCheckInStartedAt(null);
     desk.setOutOfOrder(false);
     repo.save(desk);
   }

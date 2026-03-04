@@ -15,7 +15,7 @@ public interface CheckInDeskRepository extends CrudRepository<CheckInDesk, Long>
 
   List<CheckInDesk> findByOutOfOrder(boolean outOfOrder);
 
-  List<CheckInDesk> findByOutOfOrderAndCheckinStartedAtIsNotNull(boolean outOfOrder);
+  List<CheckInDesk> findByOutOfOrderAndCheckInStartedAtIsNotNull(boolean outOfOrder);
 
   List<CheckInDesk> findByLastStatusAtBefore(Instant before);
 }

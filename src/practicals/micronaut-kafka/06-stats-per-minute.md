@@ -38,7 +38,7 @@ Let's break down the problem into steps, as usual.
 
 ## Adding the database migration
 
-Create a database migration script called `V4__create-windowed-area-checkin-stats.sql`, with this content:
+Create a database migration script called `V4__create-windowed-area-check-in-stats.sql`, with this content:
 
 ```sql
 create table windowed_area_checkin_stat (
@@ -59,7 +59,7 @@ In other words, this table has two keys:
 
 ## Creating the entity and the repository
 
-Similarly to previous exercises, you will need to create a JPA entity for the rows in the table (which would be named `WindowedAreaCheckinStat`, based on the name of the table).
+Similarly to previous exercises, you will need to create a JPA entity for the rows in the table (which would be named `WindowedAreaCheckInStat`, based on the name of the table).
 
 Create a repository for the entity, and add a custom query that can find the entity with a specific `(area, windowStartAt, name)` combination.
 
@@ -71,21 +71,21 @@ This is to ensure that it will always be the same consumer manipulating the rele
 Since the new key is not a predefined Java type (like `long`) but rather a composite of multiple values, we need to create our own `@Serdeable` class with that combination.
 The simplest thing is to use a `record`.
 
-Create a `windowed` subpackage inside your `events` package, and add this `CheckinAreaWindow` record to it:
+Create a `windowed` subpackage inside your `events` package, and add this `CheckInAreaWindow` record to it:
 
 ```java
 @Serdeable
-public record CheckinAreaWindow(int area, long windowStartEpochMillis) {}
+public record CheckInAreaWindow(int area, long windowStartEpochMillis) {}
 ```
 
-We will use `CheckinAreaWindow` instances as the key of our internal topic.
+We will use `CheckInAreaWindow` instances as the key of our internal topic.
 Note that internally, Kafka sees the key of a record as just an arbitrary sequence of bytes, which is hashed to decide the partition.
 In this case, the `@Serdeable` annotation will ensure that it is serialised on the fly into JSON before being sent to Kafka.
 
 ## Creating the internal topic
 
 We will need an internal topic as destination for the re-keyed `((area, minute), event_type)` records.
-Within the new `windowed` subpackage, create a `WindowedAreaCheckinsTopicFactory` class that sets up this topic:
+Within the new `windowed` subpackage, create a `WindowedAreaCheckInsTopicFactory` class that sets up this topic:
 
 * It should be annotated with `@Requires(bean=AdminClient.class)`, so Micronaut sets up the Kafka administration client before this one.
 * It should also be annotated with `@Factory`, so Micronaut knows it's a class that contains factory methods (i.e. methods that create new *beans* to manage).
@@ -101,13 +101,13 @@ In case you're unsure about how to write this factory, you may want to refer to 
 
 We have the key type and the factory for the internal topic: we need the producer interface for it.
 
-Create the `WindowedAreaCheckinsProducer` interface in the `windowed` subpackage.
+Create the `WindowedAreaCheckInsProducer` interface in the `windowed` subpackage.
 It should be annotated with `@KafkaClient` (as it is a producer).
 
 The interface should have a method that doesn't return anything and is annotated with `@Topic(TOPIC_WINDOWED_CHECKINS)`.
 It should take two parameters:
 
-* `@KafkaKey CheckinAreaWindow key`, the key for the record.
+* `@KafkaKey CheckInAreaWindow key`, the key for the record.
 * The event type (e.g. a String within {"started", "completed", "cancelled"}).
 
 ## Writing the consumers
@@ -116,14 +116,14 @@ We're finally ready to write the consumer class.
 The consumer should do the following:
 
 * Consume `(desk_id, terminal_info)` events from the topics related to starting, completing, and cancelling checkins, and produce new events into the internal topic.
-  Each new event would have a `CheckinAreaWindow` as key, and an indication of whether the check-in is being started, completed, or cancelled as the body.
+  Each new event would have a `CheckInAreaWindow` as key, and an indication of whether the check-in is being started, completed, or cancelled as the body.
   * The area of the key will just be the hundreds digit of the desk ID (`deskId / 100`): we have 500 desks in the simulation so this will be enough.
   * The `windowStartEpochMillis` refers to the start of the 60-second time window that this record refers to, and it will be measured in milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time) (UNIX time 0, or `1970-01-01 00:00`).
     For instance, if the current time (measured in milliseconds since the epoch) is `currentTimeEpochMillis`, this can be computed as:
     ```java
     currentTimeEpochMillis - (currentTimeEpochMillis % 60_000)
     ```
-* Consume the re-keyed events in the internal topic, and create or update the relevant `WindowedAreaCheckinStat`.
+* Consume the re-keyed events in the internal topic, and create or update the relevant `WindowedAreaCheckInStat`.
 
 ## Testing the re-keying via Mockito
 
@@ -131,7 +131,7 @@ Before writing the controller that will return the data collated by the new cons
 The consumer class has two behaviours to test: the re-keying (which involves producing records), and the updating of the database.
 We will test them separately, so we do not need to involve the Kafka cluster for our unit testing.
 
-Create a new `WindowedAreaCheckinsConsumerTest` test class.
+Create a new `WindowedAreaCheckInsConsumerTest` test class.
 
 To test that the consumer re-keys events as expected, we will swap the producer during testing with a *mock*.
 Instead of sending the event to an actual Kafka cluster, we will capture the method invocation so we can check the producer was called with the right arguments.
@@ -145,16 +145,16 @@ testImplementation("org.mockito:mockito-core:5.15.2")
 Since you changed the `build.gradle` file, make sure that your IDE reloads the Gradle project as needed.
 In IntelliJ, you would need to press the "Reload All Gradle Projects" button as we did at the [beginning of Practical 2](../micronaut-data/02-libraries.md#ready-to-move-on).
 
-Now that we have Mockito for testing, create a new `WindowedAreaCheckinsConsumerTest` test class.
+Now that we have Mockito for testing, create a new `WindowedAreaCheckInsConsumerTest` test class.
 As usual, you will want to annotate it with `@MicronautTest(transactional = false)`, and you will need to inject the consumer, the producer, and the repository that you developed in this section.
 You should also have a test setup method that deletes all the rows before each test.
 
 The next step is to add the following method, which will create the mock that Micronaut should use during testing:
 
 ```java
-@MockBean(WindowedAreaCheckinsProducer.class)
-public WindowedAreaCheckinsProducer getProducer() {
-  return mock(WindowedAreaCheckinsProducer.class);
+@MockBean(WindowedAreaCheckInsProducer.class)
+public WindowedAreaCheckInsProducer getProducer() {
+  return mock(WindowedAreaCheckInsProducer.class);
 }
 ```
 
@@ -168,7 +168,7 @@ For instance, if we sent an event that a check-in was started at millisecond 601
 
 ```java
 verify(producer).checkin(
-  eq(new CheckinAreaWindow(1, 60_000)),
+  eq(new CheckInAreaWindow(1, 60_000)),
   eq("started"));
 ```
 
@@ -178,7 +178,7 @@ The above code means "producer.checkin() should have been called with arguments 
 ## Testing the consumer's database updates
 
 Since we tested the re-keying on its own, we can now test the database updates separately as well.
-Add test methods to `WindowedAreaCheckinsConsumerTest` that check that the database is updated as it should from the re-keyed events.
+Add test methods to `WindowedAreaCheckInsConsumerTest` that check that the database is updated as it should from the re-keyed events.
 
 ## Extending the controller
 

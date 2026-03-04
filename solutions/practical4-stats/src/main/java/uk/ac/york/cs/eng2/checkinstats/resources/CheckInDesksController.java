@@ -26,7 +26,7 @@ public class CheckInDesksController {
 
   @Get("/stuck")
   public Collection<CheckInDesk> stuck() {
-    return repo.findByOutOfOrderAndCheckinStartedAtIsNotNull(true);
+    return repo.findByOutOfOrderAndCheckInStartedAtIsNotNull(true);
   }
 
   @Get("/crashed")

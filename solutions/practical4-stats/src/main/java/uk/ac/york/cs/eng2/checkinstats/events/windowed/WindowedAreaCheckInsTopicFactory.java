@@ -8,12 +8,12 @@ import org.apache.kafka.clients.admin.NewTopic;
 
 @Requires(bean=AdminClient.class)
 @Factory
-public class WindowedAreaCheckinsTopicFactory {
+public class WindowedAreaCheckInsTopicFactory {
 
-  public static final String TOPIC_WINDOWED_CHECKINS = "windowed-checkins-by-area";
+  public static final String TOPIC_WINDOWED_CHECKINS = "windowed-check-ins-by-area";
 
   @Bean
-  public NewTopic windowedCheckinsTopic() {
+  public NewTopic windowedCheckInsTopic() {
     return new NewTopic(TOPIC_WINDOWED_CHECKINS, 3, (short) 1);
   }
 

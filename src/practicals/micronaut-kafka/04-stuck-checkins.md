@@ -10,7 +10,7 @@ and provide these endpoints:
 
 ## Adding the database migration
 
-Add a migration script called `V2__create-checkin-desk.sql` with this content:
+Add a migration script called `V2__create-check-in-desk.sql` with this content:
 
 ```sql
 create table check_in_desk (

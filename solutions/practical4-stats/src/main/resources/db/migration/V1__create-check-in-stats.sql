@@ -1,6 +1,6 @@
 create sequence hibernate_sequence;
 
-create table partitioned_checkin_stat (
+create table partitioned_check_in_stat (
     id bigint primary key not null,
     name varchar(255) not null,
     partition_id int not null,

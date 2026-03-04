@@ -3,13 +3,13 @@ package uk.ac.york.cs.eng2.checkinstats.events;
 import io.micronaut.configuration.kafka.annotation.*;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckinStat;
-import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckinStatRepository;
+import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckInStat;
+import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckInStatRepository;
 
-@KafkaListener(groupId="checkin-stats", threads = 3, offsetReset = OffsetReset.EARLIEST)
+@KafkaListener(groupId="check-in-stats", threads = 3, offsetReset = OffsetReset.EARLIEST)
 public class CheckInStatisticsConsumer {
   @Inject
-  private PartitionedCheckinStatRepository repo;
+  private PartitionedCheckInStatRepository repo;
 
   @Transactional
   @Topic(CheckInTopics.TOPIC_CHECKIN)
@@ -30,9 +30,9 @@ public class CheckInStatisticsConsumer {
   }
 
   private void incrementStatistic(int partition, String statName) {
-    PartitionedCheckinStat current = repo
+    PartitionedCheckInStat current = repo
         .findByPartitionIdAndName(partition, statName)
-        .orElse(new PartitionedCheckinStat(partition, statName));
+        .orElse(new PartitionedCheckInStat(partition, statName));
 
     current.setValue(current.getValue() + 1);
     repo.save(current);

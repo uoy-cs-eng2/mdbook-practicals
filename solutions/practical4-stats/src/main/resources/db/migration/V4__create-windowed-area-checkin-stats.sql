@@ -1,4 +1,4 @@
-create table windowed_area_checkin_stat (
+create table windowed_area_check_in_stat (
     id bigint primary key not null,
     area int not null,
     window_start_at timestamp(3) not null,

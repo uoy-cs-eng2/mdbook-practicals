@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class PartitionedCheckinStat {
+public class PartitionedCheckInStat {
   @Id
   @GeneratedValue
   private Long id;
@@ -20,11 +20,11 @@ public class PartitionedCheckinStat {
   @Column
   private Long value;
 
-  public PartitionedCheckinStat() {
+  public PartitionedCheckInStat() {
     // no-arg constructor
   }
 
-  public PartitionedCheckinStat(int partition, String name) {
+  public PartitionedCheckInStat(int partition, String name) {
     this.partitionId = partition;
     this.name = name;
     this.value = 0L;

@@ -3,10 +3,10 @@ package uk.ac.york.cs.eng2.checkinstats.resources;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import jakarta.inject.Inject;
-import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckinStat;
-import uk.ac.york.cs.eng2.checkinstats.domain.WindowedAreaCheckinStat;
-import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckinStatRepository;
-import uk.ac.york.cs.eng2.checkinstats.repositories.WindowedAreaCheckinStatRepository;
+import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckInStat;
+import uk.ac.york.cs.eng2.checkinstats.domain.WindowedAreaCheckInStat;
+import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckInStatRepository;
+import uk.ac.york.cs.eng2.checkinstats.repositories.WindowedAreaCheckInStatRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,15 +15,15 @@ import java.util.Map;
 public class CheckInStatsController {
 
   @Inject
-  private PartitionedCheckinStatRepository repo;
+  private PartitionedCheckInStatRepository repo;
 
   @Inject
-  private WindowedAreaCheckinStatRepository winRepo;
+  private WindowedAreaCheckInStatRepository winRepo;
 
   @Get
   public Map<String, Long> getStats() {
     Map<String, Long> stats = new HashMap<>();
-    for (PartitionedCheckinStat stat : repo.findAll()) {
+    for (PartitionedCheckInStat stat : repo.findAll()) {
       /*
        * map.compute(key, keyval_function) is a shorthand way to build up a
        * calculation within a certain key in a map. More information is available
@@ -50,7 +50,7 @@ public class CheckInStatsController {
   public Map<Integer, Map<String, Map<String, Long>>> getWindowedStats() {
     Map<Integer, Map<String, Map<String, Long>>> stats = new HashMap<>();
 
-    for (WindowedAreaCheckinStat stat : winRepo.findAll()) {
+    for (WindowedAreaCheckInStat stat : winRepo.findAll()) {
       /*
        * map.computeIfAbsent(key, value_from_key_function) is a simplified version of
        * compute() which will get the existing value for that key if there is one, or

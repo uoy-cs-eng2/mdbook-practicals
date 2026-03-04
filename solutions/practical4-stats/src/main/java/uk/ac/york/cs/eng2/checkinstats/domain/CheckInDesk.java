@@ -52,11 +52,11 @@ public class CheckInDesk {
     this.deskId = deskId;
   }
 
-  public Instant getCheckinStartedAt() {
+  public Instant getCheckInStartedAt() {
     return checkinStartedAt;
   }
 
-  public void setCheckinStartedAt(Instant timestamp) {
+  public void setCheckInStartedAt(Instant timestamp) {
     this.checkinStartedAt = timestamp;
   }
 

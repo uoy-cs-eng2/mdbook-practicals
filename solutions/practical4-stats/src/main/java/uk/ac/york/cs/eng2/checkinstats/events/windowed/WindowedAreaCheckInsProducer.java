@@ -5,9 +5,9 @@ import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.Topic;
 
 @KafkaClient
-public interface WindowedAreaCheckinsProducer {
+public interface WindowedAreaCheckInsProducer {
 
-  @Topic(WindowedAreaCheckinsTopicFactory.TOPIC_WINDOWED_CHECKINS)
+  @Topic(WindowedAreaCheckInsTopicFactory.TOPIC_WINDOWED_CHECKINS)
   void checkin(@KafkaKey CheckInAreaWindow windowedArea, String originalTopic);
 
 }

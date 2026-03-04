@@ -22,7 +22,7 @@ public class AirportTopicFactory {
   }
 
   @Bean
-  public NewTopic createCheckinTopic() {
+  public NewTopic createCheckInTopic() {
     return new NewTopic(TOPIC_CHECKIN, 3, (short) 1);
   }
 

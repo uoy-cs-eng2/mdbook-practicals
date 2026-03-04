@@ -4,19 +4,19 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckinStat;
-import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckinStatRepository;
+import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckInStat;
+import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckInStatRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest(transactional = false)
-public class CheckinStatisticsConsumerTest {
+public class CheckInStatisticsConsumerTest {
 
   @Inject
   private CheckInStatisticsConsumer consumer;
 
   @Inject
-  private PartitionedCheckinStatRepository repo;
+  private PartitionedCheckInStatRepository repo;
 
   @BeforeEach
   public void setup() {
@@ -27,7 +27,7 @@ public class CheckinStatisticsConsumerTest {
   public void startedIsRecorded() {
     consumer.checkInStarted(0);
 
-    PartitionedCheckinStat stat = repo.findByPartitionIdAndName(0, "started").get();
+    PartitionedCheckInStat stat = repo.findByPartitionIdAndName(0, "started").get();
     assertEquals(1, stat.getValue());
   }
 
@@ -38,7 +38,7 @@ public class CheckinStatisticsConsumerTest {
     consumer.checkInCompleted(2);
     consumer.checkInCompleted(2);
 
-    PartitionedCheckinStat stat = repo.findByPartitionIdAndName(2, "completed").get();
+    PartitionedCheckInStat stat = repo.findByPartitionIdAndName(2, "completed").get();
     assertEquals(2, stat.getValue());
   }
 
@@ -47,7 +47,7 @@ public class CheckinStatisticsConsumerTest {
     consumer.checkInCancelled(2);
     consumer.checkInCompleted(2);
 
-    PartitionedCheckinStat stat = repo.findByPartitionIdAndName(2, "cancelled").get();
+    PartitionedCheckInStat stat = repo.findByPartitionIdAndName(2, "cancelled").get();
     assertEquals(1, stat.getValue());
     stat = repo.findByPartitionIdAndName(2, "completed").get();
     assertEquals(1, stat.getValue());

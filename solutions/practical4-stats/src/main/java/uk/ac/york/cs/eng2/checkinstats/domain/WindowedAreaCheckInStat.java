@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @Serdeable
 @Entity
-public class WindowedAreaCheckinStat {
+public class WindowedAreaCheckInStat {
   @Id
   @GeneratedValue
   private Long id;
@@ -27,11 +27,11 @@ public class WindowedAreaCheckinStat {
   @Column
   private Long value;
 
-  public WindowedAreaCheckinStat() {
+  public WindowedAreaCheckInStat() {
     // no-arg constructor
   }
 
-  public WindowedAreaCheckinStat(int area, Instant windowStartAt, String name) {
+  public WindowedAreaCheckInStat(int area, Instant windowStartAt, String name) {
     this.area = area;
     this.windowStartAt = windowStartAt;
     this.name = name;
@@ -80,7 +80,7 @@ public class WindowedAreaCheckinStat {
 
   @Override
   public String toString() {
-    return "WindowedAreaCheckinStat{" +
+    return "WindowedAreaCheckInStat{" +
         "id=" + id +
         ", area=" + area +
         ", windowStartAt=" + windowStartAt +

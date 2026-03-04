@@ -136,15 +136,15 @@ This `unique` constraint has two benefits:
 
 ### Adding the entity and repository
 
-Based on what you learned in Practical 2, create the `PartitionedCheckinStat` entity class for the above table, and its associated repository.
+Based on what you learned in Practical 2, create the `PartitionedCheckInStat` entity class for the above table, and its associated repository.
 
-You will need to add a custom query to your repository, which can find the `PartitionedCheckinStat` that has a certain partition ID and name.
+You will need to add a custom query to your repository, which can find the `PartitionedCheckInStat` that has a certain partition ID and name.
 Remember that custom queries are written by naming your methods according to the conventions in the Micronaut Data documentation.
 
 We will give you this custom query as an example, but you will have to figure out the others in this practical:
 
 ```java
-Optional<PartitionedCheckinStat> findByPartitionIdAndName(int partitionId, String name);
+Optional<PartitionedCheckInStat> findByPartitionIdAndName(int partitionId, String name);
 ```
 
 ### Copying over some useful code
@@ -152,14 +152,14 @@ Optional<PartitionedCheckinStat> findByPartitionIdAndName(int partitionId, Strin
 You will need some bits of code from the simulator project:
 
 * Copy over the `TerminalInfo` record to a new `.events` subpackage of your main package.
-* Create a new `CheckinTopics` interface inside the new `.events` subpackage, and copy over the `TOPIC_*` constants from `AirportTopicFactory`.
+* Create a new `CheckInTopics` interface inside the new `.events` subpackage, and copy over the `TOPIC_*` constants from `AirportTopicFactory`.
 
 ### Writing the actual consumer
 
 Our database code is ready, and we have the necessary information about the topics to be consumed.
 We can finally write our first consumer.
 
-Create a class called `CheckinStatisticsConsumer` in the `.events` subpackage, and add this annotation:
+Create a class called `CheckInStatisticsConsumer` in the `.events` subpackage, and add this annotation:
 
 ```java
 @KafkaListener(
@@ -182,13 +182,13 @@ The annotation has this meaning:
   We are using `EARLIEST` so a new consumer group will start from the beginning of each topic.
   The default is `LATEST`, which would have a new consumer group only process the records that are produced after its creation.
 
-Inject the repository for your `PartitionedCheckinStat` entities into this consumer.
+Inject the repository for your `PartitionedCheckInStat` entities into this consumer.
 
 Define three consumer methods:
 
-* One which takes the `CheckinTopics.TOPIC_CHECKIN` events and creates or increments the value associated to the "started" statistic and the partition of the record.
-* Same for `CheckinTopics.TOPIC_CANCELLED`, but the name is "cancelled".
-* Same for `CheckinTopics.TOPIC_COMPLETED`, but the name is "completed".
+* One which takes the `CheckInTopics.TOPIC_CHECKIN` events and creates or increments the value associated to the "started" statistic and the partition of the record.
+* Same for `CheckInTopics.TOPIC_CANCELLED`, but the name is "cancelled".
+* Same for `CheckInTopics.TOPIC_COMPLETED`, but the name is "completed".
 
 The methods have to meet a number of requirements:
 
@@ -203,7 +203,7 @@ Remember to use the custom query that we defined above.
 
 Once you have a first version of your consumer, it's time to test it.
 
-Create a `CheckinStatisticsConsumerTest` test class within a new subpackage of your main package within the `src/test/java` source folder.
+Create a `CheckInStatisticsConsumerTest` test class within a new subpackage of your main package within the `src/test/java` source folder.
 These tests will involve the database, so you will need to ensure a few things:
 
 * Tests should not run within a transaction.
@@ -223,9 +223,9 @@ Later in the module, we will discuss how to automate *end-to-end* tests that cov
 Now that we know that the consumer works as intended, we can expose it as a `GET /stats` endpoint.
 
 Based on what you learned on Practicals 1 and 2, create a controller that will produce a JSON output similar to the one at the top of this section.
-Note that you will need to obtain all the `PartitionedCheckinStat` (which should be fast as there won't be more than 9 of them), and sum their values across partitions for each unique name.
+Note that you will need to obtain all the `PartitionedCheckInStat` (which should be fast as there won't be more than 9 of them), and sum their values across partitions for each unique name.
 
-In this case, you could simply populate a `Map<String, Long>` and return it (which will automatically adapt to new names among the `PartitionedCheckinStat` entries), or you could create a dedicated DTO (which will need to be updated every time you want to track a new statistic).
+In this case, you could simply populate a `Map<String, Long>` and return it (which will automatically adapt to new names among the `PartitionedCheckInStat` entries), or you could create a dedicated DTO (which will need to be updated every time you want to track a new statistic).
 
 ## Trying everything together
 
