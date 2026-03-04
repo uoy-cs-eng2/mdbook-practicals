@@ -39,7 +39,7 @@ It is currently one of the most convenient types in Java for representing a give
 
 ## Creating the consumer
 
-Create a `CheckinDeskConsumer` consumer class.
+Create a `CheckInDeskConsumer` consumer class.
 You will need to give it a `groupId`, and you will want to use multiple threads and start from the beginning of the topics involved when the consumer group is created.
 
 In terms of actual behaviour, you should do this:

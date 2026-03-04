@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CheckinDeskConsumerTest {
 
   @Inject
-  private CheckinDeskConsumer consumer;
+  private CheckInDeskConsumer consumer;
 
   @Inject
   private CheckInDeskRepository repo;

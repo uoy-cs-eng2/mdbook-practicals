@@ -6,7 +6,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.ac.york.cs.eng2.checkinstats.domain.WindowedAreaCheckinStat;
-import uk.ac.york.cs.eng2.checkinstats.events.windowed.CheckinAreaWindow;
+import uk.ac.york.cs.eng2.checkinstats.events.windowed.CheckInAreaWindow;
 import uk.ac.york.cs.eng2.checkinstats.events.windowed.WindowedAreaCheckinsConsumer;
 import uk.ac.york.cs.eng2.checkinstats.events.windowed.WindowedAreaCheckinsProducer;
 import uk.ac.york.cs.eng2.checkinstats.repositories.WindowedAreaCheckinStatRepository;
@@ -45,18 +45,18 @@ public class WindowedAreaCheckinsConsumerTest {
 
   @Test
   public void eventIsRekeyed() {
-    consumer.checkInEvent(123L, null, CheckinTopics.TOPIC_CHECKIN, WINDOW_SIZE_MILLIS + 200);
+    consumer.checkInEvent(123L, null, CheckInTopics.TOPIC_CHECKIN, WINDOW_SIZE_MILLIS + 200);
 
     verify(producer).checkin(
-        eq(new CheckinAreaWindow(1, WINDOW_SIZE_MILLIS)),
-        eq(CheckinTopics.TOPIC_CHECKIN));
+        eq(new CheckInAreaWindow(1, WINDOW_SIZE_MILLIS)),
+        eq(CheckInTopics.TOPIC_CHECKIN));
   }
 
   @Test
   public void countsAreWindowed() {
-    consumer.windowedCheckin(new CheckinAreaWindow(1, WINDOW_SIZE_MILLIS), CheckinTopics.TOPIC_CHECKIN);
-    consumer.windowedCheckin(new CheckinAreaWindow(1, WINDOW_SIZE_MILLIS), CheckinTopics.TOPIC_CHECKIN);
-    consumer.windowedCheckin(new CheckinAreaWindow(1, WINDOW_SIZE_MILLIS * 2), CheckinTopics.TOPIC_CHECKIN);
+    consumer.windowedCheckin(new CheckInAreaWindow(1, WINDOW_SIZE_MILLIS), CheckInTopics.TOPIC_CHECKIN);
+    consumer.windowedCheckin(new CheckInAreaWindow(1, WINDOW_SIZE_MILLIS), CheckInTopics.TOPIC_CHECKIN);
+    consumer.windowedCheckin(new CheckInAreaWindow(1, WINDOW_SIZE_MILLIS * 2), CheckInTopics.TOPIC_CHECKIN);
 
     assertAreaCountIs(1, WINDOW_SIZE_MILLIS, "started", 2);
     assertAreaCountIs(1, WINDOW_SIZE_MILLIS * 2, "started", 1);
@@ -64,8 +64,8 @@ public class WindowedAreaCheckinsConsumerTest {
 
   @Test
   public void countsAreDividedByArea() {
-    consumer.windowedCheckin(new CheckinAreaWindow(2, WINDOW_SIZE_MILLIS), CheckinTopics.TOPIC_COMPLETED);
-    consumer.windowedCheckin(new CheckinAreaWindow(3, WINDOW_SIZE_MILLIS), CheckinTopics.TOPIC_COMPLETED);
+    consumer.windowedCheckin(new CheckInAreaWindow(2, WINDOW_SIZE_MILLIS), CheckInTopics.TOPIC_COMPLETED);
+    consumer.windowedCheckin(new CheckInAreaWindow(3, WINDOW_SIZE_MILLIS), CheckInTopics.TOPIC_COMPLETED);
 
     assertAreaCountIs(2, WINDOW_SIZE_MILLIS, "completed", 1);
     assertAreaCountIs(3, WINDOW_SIZE_MILLIS, "completed", 1);

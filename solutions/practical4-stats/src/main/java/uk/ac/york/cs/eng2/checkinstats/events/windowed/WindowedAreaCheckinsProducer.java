@@ -8,6 +8,6 @@ import io.micronaut.configuration.kafka.annotation.Topic;
 public interface WindowedAreaCheckinsProducer {
 
   @Topic(WindowedAreaCheckinsTopicFactory.TOPIC_WINDOWED_CHECKINS)
-  void checkin(@KafkaKey CheckinAreaWindow windowedArea, String originalTopic);
+  void checkin(@KafkaKey CheckInAreaWindow windowedArea, String originalTopic);
 
 }

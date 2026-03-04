@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller("/stats")
-public class CheckinStatsController {
+public class CheckInStatsController {
 
   @Inject
   private PartitionedCheckinStatRepository repo;

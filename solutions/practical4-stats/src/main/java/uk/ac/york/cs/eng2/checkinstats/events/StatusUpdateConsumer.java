@@ -17,7 +17,7 @@ public class StatusUpdateConsumer {
   private CheckInDeskRepository repo;
 
   @Transactional
-  @Topic(CheckinTopics.TOPIC_STATUS)
+  @Topic(CheckInTopics.TOPIC_STATUS)
   public void statusUpdate(@KafkaKey long deskId, TerminalInfo tInfo, long timestamp) {
     CheckInDesk desk = repo.findByDeskId(deskId).orElse(new CheckInDesk(deskId));
     desk.setLastStatusAt(Instant.ofEpochMilli(timestamp));

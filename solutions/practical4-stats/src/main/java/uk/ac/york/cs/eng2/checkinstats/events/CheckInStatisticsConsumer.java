@@ -7,24 +7,24 @@ import uk.ac.york.cs.eng2.checkinstats.domain.PartitionedCheckinStat;
 import uk.ac.york.cs.eng2.checkinstats.repositories.PartitionedCheckinStatRepository;
 
 @KafkaListener(groupId="checkin-stats", threads = 3, offsetReset = OffsetReset.EARLIEST)
-public class CheckinStatisticsConsumer {
+public class CheckInStatisticsConsumer {
   @Inject
   private PartitionedCheckinStatRepository repo;
 
   @Transactional
-  @Topic(CheckinTopics.TOPIC_CHECKIN)
+  @Topic(CheckInTopics.TOPIC_CHECKIN)
   public void checkInStarted(@KafkaPartition int partition) {
     incrementStatistic(partition, "started");
   }
 
   @Transactional
-  @Topic(CheckinTopics.TOPIC_CANCELLED)
+  @Topic(CheckInTopics.TOPIC_CANCELLED)
   public void checkInCancelled(@KafkaPartition int partition) {
     incrementStatistic(partition, "cancelled");
   }
 
   @Transactional
-  @Topic(CheckinTopics.TOPIC_COMPLETED)
+  @Topic(CheckInTopics.TOPIC_COMPLETED)
   public void checkInCompleted(@KafkaPartition int partition) {
     incrementStatistic(partition, "completed");
   }

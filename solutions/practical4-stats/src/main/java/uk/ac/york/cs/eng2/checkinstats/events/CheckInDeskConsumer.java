@@ -9,13 +9,13 @@ import uk.ac.york.cs.eng2.checkinstats.repositories.CheckInDeskRepository;
 import java.time.Instant;
 
 @KafkaListener(groupId="checkin-desks", threads = 3, offsetReset = OffsetReset.EARLIEST)
-public class CheckinDeskConsumer {
+public class CheckInDeskConsumer {
 
   @Inject
   private CheckInDeskRepository repo;
 
   @Transactional
-  @Topic(CheckinTopics.TOPIC_CHECKIN)
+  @Topic(CheckInTopics.TOPIC_CHECKIN)
   public void checkInStarted(@KafkaKey long deskId, TerminalInfo tInfo, long timestamp) {
     CheckInDesk desk = repo.findByDeskId(deskId).orElse(new CheckInDesk(deskId));
     desk.setCheckinStartedAt(Instant.ofEpochMilli(timestamp));
@@ -24,7 +24,7 @@ public class CheckinDeskConsumer {
   }
 
   @Transactional
-  @Topic({CheckinTopics.TOPIC_CANCELLED, CheckinTopics.TOPIC_COMPLETED})
+  @Topic({CheckInTopics.TOPIC_CANCELLED, CheckInTopics.TOPIC_COMPLETED})
   public void checkInDone(@KafkaKey long deskId, TerminalInfo tInfo, long timestamp) {
     CheckInDesk desk = repo.findByDeskId(deskId).orElse(new CheckInDesk(deskId));
     desk.setCheckinStartedAt(null);
@@ -33,7 +33,7 @@ public class CheckinDeskConsumer {
   }
 
   @Transactional
-  @Topic(CheckinTopics.TOPIC_OUTOFORDER)
+  @Topic(CheckInTopics.TOPIC_OUTOFORDER)
   public void checkInDeskOutOfOrder(@KafkaKey long deskId, TerminalInfo tInfo, long timestamp) {
     CheckInDesk desk = repo.findByDeskId(deskId).orElse(new CheckInDesk(deskId));
     desk.setOutOfOrder(true);

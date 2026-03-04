@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CheckinStatisticsConsumerTest {
 
   @Inject
-  private CheckinStatisticsConsumer consumer;
+  private CheckInStatisticsConsumer consumer;
 
   @Inject
   private PartitionedCheckinStatRepository repo;

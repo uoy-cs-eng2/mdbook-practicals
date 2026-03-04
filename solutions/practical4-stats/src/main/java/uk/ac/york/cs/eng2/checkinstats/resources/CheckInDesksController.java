@@ -10,7 +10,7 @@ import java.time.Instant;
 import java.util.Collection;
 
 @Controller("/desks")
-public class CheckinDesksController {
+public class CheckInDesksController {
   @Inject
   private CheckInDeskRepository repo;
 
