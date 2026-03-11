@@ -16,7 +16,13 @@ From Git Bash, you would switch to the relevant folder first:
 $ cd /mnt/c/Users/yourUsername
 $ mkdir -p docker-lab
 $ cd docker-lab
+$ export MSYS_NO_PATHCONV=1
 ```
+
+> [!NOTE]
+> The `export MSYS_NO_PATHCONV=1` line is needed to prevent the MSYS system underlying Git Bash to turn Unix-style paths to Windows-style paths, which breaks the bind mounts in some of the commands of this section.
+>
+> You will need this line for your own machine as well, if you are doing this section from Git Bash on Windows.
 
 ## Running the Hello World image
 
