@@ -36,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.LYCHEE_GITHUB_TOKEN }}
         with:
-          args: --verbose --exclude-loopback --no-progress --cache --max-cache-age 1d --user-agent 'curl/7.79.1' book
+          args: --verbose --exclude-loopback --no-progress --cache --max-cache-age 1d --user-agent 'curl/7.79.1' --root-dir book
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
