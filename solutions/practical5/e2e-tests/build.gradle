@@ -7,7 +7,7 @@ plugins {
 }
 
 version = "0.1"
-group = "uk.ac.york.cs.eng2.book.e2e"
+group = "uk.ac.york.cs.eng2.books.e2e"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,7 @@ dependencies {
 
 
 application {
-    mainClass = "uk.ac.york.cs.eng2.book.e2e.Application"
+    mainClass = "uk.ac.york.cs.eng2.books.e2e.Application"
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
@@ -40,7 +40,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("uk.ac.york.cs.eng2.book.e2e.*")
+        annotations("uk.ac.york.cs.eng2.books.e2e.*")
     }
     aot {
         // Please review carefully the optimizations enabled below

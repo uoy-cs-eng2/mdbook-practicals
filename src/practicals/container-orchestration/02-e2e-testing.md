@@ -20,7 +20,7 @@ Use [Micronaut Launch](https://micronaut.io/launch/) as usual, but this time, do
 * Application type: Micronaut Application.
 * Java version: 17.
 * Name: `e2e-tests`.
-* Base package: `uk.ac.york.cs.eng2.book.e2e`.
+* Base package: `uk.ac.york.cs.eng2.books.e2e`.
 * Micronaut version: latest 4.x version.
 * Language: Java.
 * Build tool: Gradle.
@@ -40,7 +40,8 @@ Once you have loaded both, your Gradle drawer should look like this:
 
 ## Generating the OpenAPI client
 
-Run `book-microservice`, download its OpenAPI specification from its Swagger UI into `src/main/openapi`, and configure the Gradle build of the `e2e-tets` project to produce a Micronaut declarative HTTP client from it.
+Run `book-microservice`, download its OpenAPI specification from its Swagger UI into `src/main/openapi`, and configure the Gradle build of the `e2e-tests` project to produce a Micronaut declarative HTTP client from it.
+Leave it running as you will need it for the actual end-to-end tests.
 
 You should be able to follow the same process as in [Practical 4](../service-integration/02-client-generation.md), adapting the `clientId`, package names, and file names accordingly.
 

@@ -1,4 +1,4 @@
-package uk.ac.york.cs.eng2.book.e2e;
+package uk.ac.york.cs.eng2.books.e2e;
 
 import io.micronaut.runtime.Micronaut;
 

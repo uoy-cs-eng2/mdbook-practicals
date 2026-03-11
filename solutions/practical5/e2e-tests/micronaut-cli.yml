@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: uk.ac.york.cs.eng2.book.e2e
+defaultPackage: uk.ac.york.cs.eng2.books.e2e
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle
