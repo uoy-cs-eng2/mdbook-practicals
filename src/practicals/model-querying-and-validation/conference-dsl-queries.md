@@ -23,11 +23,8 @@ For Q5, we will need to define a few helper operations for working with `HH:MM`-
 {{#include ../../../solutions/practical8/conference-dsl/query5.eol}}
 ```
 
-<div class="warning">
-<b>Statements after operations are ignored</b>
-
-The EOL execution engines ignores any statements that appear after the definition of the first operation in a `.eol` file. Therefore, if you were to move the first statement in the example above (`Track.all.select(t|t.start.isBefore("12:00")).size().println();`) to the end of the file, it would not get executed.
-</div>
+> [!WARNING]
+> The EOL execution engine ignores any statements that appear after the definition of the first operation in a `.eol` file. Therefore, if you were to move the first statement in the example above (`Track.all.select(t|t.start.isBefore("12:00")).size().println();`) to the end of the file, it would not get executed.
 
 ## Running queries Q1-Q5
 
@@ -71,11 +68,8 @@ The EOL execution engines ignores any statements that appear after the definitio
 
 - Select `conference.model` as the model file. If the file selection dialog is empty, start typing the name of the file or `**` to display all workspace files. 
 
-<div class="warning">
-<b>Have you selected the model file?</b>
-
-Double-check that you have selected the model file (`conference.model`) and **not** the metamodel file (`conference.ecore`) in this step. This is a common mistake to make.
-</div>
+> [!WARNING]
+> Double-check that you have selected the model file (`conference.model`) and **not** the metamodel file (`conference.ecore`) in this step. This is a common mistake to make.
 
 ![Step 14](images/step-14.png)
 

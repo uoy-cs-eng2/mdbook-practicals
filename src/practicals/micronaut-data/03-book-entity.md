@@ -215,13 +215,9 @@ Hibernate:
         book b1_0
 ```
 
-<div class="warning">
-<b>Do not use this in production!</b>
-
-You should remove these logging lines once done, as otherwise they could reveal sensitive information in the logs, and they would significantly increase their size.
+> [!WARNING]
+> <b>Do not use this in production!</b> You should remove these logging lines once done, as otherwise they could reveal sensitive information in the logs, and they would significantly increase their size.
 They should only be used during development, and never in production environments.
-</div>
-
 
 ## (Optional) Integrated database client in IntelliJ Ultimate
 
