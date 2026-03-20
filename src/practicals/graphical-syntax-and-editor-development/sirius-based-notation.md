@@ -11,7 +11,13 @@
 
 ## Example editors
 
-Below are two Sirius-based editors from which you can draw inspiration.
+Below are three Sirius-based editors from which you can draw inspiration.
+
+### Call Centre Language
+
+GitHub repository: [https://github.com/uoy-cs-eng2/callcentre-sirius](https://github.com/uoy-cs-eng2/callcentre-sirius)
+
+![](images/callcentre-editor.png)
 
 ### Project Scheduling Language
 
