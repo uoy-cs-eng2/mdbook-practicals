@@ -7,7 +7,7 @@ Design the metamodel of a DSL for modelling conferences using Emfatic. Below are
 - There are breaks between tracks (e.g., for lunch/coffee)
 - Each track/break takes place in one room
 - Each talk is delivered by one speaker
-- Each talk also has a pre-arranged discussant whose role is to provide critical feedback to the speaker
+- Each talk also has a pre-arranged discussant, whose role is to provide critical feedback
 - Each talk has a pre-defined duration
 
 ## Why?
