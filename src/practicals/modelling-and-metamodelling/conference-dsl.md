@@ -6,7 +6,8 @@ Design the metamodel of a DSL for modelling conferences using Emfatic. Below are
 - On every day, there are several talks organised in (potentially parallel) tracks
 - There are breaks between tracks (e.g., for lunch/coffee)
 - Each track/break takes place in one room
-- Each talk can be delivered by one or more speakers
+- Each talk is delivered by one speaker
+- Each talk also has a pre-arranged discussant whose role is to provide critical feedback to the speaker
 - Each talk has a pre-defined duration
 
 ## Why?
@@ -73,7 +74,7 @@ class Track extends Slot {
 class Talk {
     attr String title;
     attr int duration;
-    ref Person[*] speakers;
+    ref Person speaker;
     ref Person discussant;
 }
 
