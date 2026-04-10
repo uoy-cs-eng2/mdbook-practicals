@@ -58,4 +58,4 @@ If you click on that button, you will get a file comparison editor mentioning va
 
 ## Solutions
 
-Model solutions for the exercises are available in [this ZIP file](../../solutions/practical10.zip).
+Model solutions for the exercises are available in [this ZIP file](../../solutions/practical11.zip).

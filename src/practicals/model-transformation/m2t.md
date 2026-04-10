@@ -60,4 +60,4 @@ While the `callcentre2java` model-to-text transformation discussed in the M2T le
 
 ## Solutions
 
-Model solutions for the exercises are available in [this ZIP file](../../solutions/practical9.zip).
+Model solutions for the exercises are available in [this ZIP file](../../solutions/practical10.zip).

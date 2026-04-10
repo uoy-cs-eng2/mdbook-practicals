@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ASCII"?>
+<Conference xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="conference" xmi:id="_e-mNEObZEe-uj-1n3DNKPg">
+  <participants xmi:id="_e-mNEebZEe-uj-1n3DNKPg" fullName="Person 1" affiliation="University 1"/>
+  <participants xmi:id="_e-mNEubZEe-uj-1n3DNKPg" fullName="Person 2" affiliation="University 2"/>
+  <participants xmi:id="_e-mNE-bZEe-uj-1n3DNKPg" fullName="Person 3" affiliation="University 3"/>
+  <participants xmi:id="_e-mNFObZEe-uj-1n3DNKPg" fullName="Person 4" affiliation="University 4"/>
+  <participants xmi:id="_e-mNFebZEe-uj-1n3DNKPg" fullName="Person 5" affiliation="University 5"/>
+  <participants xmi:id="_e-mNFubZEe-uj-1n3DNKPg" fullName="Person 6" affiliation="University 6"/>
+  <participants xmi:id="_e-mNF-bZEe-uj-1n3DNKPg" fullName="Person 7" affiliation="University 7"/>
+  <participants xmi:id="_e-mNGObZEe-uj-1n3DNKPg" fullName="Person 8" affiliation="University 8"/>
+  <participants xmi:id="_e-mNGebZEe-uj-1n3DNKPg" fullName="Person 9" affiliation="University 9"/>
+  <participants xmi:id="_e-mNGubZEe-uj-1n3DNKPg" fullName="Person 10" affiliation="University 10"/>
+  <rooms xmi:id="_e-mNG-bZEe-uj-1n3DNKPg" name="Room 1"/>
+  <rooms xmi:id="_e-mNHObZEe-uj-1n3DNKPg" name="Room 2"/>
+  <rooms xmi:id="_e-mNHebZEe-uj-1n3DNKPg" name="Room 3"/>
+  <rooms xmi:id="_e-mNHubZEe-uj-1n3DNKPg" name="Room 4"/>
+  <days xmi:id="_e-mNH-bZEe-uj-1n3DNKPg" name="Day 1">
+    <slots xsi:type="Track" xmi:id="_e-mNIObZEe-uj-1n3DNKPg" start="09:00" end="12:30" room="_e-mNHubZEe-uj-1n3DNKPg" title="Morning">
+      <talks xmi:id="_e-mNIebZEe-uj-1n3DNKPg" title="Talk 1" duration="20" speaker="_e-mNE-bZEe-uj-1n3DNKPg" discussant="_e-mNF-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNIubZEe-uj-1n3DNKPg" title="Talk 2" duration="20" speaker="_e-mNEubZEe-uj-1n3DNKPg" discussant="_e-mNEubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNI-bZEe-uj-1n3DNKPg" title="Talk 3" duration="20" speaker="_e-mNEubZEe-uj-1n3DNKPg" discussant="_e-mNFObZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNJObZEe-uj-1n3DNKPg" title="Talk 4" duration="20" speaker="_e-mNEebZEe-uj-1n3DNKPg" discussant="_e-mNE-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNJebZEe-uj-1n3DNKPg" title="Talk 5" duration="20" speaker="_e-mNGubZEe-uj-1n3DNKPg" discussant="_e-mNGebZEe-uj-1n3DNKPg"/>
+    </slots>
+    <slots xsi:type="Break" xmi:id="_e-mNJubZEe-uj-1n3DNKPg" start="12:30" end="14:00" room="_e-mNG-bZEe-uj-1n3DNKPg" reason="Lunch"/>
+    <slots xsi:type="Track" xmi:id="_e-mNJ-bZEe-uj-1n3DNKPg" start="14:00" end="17:00" room="_e-mNHebZEe-uj-1n3DNKPg" title="Afternoon">
+      <talks xmi:id="_e-mNKObZEe-uj-1n3DNKPg" title="Talk 6" duration="20" speaker="_e-mNGObZEe-uj-1n3DNKPg" discussant="_e-mNFubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNKebZEe-uj-1n3DNKPg" title="Talk 7" duration="20" speaker="_e-mNFubZEe-uj-1n3DNKPg" discussant="_e-mNEubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNKubZEe-uj-1n3DNKPg" title="Talk 8" duration="20" speaker="_e-mNF-bZEe-uj-1n3DNKPg" discussant="_e-mNE-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNK-bZEe-uj-1n3DNKPg" title="Talk 9" duration="20" speaker="_e-mNF-bZEe-uj-1n3DNKPg" discussant="_e-mNFubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNLObZEe-uj-1n3DNKPg" title="Talk 10" duration="20" speaker="_e-mNEubZEe-uj-1n3DNKPg" discussant="_e-mNF-bZEe-uj-1n3DNKPg"/>
+    </slots>
+  </days>
+  <days xmi:id="_e-mNLebZEe-uj-1n3DNKPg" name="Day 2">
+    <slots xsi:type="Track" xmi:id="_e-mNLubZEe-uj-1n3DNKPg" start="09:00" end="12:30" room="_e-mNHObZEe-uj-1n3DNKPg" title="Morning">
+      <talks xmi:id="_e-mNL-bZEe-uj-1n3DNKPg" title="Talk 11" duration="20" speaker="_e-mNGubZEe-uj-1n3DNKPg" discussant="_e-mNFebZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNMObZEe-uj-1n3DNKPg" title="Talk 12" duration="20" speaker="_e-mNF-bZEe-uj-1n3DNKPg" discussant="_e-mNGebZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNMebZEe-uj-1n3DNKPg" title="Talk 13" duration="20" speaker="_e-mNFubZEe-uj-1n3DNKPg" discussant="_e-mNF-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNMubZEe-uj-1n3DNKPg" title="Talk 14" duration="20" speaker="_e-mNFebZEe-uj-1n3DNKPg" discussant="_e-mNEubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNM-bZEe-uj-1n3DNKPg" title="Talk 15" duration="20" speaker="_e-mNGObZEe-uj-1n3DNKPg" discussant="_e-mNFubZEe-uj-1n3DNKPg"/>
+    </slots>
+    <slots xsi:type="Break" xmi:id="_e-mNNObZEe-uj-1n3DNKPg" start="12:30" end="14:00" room="_e-mNHObZEe-uj-1n3DNKPg" reason="Lunch"/>
+    <slots xsi:type="Track" xmi:id="_e-mNNebZEe-uj-1n3DNKPg" start="14:00" end="17:00" room="_e-mNHebZEe-uj-1n3DNKPg" title="Afternoon">
+      <talks xmi:id="_e-mNNubZEe-uj-1n3DNKPg" title="Talk 16" duration="20" speaker="_e-mNFObZEe-uj-1n3DNKPg" discussant="_e-mNGubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNN-bZEe-uj-1n3DNKPg" title="Talk 17" duration="-10" speaker="_e-mNGebZEe-uj-1n3DNKPg" discussant="_e-mNEubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNOObZEe-uj-1n3DNKPg" title="Talk 18" duration="20" speaker="_e-mNGubZEe-uj-1n3DNKPg" discussant="_e-mNF-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNOebZEe-uj-1n3DNKPg" title="Talk 19" duration="20" speaker="_e-mNFebZEe-uj-1n3DNKPg" discussant="_e-mNEebZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNOubZEe-uj-1n3DNKPg" title="Talk 20" duration="20" speaker="_e-mNF-bZEe-uj-1n3DNKPg" discussant="_e-mNGubZEe-uj-1n3DNKPg"/>
+    </slots>
+  </days>
+  <days xmi:id="_e-mNO-bZEe-uj-1n3DNKPg" name="Day 3">
+    <slots xsi:type="Track" xmi:id="_e-mNPObZEe-uj-1n3DNKPg" start="12:30" end="09:00" room="_e-mNHubZEe-uj-1n3DNKPg" title="Morning">
+      <talks xmi:id="_e-mNPebZEe-uj-1n3DNKPg" title="Talk 21" duration="20" speaker="_e-mNGebZEe-uj-1n3DNKPg" discussant="_e-mNGubZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNPubZEe-uj-1n3DNKPg" title="Talk 22" duration="20" speaker="_e-mNFubZEe-uj-1n3DNKPg" discussant="_e-mNGebZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNP-bZEe-uj-1n3DNKPg" title="Talk 23" duration="20" speaker="_e-mNFubZEe-uj-1n3DNKPg" discussant="_e-mNGebZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNQObZEe-uj-1n3DNKPg" title="Talk 24" duration="20" speaker="_e-mNEubZEe-uj-1n3DNKPg" discussant="_e-mNGebZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNQebZEe-uj-1n3DNKPg" title="Talk 25" duration="20" speaker="_e-mNF-bZEe-uj-1n3DNKPg" discussant="_e-mNFebZEe-uj-1n3DNKPg"/>
+    </slots>
+    <slots xsi:type="Break" xmi:id="_e-mNQubZEe-uj-1n3DNKPg" start="12:30" end="14:00" room="_e-mNHObZEe-uj-1n3DNKPg" reason="Lunch"/>
+    <slots xsi:type="Track" xmi:id="_e-mNQ-bZEe-uj-1n3DNKPg" start="14:00" end="17:00" room="_e-mNHubZEe-uj-1n3DNKPg" title="Afternoon">
+      <talks xmi:id="_e-mNRObZEe-uj-1n3DNKPg" title="Talk 26" duration="20" speaker="_e-mNGubZEe-uj-1n3DNKPg" discussant="_e-mNF-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNRebZEe-uj-1n3DNKPg" title="Talk 27" duration="20" speaker="_e-mNGObZEe-uj-1n3DNKPg" discussant="_e-mNF-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNRubZEe-uj-1n3DNKPg" title="Talk 28" duration="20" speaker="_e-mNGubZEe-uj-1n3DNKPg" discussant="_e-mNEebZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNR-bZEe-uj-1n3DNKPg" title="Talk 29" duration="20" speaker="_e-mNGubZEe-uj-1n3DNKPg" discussant="_e-mNE-bZEe-uj-1n3DNKPg"/>
+      <talks xmi:id="_e-mNSObZEe-uj-1n3DNKPg" title="Talk 30" duration="20" speaker="_e-mNE-bZEe-uj-1n3DNKPg" discussant="_e-mNEubZEe-uj-1n3DNKPg"/>
+    </slots>
+  </days>
+</Conference>

@@ -1,6 +1,6 @@
 # Introduction
 
-In this practical you will use the [Epsilon Object Language (EOL)](https://eclipse.dev/epsilon/doc/eol) to query models and the [Epsilon Validation Language (EVL)](https://eclipse.dev/epsilon/doc/evl) for model validation. EVL extends the syntax of EOL so it is important that you attempt the model querying exercises before you move on to model validation.
+In this practical you will use the [Epsilon Object Language (EOL)](https://eclipse.dev/epsilon/doc/eol) to query models.
 
 ## What you should already know
 
@@ -10,7 +10,6 @@ In this practical you will use the [Epsilon Object Language (EOL)](https://eclip
 ## What you will learn
 
 - How to write and run EOL queries on EMF-based models.
-- How to write and run EVL validation rules on EMF-based models.
 
 ## What you will need
 
