@@ -1,6 +1,6 @@
 # Practical 11: Model workflows
 
-This is the worksheet for the tenth practical in the Engineering 2 module.
+This is the worksheet for the eleventh practical in the Engineering 2 module.
 
 This practical covers automating model management workflows using the [Epsilon Ant tasks](https://eclipse.dev/epsilon/doc/workflow/), and using the same Ant tasks to test Epsilon scripts through its [EUnit](https://eclipse.dev/epsilon/doc/eunit/) language.
 
