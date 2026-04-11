@@ -56,7 +56,7 @@ operation String isBefore(time : String) {
     - The Ecore metamodel of the Conference DSL;
     - A sample model that conforms to it;
     - An EOL file that contains your queries.
-- You should already have `conference.ecore` (Ecore metamodel) and `conference.model` (sample model) in your workspace after following [the instructions at the start of this practical](./index.md#before-you-start).
+- You should already have `conference.ecore` (Ecore metamodel) and `conference.model` (sample model) in your workspace after following [the instructions at the start of this practical](./introduction.md#what-you-will-need).
 - Create an empty text file named `conference-queries.eol` within your `conference-dsl` project.
 - Right-click on `conference.ecore`.
 
