@@ -20,7 +20,31 @@ Instructions for running your EOL queries against a conference model are provide
 For Q5, we will need to define a few helper operations for working with `HH:MM`-formatted times first. For now, we assume that string values under `Slot.start` and `Slot.end` conform to the `HH:MM` format. Later on, we will encode (and check) this assumption using a validation constraint.
 
 ```eol
-{{#include ../../../solutions/practical8/conference-dsl/query5.eol}}
+// Q5
+// Select all tracks that start before noon
+// and compute the size of the returned collection
+Track.all.select(t|t.start.isBefore("12:00")).size().println();
+
+// Get the hours part of the string
+// and convert it to an integer
+// e.g. for 15:45 it returns 15
+operation String getHours() {
+    return self.split(":").at(0).asInteger();
+}
+
+// Same for the minutes part
+operation String getMinutes() {
+    return self.split(":").at(1).asInteger();
+}
+
+// Compares the string on which it is invoked
+// with its time parameter e.g.
+// "15:15".isBefore("18:00") returns true
+operation String isBefore(time : String) {
+    return (self.getHours() < time.getHours()) or 
+        (self.getHours() = time.getHours() and 
+        self.getMinutes() < time.getMinutes());
+}
 ```
 
 > [!WARNING]
