@@ -1,10 +1,15 @@
 # Model-to-model transformation
 
-As a warm-up exercise, modify [this M2M transformation](https://www.eclipse.org/epsilon/live/?etl) on Epsilon's playground so that it generates 2 deliverables per task
+**Exercise 1:** Modify [this ETL transformation](https://eclipse.dev/epsilon/playground/?4c163eb6) on Epsilon's playground so that it generates 2 deliverables per task
 - One interim report in the middle of the task
 - One final report at the end of the task
 
-## Exercise
+**Exercise 2:** Study [this Flock migration transformation](https://eclipse.dev/epsilon/playground/?flock) on Epsilon's playground. Now complete [this Flock migration](https://eclipse.dev/epsilon/playground/?8e886c96) to add effort elements to the migrated model.
+
+> [!NOTE]
+> You can develop the transformations above either directly on the Playground or in Eclipse, as demonstrated in the respective lectures. If you develop them on the Playground, we advise you to also download copies (using the Playground's `Download -> Ant (Eclipse)` menu and dialog) and run them within Eclipse.
+
+## Exercise 3
 
 Write a M2M transformation with ETL that produces a MiniVoiceXML model from a call centre model. MiniVoiceXML is a toy version of the [W3C VoiceXML specification](https://www.w3.org/TR/voicexml20/).
 
@@ -49,6 +54,59 @@ Write a M2M transformation with ETL that produces a MiniVoiceXML model from a ca
     - In `minivoicexml.interpreter`, right-click on `Launcher.launch`, select `Run As –> Launcher`
     - The interpreter will run from the `Console` view: check that the model behaves as expected by entering your answers
 
-## Solution
+## Solutions
 
-- A [reference solution](https://eclipse.dev/epsilon/playground/?callcentre2minivoicexml) is available on Epsilon's playground.
+- Exercise 1
+
+```etl
+rule Project2Project
+	transform s : Source!Project
+	to t : Target!Project {
+
+	t.name = s.name;
+
+	// Transform the tasks of the source
+	// project using the Task2Deliverable
+	// rule and assign the result to
+	// t.deliverables
+	t.deliverables ::= s.tasks;
+}
+
+// Transform each task to two deliverables
+// to be submitted in the middle and at the end of the task
+rule Task2Deliverable
+	transform t : Source!Task
+	to interim : Target!Deliverable, 
+       final : Target!Deliverable {
+
+	interim.name = t.name + " Interim Report";
+	interim.due = t.start + (t.duration / 2);
+
+	final.name = t.name + " Final Report";
+	final.due = t.start + t.duration;
+
+	// The lead of the deliverables
+	// is the person with the highest
+	// effort in the task
+	var lead = t.effort.sortBy(e|-e.percentage).
+		first()?.person;
+
+    interim.lead ::= lead;
+    final.lead ::= lead;
+}
+
+// @lazy means that persons will be transformed 
+// only upon request. As such, Charlie will not 
+// appear in the target model because he leads
+// no deliverables
+@lazy
+rule Person2Person
+	transform s : Source!Person
+	to t : Target!Person {
+
+	t.name = s.name;
+}
+```
+- Exercise 2: A [reference solution](https://eclipse.dev/epsilon/playground/?pslv0-v1) is available on Epsilon's playground.
+- Exercise 3: A [reference solution](https://eclipse.dev/epsilon/playground/?callcentre2minivoicexml) is available on Epsilon's playground.
+ 
