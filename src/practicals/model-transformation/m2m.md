@@ -1,4 +1,4 @@
-# Model-to-Model transformation
+# Model-to-model transformation
 
 As a warm-up exercise, modify [this M2M transformation](https://www.eclipse.org/epsilon/live/?etl) on Epsilon's playground so that it generates 2 deliverables per task
 - One interim report in the middle of the task
