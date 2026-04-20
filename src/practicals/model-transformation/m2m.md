@@ -1,6 +1,7 @@
 # Model-to-model transformation
 
 **Exercise 1:** Modify [this ETL transformation](https://eclipse.dev/epsilon/playground/?4c163eb6) on Epsilon's playground so that it generates 2 deliverables per task
+
 - One interim report in the middle of the task
 - One final report at the end of the task
 
