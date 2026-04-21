@@ -1,11 +1,14 @@
 # Model-to-model transformation
 
-**Exercise 1:** Modify [this ETL transformation](https://eclipse.dev/epsilon/playground/?4c163eb6) on Epsilon's playground so that it generates 2 deliverables per task
+**Exercise 1:** Study this [ETL transformation](https://eclipse.dev/epsilon/playground/?notes2coins), which demonstrates generating multiple output elements from a single source element. Modify [this ETL transformation](https://eclipse.dev/epsilon/playground/?4c163eb6) on Epsilon's Playground so that it generates 2 deliverables per task:
 
-- One interim report in the middle of the task
+- One interim report halfway through the task
 - One final report at the end of the task
 
-**Exercise 2:** Study [this Flock migration transformation](https://eclipse.dev/epsilon/playground/?flock) on Epsilon's playground. Now complete [this Flock migration](https://eclipse.dev/epsilon/playground/?8e886c96) to add effort elements to the migrated model.
+**Exercise 2:** Study [this Flock migration transformation](https://eclipse.dev/epsilon/playground/?flock) on Epsilon's Playground. Now complete [this Flock migration](https://eclipse.dev/epsilon/playground/?8e886c96) to add effort elements to the migrated model.
+
+> [!NOTE]
+> The names of the original and migrated models in the Flock transformation of Exercise 2 are `Original` and `Migrated` respectively. Therefore, to create a new `Effort` element in the migrated model you can use `var effort : new Migrated!Effort;`.
 
 > [!NOTE]
 > You can develop the transformations above either directly on the Playground or in Eclipse, as demonstrated in the respective lectures. If you develop them on the Playground, we advise you to also download copies (using the Playground's `Download -> Ant (Eclipse)` menu and dialog) and run them within Eclipse.
