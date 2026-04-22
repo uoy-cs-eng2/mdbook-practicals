@@ -28,7 +28,7 @@ While the `callcentre2java` model-to-text transformation discussed in the M2T le
     - `ac.uk.york.callcentre.m2t`
     - `acmebank.model`
     - `acmebank.application`
-- Run the `callcentre2java.egx` EGX M2T transformation against the `acmebank.callcentre` model so that it generates code under the `acmebank.application` project
+- Run the `callcentre2java.egx` EGX M2T transformation against the `acmebank.callcentre` model so that it generates code under the `src-gen` folder of the `acmebank.application` project
     - Create a new `EGL Generator` run configuration (like you did for EOL and EVL in previous practicals)
     - Set its source to `callcentre2java.egx`
     - Set the `Files should be generated in` directory to the `acmebank.application` project
