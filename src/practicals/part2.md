@@ -5,4 +5,4 @@
 1. [Model querying](./model-querying/index.md)
 1. [Model validation](./model-validation/index.md)
 1. [Model transformation](./model-transformation/index.md)
-1. [Model workflows](./model-workflows/index.md)
+1. [Model management workflows](./model-management-workflows/index.md)
