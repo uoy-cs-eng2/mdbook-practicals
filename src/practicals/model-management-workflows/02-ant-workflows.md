@@ -18,7 +18,7 @@ Click Run.
 
 ## Combining the EVL and EGL scripts
 
-Modify `build.xml` so that the constraints in [the related EVL example](https://eclipse.dev/epsilon/playground/?evl) are executed before the EGL model-to-text transformation. For more information, see slide 7 of the Model Management Workflows lecture.
+Modify `build.xml` so that the constraints in [the related EVL example](https://eclipse.dev/epsilon/playground/?evl) are executed before the EGL model-to-text transformation. For more information, see the Model Management Workflows lecture.
 
 First, paste the Ant tasks in the main target of the EVL `build.xml` before the ones in the EGL `build.xml` file.
 Ensure this works as intended, by changing `model.flexmi` so that it violates one of the EVL constraints (e.g. set the duration of the Analysis task to a negative number), and running `build.xml` again: the build should fail in the validation step and code generation should not take place.
@@ -45,4 +45,4 @@ Ensure the build still works as expected before moving on.
 
 ## Solutions
 
-Model solutions for the exercises are available in [this ZIP file](../../solutions/practical10.zip).
+Model solutions for the exercises are available in [this ZIP file](../../solutions/practical11.zip).
