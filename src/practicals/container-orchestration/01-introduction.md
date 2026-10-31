@@ -33,7 +33,7 @@ You should be familiar with these concepts from the Week 5 lectures:
 
 ## What you will need
 
-* Java 17 or newer: install from [Adoptium](https://adoptium.net/).
+* Java 25 or newer: install from [Adoptium](https://adoptium.net/).
 * An IDE with Gradle and Java support: in this worksheet, we discuss [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 * A local installation of [Docker Desktop](https://www.docker.com/get-started/).
   Ensure Docker Desktop is running before you start this practical.

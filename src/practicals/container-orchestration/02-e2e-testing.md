@@ -18,10 +18,10 @@ Due to the above reasons, we will generate a separate Micronaut project which wi
 Use [Micronaut Launch](https://micronaut.io/launch/) as usual, but this time, do *not* add any features:
 
 * Application type: Micronaut Application.
-* Java version: 17.
+* Java version: 25.
 * Name: `e2e-tests`.
 * Base package: `uk.ac.york.cs.eng2.books.e2e`.
-* Micronaut version: latest 4.x version.
+* Micronaut version: latest 5.x version.
 * Language: Java.
 * Build tool: Gradle.
 * Test framework: JUnit.
