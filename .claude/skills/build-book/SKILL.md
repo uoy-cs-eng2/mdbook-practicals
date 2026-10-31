@@ -13,7 +13,7 @@ description: Build the mdBook into ./book, regenerating the solution ZIPs first.
 
    `zip-solutions.sh` must run first: it regenerates `src/solutions/*.zip`, which pages link to.
 
-2. If `mdbook` is not found, try `bash -l -c "mdbook build"`. If it is still missing, tell the user to install it (CI uses mdBook 0.5.2) rather than installing it silently.
+2. If `mdbook` is not found, try `bash -l -c "mdbook build"`. If it is still missing, tell the user to install it (CI uses mdBook 0.5.4) rather than installing it silently.
 
 3. Report any mdBook errors or warnings. Common causes are a broken `{{#include ...}}` path into `solutions/` and a page missing from `src/SUMMARY.md`.
 

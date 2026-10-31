@@ -8,7 +8,7 @@ mdBook sources for the ENG2 practical worksheets (University of York). Part 1 (p
 
 ## Commands
 
-mdBook 0.5.2 is used in CI. The solution ZIPs must be generated before building:
+mdBook 0.5.4 is used in CI. The solution ZIPs must be generated before building:
 
 ```shell
 ./zip-solutions.sh && mdbook serve --open   # local preview
