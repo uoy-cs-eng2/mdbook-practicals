@@ -31,7 +31,7 @@ You should be familiar with these concepts from the lectures:
 
 ## What you will need
 
-* Java 17 or newer: install from [Adoptium](https://adoptium.net/).
+* Java 25 or newer: install from [Adoptium](https://adoptium.net/).
 * An IDE with Gradle and Java support: in this worksheet, we discuss [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 
 ## What you will do
