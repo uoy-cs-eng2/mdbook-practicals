@@ -19,7 +19,7 @@ If we want to generate clients from the OpenLibrary OpenAPI spec, we will need t
 Open your `build.gradle` file, and add this line to the `plugins` section:
 
 ```groovy
-id("io.micronaut.openapi") version "4.6.1"
+id("io.micronaut.openapi") version "5.0.2"
 ```
 
 ## Configuring the Micronaut OpenAPI Gradle plugin
