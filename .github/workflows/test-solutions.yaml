@@ -1,0 +1,36 @@
+name: Test solutions
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - practical1
+          - practical1-additional
+          - practical2
+          - practical3
+          - practical4-books
+          - practical4-simulator
+          - practical4-stats
+          - practical5/book-microservice
+          # practical5/e2e-tests is excluded: it needs the whole Docker Compose stack running
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Run tests
+        working-directory: solutions/${{ matrix.project }}
+        run: ./gradlew test --no-daemon
