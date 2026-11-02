@@ -37,7 +37,8 @@ If one or more publishers are found, the controller should try to reuse the `Pub
 
 You will need to update the `BooksController` tests to cover the use of the gateway.
 
-To avoid having the unit tests depend on an external service, use a method annotated with `@MockBean` to return a Test Double of the connection object used by the gateway (the `BooksApi`), which always provides the same response.
+To avoid having the unit tests depend on an external service, use a method annotated with `@MockBean` to return a Test Double of the gateway (the `BookCatalogGateway`), which always provides the same response.
+This is one of the benefits of the Gateway pattern: the rest of the application only depends on the `BookCatalogGateway` interface, so it is easy to replace it with a Test Double.
 
 You can use Mockito to quickly implement that Test Double, instead of having to write a full implementation of the interface.
 Remember to add Mockito to your `build.gradle` first, [as we did on Practical 3](../micronaut-kafka/06-stats-per-minute.md#testing-the-re-keying-via-mockito).
@@ -45,10 +46,11 @@ Remember to add Mockito to your `build.gradle` first, [as we did on Practical 3]
 For our case, it could look like this:
 
 ```java
-BooksApi mock = mock(BooksApi.class);
-when(mock.readIsbnIsbnIsbnGet(any())).thenReturn(
-  Map.of("publishers", Collections.singletonList("P Ublisher"))
-);
+BookCatalogInfo info = new BookCatalogInfo();
+info.getPublishers().add("P Ublisher");
+
+BookCatalogGateway mock = mock(BookCatalogGateway.class);
+when(mock.findByIsbn(any())).thenReturn(Optional.of(info));
 ```
 
 The `any()` call uses Mockito's argument matchers to indicate that the mock will always return the same predefined response for any ISBN.

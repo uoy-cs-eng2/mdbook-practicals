@@ -62,11 +62,13 @@ micronaut {
         replaceLogbackXml = true
     }
     openapi {
-        client("openlibrary", file("src/main/openapi/openlibrary-0.1.0.json")) {
+        client("openlibrary", file("src/main/openapi/openlibrary-1.0.0.json")) {
             apiPackageName = "uk.ac.york.cs.eng2.books.openlibrary.api"
             modelPackageName = "uk.ac.york.cs.eng2.books.openlibrary.model"
             clientId = "openlibrary"
             useReactive = false
+            // SearchResponse has both "numFound" and "num_found", which would produce duplicate getters/setters
+            nameMapping = ["num_found": "numFoundSnakeCase"]
         }
     }
 }

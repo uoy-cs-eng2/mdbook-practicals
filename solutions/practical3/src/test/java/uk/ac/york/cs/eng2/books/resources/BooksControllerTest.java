@@ -14,14 +14,13 @@ import uk.ac.york.cs.eng2.books.domain.Author;
 import uk.ac.york.cs.eng2.books.domain.Book;
 import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
-import uk.ac.york.cs.eng2.books.openlibrary.api.BooksApi;
+import uk.ac.york.cs.eng2.books.gateways.BookCatalogGateway;
+import uk.ac.york.cs.eng2.books.gateways.BookCatalogInfo;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,7 +42,7 @@ public class BooksControllerTest {
   private AuthorRepository authorRepository;
 
   @Inject
-  private BooksApi booksApi;
+  private BookCatalogGateway bookCatalogGateway;
 
   @BeforeEach
   public void setup() {
@@ -80,8 +79,8 @@ public class BooksControllerTest {
     assertEquals(b.getIsbn(), fetchedBook.getIsbn());
 
     // The publisher should have been fetched from the API
-    verify(booksApi, times(1))
-        .readIsbnIsbnIsbnGet(eq(bookIsbn));
+    verify(bookCatalogGateway, times(1))
+        .findByIsbn(eq(bookIsbn));
 
     @NonNull Optional<Book> dbBook = bookRepository.findById(bookId);
     assertEquals("P Ublisher", dbBook.get().getPublisher().getName());
@@ -242,12 +241,13 @@ public class BooksControllerTest {
     assertEquals(0, booksClient.getBookAuthors(bookId).size());
   }
 
-  @MockBean(BooksApi.class)
-  public BooksApi getBooksApi() {
-    BooksApi mock = mock(BooksApi.class);
-    when(mock.readIsbnIsbnIsbnGet(any())).thenReturn(
-        Map.of("publishers", Collections.singletonList("P Ublisher"))
-    );
+  @MockBean(BookCatalogGateway.class)
+  public BookCatalogGateway getBookCatalogGateway() {
+    BookCatalogInfo info = new BookCatalogInfo();
+    info.getPublishers().add("P Ublisher");
+
+    BookCatalogGateway mock = mock(BookCatalogGateway.class);
+    when(mock.findByIsbn(any())).thenReturn(Optional.of(info));
     return mock;
   }
 

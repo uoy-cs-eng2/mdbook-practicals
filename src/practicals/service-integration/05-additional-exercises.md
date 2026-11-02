@@ -26,7 +26,7 @@ The `@CircuitBreaker` annotation implies a number of changes in behaviour:
   * The failing service will see a reduction in its load, which will make it easier for its administrators to bring it back up.
 * After some time, the "circuit breaker" will go to a half-open state, in which it will attempt to make a real request again. If that works, it will go back to an "open" state where requests go to OpenLibrary as usual. Otherwise, it will go back to the above "closed" state and wait for some time before trying again.
 
-Since you cannot directly change the generated OpenAPI client (`BooksApi`), you may need to apply the `@CircuitBreaker` interface to a new subinterface of `BooksApi` that you would create yourself.
+Since you cannot directly change the generated OpenAPI client (`SearchApi`), you may need to apply the `@CircuitBreaker` interface to a new subinterface of `SearchApi` that you would create yourself.
 
 ## Use more information from OpenLibrary
 
