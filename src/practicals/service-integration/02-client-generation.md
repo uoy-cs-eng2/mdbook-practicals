@@ -6,7 +6,7 @@ You can use your own, or you can start from the [model solution of Practical 2](
 ## Obtaining the OpenAPI specification
 
 We want to integrate an external service to have better information about our books.
-For this practical, we have chosen the [OpenLibrary API](https://openlibrary.org/developers/api), as they have an [OpenAPI sandbox](https://openlibrary.org/swagger/docs) that we can experiment with.
+For this practical, we have chosen the [OpenLibrary API](https://openlibrary.org/developers/api), as they have an [OpenAPI sandbox](https://openlibrary.org/docs) that we can experiment with.
 
 As a first step, visit their sandbox (see link above), and download the `openapi.json` file linked from under the "Open Library API" header (the link in "Contribute by proposing edits to openapi.json").
 

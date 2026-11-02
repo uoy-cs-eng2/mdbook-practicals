@@ -65,7 +65,7 @@ It's time to finish implementing the gateway method so our test passes.
 
 The problem is that the `readIsbnIsbnIsbnGet` method in `BooksApi` only returns a raw `Object`: you'll need to use the debugger to find out what is its actual type, and then cast it to the correct type to extract the desired information (the names of the publishers) and put it in the `BookCatalogInfo`.
 
-You may find it useful to experiment with the [OpenLibrary Swagger UI](https://openlibrary.org/swagger/docs) yourself and see what the response looks like.
+You may find it useful to experiment with the [OpenLibrary Swagger UI](https://openlibrary.org/docs) yourself and see what the response looks like.
 In terms of ISBNs, the endpoint only takes ISBNs of books in the Open Library: for example, use `1524797162` (it's the ISBN of a videogame book).
 
 You'll most likely need to use `instanceof` checks and cast down to `Map<String, Object>` and `List<String>` where needed.
