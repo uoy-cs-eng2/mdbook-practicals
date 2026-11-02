@@ -15,14 +15,11 @@ import uk.ac.york.cs.eng2.books.domain.Publisher;
 import uk.ac.york.cs.eng2.books.dto.BookCreateDTO;
 import uk.ac.york.cs.eng2.books.events.BookIsbnChange;
 import uk.ac.york.cs.eng2.books.events.BooksProducer;
-import uk.ac.york.cs.eng2.books.openlibrary.api.BooksApi;
 import uk.ac.york.cs.eng2.books.repository.AuthorRepository;
 import uk.ac.york.cs.eng2.books.repository.BookRepository;
 import uk.ac.york.cs.eng2.books.repository.PublisherRepository;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -237,15 +234,6 @@ public class BooksControllerTest {
 
     booksClient.removeBookAuthor(bookId, author.getId());
     assertEquals(0, booksClient.getBookAuthors(bookId).size());
-  }
-
-  @MockBean(BooksApi.class)
-  public BooksApi getBooksApi() {
-    BooksApi mock = mock(BooksApi.class);
-    when(mock.readIsbnIsbnIsbnGet(any())).thenReturn(
-        Map.of("publishers", Collections.singletonList("P Ublisher"))
-    );
-    return mock;
   }
 
   @MockBean(BooksProducer.class)
